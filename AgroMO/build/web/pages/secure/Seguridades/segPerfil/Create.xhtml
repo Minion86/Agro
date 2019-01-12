@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="SegPerfilCreateForm">
+            <p:dialog id="SegPerfilCreateDlg" height="400"  widgetVar="SegPerfilCreateDialog"  resizable="false"  header="Nuevo Registro">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{segPerfilController.selected != null}">
+                        <p:outputLabel value="Perfil" for="nombreSegPerfil" />
+
+                        <p:inputText id="nombreSegPerfil" value="#{segPerfilController.selected.nombrePerfil}"  />
+
+                        <p:outputLabel rendered="#{segPerfilController.selected.idPerfil != null}" value="Permisos"  />
+
+
+                        <p:treeTable rendered="#{segPerfilController.selected.idPerfil != null}"  id="datalist" value="#{segPerfilController.abuelo}" var="node"
+                                     widgetVar="datalistVar"
+                                     style="text-align: left">
+
+                            <p:column headerText="Menu">
+                                <h:outputText value="#{node.segMenu.textoMenu}" />
+                            </p:column>
+
+                            <p:column  headerText="Acciones">
+                                <p:dataTable  id="accionList" var="accion" value="#{node.segAccionesDTOlist}" >
+
+                                    <p:column  width="20%">
+                                        <p:selectBooleanCheckbox  value="#{accion.existeAsignadoPerfil}"   >
+                                            <p:ajax update=":growl" listener="#{segPerfilController.cambiaAccionesDTO(node.segMenu, accion)}" />
+                                        </p:selectBooleanCheckbox>
+                                    </p:column>
+                                    <p:column  width="70%" headerText="Accion">
+                                        <h:outputText value="#{accion.accion.nombreAccion}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:column>
+
+                        </p:treeTable>
+
+                    </p:panelGrid>
+                    <p:commandButton rendered="#{segPerfilController.selected.idPerfil == null}"  actionListener="#{segPerfilController.create}" value="#{bundle.Save}" update="display,:SegPerfilListForm:datalist,:growl"/>
+                    <p:commandButton rendered="#{segPerfilController.selected.idPerfil != null}" actionListener="#{segPerfilController.update}" value="#{bundle.Save}" update="display,:SegPerfilListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SegPerfilCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PF('SegPerfilCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>

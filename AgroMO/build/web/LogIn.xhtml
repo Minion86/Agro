@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <title>Sistema Inteligente de Control de Plantaciones</title>
+        <h:outputStylesheet name="css/iess.css"/>
+    </h:head>
+    <h:body  style="background-image:url(/AgroMO/images/Aero.jpg)" >   
+        <div id="container">
+            <div id="mainContent">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <p:messages />
+                </h:panelGroup>
+                <p:growl id="growl" life="3000" widgetVar="growlWV" />
+                <p:dialog visible="true" id="dialog" header="AgroMO - Sistema Inteligente de Control de Plantaciones" widgetVar="dlg" draggable="false" resizable="false" closable="false" width="600" closeOnEscape="dlg">
+                    <h:form id="loginFormId" prependId="false" >  
+                        <h:panelGrid columns="2" >
+                            <p:graphicImage width="280" height="200" value="/images/logo.jpg" /> 
+                            <h:panelGrid columns="1" cellpadding="5">  
+                                <h:panelGrid style="min-width: 100px" id="pnlUsername" columns="2" cellpadding="5">  
+                                    <h:outputText id="lblUserName" value="Usuario: * " styleClass="label_formulario"/>
+                                    <p:inputText value="#{beanLogin.userName}" id="usuario" required="true" label="username">
+
+                                    </p:inputText>
+                                    <h:outputText id="lblPassword"  value="Password: * "/>  
+                                    <p:password value="#{beanLogin.password}" id="password" required="true" feedback="false" />
+
+                                </h:panelGrid> 
+
+                                <f:facet name="footer">  
+                                    <p:commandButton id="Login" value="Login"  onclick="sendData();"  />  
+                                    <p:commandButton id="btnCancelId" tabindex="4" value="Cancel" onclick="window.location.reload();"></p:commandButton>
+                                </f:facet>  
+                            </h:panelGrid>  
+                        </h:panelGrid> 
+                        <script type="text/javascript" language="JavaScript">
+                            window.onload = function carga() {
+                                var error = '#{request.getParameter("error")}';
+                                if (error == 'credenciales') {
+                                    error = 'Usuario o Contraseña Inválidos.';
+                                    PF('growlWV').renderMessage({"summary": error,
+                                        "detail": error,
+                                        "severity": "error"});
+                                }
+                            }
+
+                            function datosValidos() {
+                                var usuario = document.getElementById("usuario");
+                                var password = document.getElementById("password");
+                                if (password.value == "") {
+
+                                    PF('growlWV').renderMessage({"summary": "Ingresa tu password",
+                                        "detail": "Ingresa tu password",
+                                        "severity": "error"});
+                                    password.focus();
+                                    return false;
+                                }
+
+                                if (usuario.value == "") {
+                                    PF('growlWV').renderMessage({"summary": "Ingresa tu usuario",
+                                        "detail": "Ingresa tu usuario",
+                                        "severity": "error"});
+                                    usuario.focus();
+                                    return false;
+                                }
+
+                                return true;
+                            }
+
+                            function sendData() {
+                                if (datosValidos()) {
+                                    var forma = document.getElementById("loginFormId");
+                                    forma.action = "j_spring_security_check";
+                                    forma.method = "POST";
+                                    forma.submit();
+                                }
+                            }
+                        </script>
+
+                    </h:form>  
+                </p:dialog>
+
+            </div>
+        </div>
+    </h:body>
+</html>

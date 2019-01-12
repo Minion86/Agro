@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/Template1.xhtml">
+        <ui:define name="title">
+            <h:outputText value=""></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="form">
+
+                <p:growl id="msgs" showDetail="true"/>
+
+                <p:panel header="Selección de Perfil" style="margin-bottom:10px;" >
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:selectOneMenu id="rol" value="#{loginController.rol}" converter="SegListaPerfilControllerConverter"  required="True" requiredMessage="Por favor escoja un Perfil asignado">
+
+                            <f:selectItems itemValue="#{rol}" var="rol"   value="#{segListaPerfilController.getSegPerfilItemsbyPermisos(loginController.user)}" />
+
+                        </p:selectOneMenu>
+                        <p:message for="form:rol"/>
+
+                    </h:panelGrid>
+
+                    <p:separator />
+
+                    <p:commandButton value="Aceptar" update="msgs" actionListener="#{loginController.escogePerfil}"  id="Aceptar"/>
+
+                </p:panel>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/Template1_Menu.xhtml">
+
+
+        <ui:define name="title">
+            <p:graphicImage value="/images/cabecera_popup.jpg"  width="70%" height="10%" />
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="SegUsuarioListForm">
+                <p:menubar >
+
+
+                    <f:facet name="options" >
+                        <p:commandButton rendered="#{segUsuarioController.permisoBuscar}"  update=":FormSearch:ListaSearch" actionListener="#{segUsuarioController.prepareSearch}"
+                                         value="Búsqueda Avanzada"      oncomplete="PF('SegUsuarioSearchDialog').show(); "  icon="ui-icon ui-icon-search" title="Búsqueda Avanzada" >
+                        </p:commandButton>
+                    </f:facet>
+                </p:menubar>
+                <p:panel header="Lista de Usuarios">
+                    <p:dataTable id="datalist" value="#{segUsuarioController.sonAllUsuarioItems}" var="item"
+                                 selectionMode="single" selection="#{segUsuarioController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idUsuario}"
+                                 rows="10"
+                                 widgetVar="datalistVar"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
+
+                        <f:facet name="header">
+                            <h:commandLink rendered="#{segUsuarioController.permisoImprimir}">
+                                <p:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                <p:dataExporter type="xls" target="datalist" fileName="ReporteLista" />
+                            </h:commandLink>
+
+
+                        </f:facet>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Usuario"/>
+                            </f:facet>
+                            <h:outputText value="#{item.usernameUsuario}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Identificación"/>
+                            </f:facet>
+                            <h:outputText value="#{item.identificacionUsuario}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombreUsuario}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Apellido"/>
+                            </f:facet>
+                            <h:outputText value="#{item.apellidoUsuario}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Estado"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.activoUsuario}"  disabled="true"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{segUsuarioController.prepareCreate}" update=":SegUsuarioCreateForm" oncomplete="PF('SegUsuarioCreateDialog').show()" rendered="#{segUsuarioController.permisoInsertar}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{segUsuarioController.prepareEdit}" update=":SegUsuarioEditForm" oncomplete="PF('SegUsuarioEditDialog').show()" disabled="#{empty segUsuarioController.selected}" rendered="#{segUsuarioController.permisoActualizar}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{segUsuarioController.destroy}" update=":growl,datalist" disabled="#{empty segUsuarioController.selected}" rendered="#{segUsuarioController.permisoEliminar}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            <h:form id="FormSearch" rendered="#{segUsuarioController.permisoBuscar}">
+
+                <p:dialog header="Búsqueda Avanzada" widgetVar="SegUsuarioSearchDialog" resizable="false" id="SegUsuariosearchDlg"
+                          width="780"  height="440">
+                    <br/>
+                    <center>
+                        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                            <f:facet name="start">
+                                <p:graphicImage value="/images/ajaxloadingbar.gif" />
+                            </f:facet>
+
+                            <f:facet name="complete">
+                                <h:outputText value="" />
+                            </f:facet>
+                        </p:ajaxStatus>
+
+                        <p:panelGrid id="ListaSearch"  >
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Usuario:" for="usuario" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="usuario" value="#{segUsuarioController.selected.usernameUsuario}"/>
+                                    <p:message for="usuario" display="icon"/>
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Identificación:" for="identificacion" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="identificacion" value="#{segUsuarioController.selected.identificacionUsuario}"/>
+                                    <p:message for="identificacion" display="icon"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Nombre:" for="nombre" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="nombre" value="#{segUsuarioController.selected.nombreUsuario}"/>
+                                    <p:message for="nombre" display="icon"/>
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Apellido:" for="apellido" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="apellido" value="#{segUsuarioController.selected.apellidoUsuario}"/>
+                                    <p:message for="apellido" display="icon"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="E-Mail:" for="email" />
+                                </p:column>
+                                <p:column colspan="3"  >
+                                    <p:inputText id="email" value="#{segUsuarioController.selected.emailUsuario}"/>
+                                    <p:message for="email" display="icon"/>
+                                </p:column>
+
+                            </p:row>
+
+
+                            <f:facet name="footer">
+                                <p:row>
+                                    <p:column colspan="4"  >
+                                        <p:outputPanel  layout="block" style="text-align:right">
+
+                                            <p:commandButton value="Buscar"  update=":growl,:SegUsuarioListForm:datalist"
+                                                             oncomplete="handleListaSegUsuariosSearchCloseRequest(xhr, status, args)" actionListener="#{segUsuarioController.search}"
+                                                             icon="ui-icon ui-icon-check"/>
+
+                                            <p:commandButton value="Cancelar" onclick="PF('SegUsuarioSearchDialog').hide()" type="button"
+                                                             icon="ui-icon ui-icon-close"/>
+
+                                        </p:outputPanel>
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+                        </p:panelGrid>
+                        <br/>
+
+                    </center>
+                </p:dialog>
+
+            </h:form>
+            <ui:include src="Create.xhtml" rendered="#{segUsuarioController.permisoInsertar}"/>
+            <ui:include src="Edit.xhtml" rendered="#{segUsuarioController.permisoActualizar}"/>
+            
+
+            <script type="text/javascript">
+
+
+                function handleListaSegUsuariosSearchCloseRequest(xhr, status, args) {
+                    if (args.validationFailed) {
+                        jQuery('#SegUsuariosearchDlg').effect("shake", {times: 3}, 100);
+                        alert('Error');
+                    } else {
+                        PF('SegUsuarioSearchDialog').hide();
+                        PF('datalistVar').clearFilters();
+                    }
+
+                }
+
+
+
+
+
+            </script>
+        </ui:define>
+    </ui:composition>
+
+</html>

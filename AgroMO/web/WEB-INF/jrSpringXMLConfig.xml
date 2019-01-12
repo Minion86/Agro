@@ -1,0 +1,55 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <http auto-config="true" use-expressions="true"
+          authentication-manager-ref="userITAuthenticationManager"
+          xmlns="http://www.springframework.org/schema/security">
+        <access-denied-handler error-page="/content/accesoDenegado.jr"/>
+        
+        <intercept-url
+            pattern="/LogIn.jsf"
+            access="permitAll" />
+        <intercept-url pattern="/pages/secure/**" access="isAuthenticated()" />
+        <intercept-url pattern="/pages/unsecure/**" access="permitAll"/>
+       
+        <intercept-url pattern="/resources/**" access="permitAll"/>
+        <form-login login-page="/LogIn.jsf"
+         
+                    default-target-url="/pages/secure/Principal.jsf"
+                    authentication-failure-url="/LogIn.jsf?error=credenciales"
+                    always-use-default-target="true"
+                    username-parameter="usuario"
+                    password-parameter="password"/>
+        
+       
+        <logout logout-success-url="/LogIn.jsf" />
+        
+        <headers>
+            <cache-control />
+            <content-type-options />
+            <hsts />
+            <frame-options />
+            <xss-protection />
+        </headers>
+    </http>
+    
+    <bean id="serviceLogin" class="org.Seguridades.servicio.ServiceLogin"/>
+	
+    <bean id="customUserAuthenticationProvider" class="org.Seguridades.bean.BeanLogin">
+        <property name="serviceLogin" ref="serviceLogin"/>
+    </bean>
+	
+    <authentication-manager id="userITAuthenticationManager" xmlns="http://www.springframework.org/schema/security">
+        <authentication-provider ref="customUserAuthenticationProvider"/>
+    </authentication-manager>
+     
+   
+</beans>

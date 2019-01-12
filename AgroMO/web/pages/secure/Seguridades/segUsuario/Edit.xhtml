@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="SegUsuarioEditForm">
+            <p:dialog id="SegUsuarioEditDlg" widgetVar="SegUsuarioEditDialog" height="400"  resizable="false"  header="Editar Registro">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="3" rendered="#{segUsuarioController.selected != null}">
+                        <h:outputLabel value="*Cédula:"/>
+                        <p:inputText maxlength="20" id="txtCedula" value="#{segUsuarioController.selected.identificacionUsuario}" required="true" requiredMessage="Valor Requerido" >
+                            <f:validator for="txtCedula" validatorId="numerosValidacion"/>
+                            <f:validator for="txtCedula" validatorId="rucValidacion"/>
+                        </p:inputText>
+
+                        <p:message for="txtCedula" id="txtCedulaMessage"/>
+
+                        <h:outputLabel value="*Usuario:"/>
+                        <p:inputText maxlength="100" id="txtUsername"  value="#{segUsuarioController.selected.usernameUsuario}" required="true" requiredMessage="Valor Requerido"/>
+                        <p:message for="txtUsername"/>
+
+
+                        <h:outputLabel value="*Nombres:"/>
+                        <p:inputText maxlength="500" id="txtNombre"  value="#{segUsuarioController.selected.nombreUsuario}" required="true" requiredMessage="Valor Requerido"/>
+                        <p:message for="txtNombre"/>
+
+
+                        <h:outputLabel value="*Apellidos:"/>
+                        <p:inputText maxlength="300" id="txtApellido"  value="#{segUsuarioController.selected.apellidoUsuario}" required="true" requiredMessage="Valor Requerido"/>
+                        <p:message for="txtApellido"/>
+
+
+                        <h:outputLabel value="Contraseña:*"/>
+                        <p:password maxlength="50" id="newPass"  requiredMessage="VALOR REQUERIDO" value="#{segUsuarioController.new_password}">
+                            <p:ajax event="blur" update="msgNewPass"/>
+                        </p:password>
+                        <p:message id="msgNewPass" for="newPass"/>
+
+                        <h:outputLabel value="Confirmar contraseña:*"/>
+                        <p:password maxlength="50" id="confirmPass"
+                                    value="#{segUsuarioController.confirm_password}"  requiredMessage="VALOR REQUERIDO">
+                            <p:ajax event="blur" update="msgConfirm"/>        
+                        </p:password>
+                        <p:message id="msgConfirm" for="confirmPass"/>
+
+
+
+                        <h:outputLabel value="*Correo Electrónico:"/>
+                        <p:inputText maxlength="200" id="txtCorreoElectronico" value="#{segUsuarioController.selected.emailUsuario}" required="true" requiredMessage="Valor Requerido">
+                            <f:validator validatorId="org.Seguridades.validators.EmailValidator"/>
+                        </p:inputText>
+                        <p:message for="txtCorreoElectronico" />
+                        <h:outputLabel value=""/>
+
+                        <p:panel header="Selección de Perfil" style="margin-bottom:10px;" >
+                            <p:panelGrid>
+                                <p:row>
+                                    <p:column colspan="2"  >
+                                        <p:selectOneMenu id="rol" value="#{segUsuarioController.rol}" converter="SegListaPerfilControllerConverter"  required="True" requiredMessage="Por favor escoja un Perfil asignado">
+                                            <f:selectItems itemValue="#{rol}" var="rol"   value="#{segListaPerfilController.getSegPerfilItemsAll()}" />
+                                        </p:selectOneMenu>
+                                        <p:message for="rol"/>
+                                    </p:column>
+                                    <p:column colspan="1"  >
+                                        <p:commandLink  update="perfiles" actionListener="#{segUsuarioController.addPerfil}"  id="Aceptar">
+
+                                            <p:graphicImage value="/images/aumentar16.png"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                   
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="3"  >
+                                        <p:dataTable id="perfiles" value="#{segUsuarioController.selected.segUsuarioPerfilList}" var="item">
+                                            <p:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Perfil"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idPerfil.nombrePerfil}"/>
+                                            </p:column>
+
+                                            <p:column>
+                                                <p:commandLink update="perfiles" action="#{segUsuarioController.delPerfil(item)}"  id="Aceptar">
+                                                    <p:graphicImage value="/images/eliminar16.png"/>
+                                                </p:commandLink>
+                                            </p:column>
+
+                                        </p:dataTable>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+
+                            <p:separator />
+
+
+
+                        </p:panel>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{segUsuarioController.update}" value="#{bundle.Save}" update="display,:SegUsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SegUsuarioEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PF('SegUsuarioEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/Template1_Menu.xhtml">
+
+
+        <ui:define name="title">
+            <p:graphicImage value="/images/cabecera_popup.jpg"  width="70%" height="10%" />
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="SegMenuListForm">
+
+                <p:panel header="Lista de Menús">
+                    <p:treeTable id="datalist" value="#{segMenuController.abuelo}" var="node"
+                                 selectionMode="single"
+                                 widgetVar="datalistVar"
+                                 style="text-align: left">
+                        <p:ajax event="select"  listener="#{segMenuController.onNodeSelect}"  update="createButton editButton " />
+                        <p:ajax event="unselect" update="createButton editButton"/>
+
+                        <f:facet name="header">
+                            <h:commandLink>
+                                <p:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                <p:dataExporter type="xls" target="datalist" fileName="ReporteLista" />
+                            </h:commandLink>
+
+
+                        </f:facet>
+
+                        <p:column headerText="Menu">
+                            <h:outputText value="#{node.textoMenu}" />
+                        </p:column>
+                        <p:column headerText="URL">
+                            <h:outputText value="#{node.urlMenu}" />
+                        </p:column>
+                        <p:column  headerText="Acciones">
+                            <p:dataList value="#{node.segAccionMenuList}" var="detalle" type="ordered">
+                                #{detalle.idAcciones.nombreAccion}
+                            </p:dataList>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{segMenuController.prepareCreate}" update=":SegMenuCreateForm" oncomplete="PF('SegMenuCreateDialog').show()" rendered="#{segMenuController.permisoInsertar}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SegMenuEditForm" oncomplete="PF('SegMenuEditDialog').show()" disabled="#{empty segMenuController.selected}" rendered="#{segMenuController.permisoActualizar}"/>
+                        </f:facet>
+                    </p:treeTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml" rendered="#{segMenuController.permisoInsertar}"/>
+            <ui:include src="Edit.xhtml" rendered="#{segMenuController.permisoActualizar}"/>
+            
+
+        </ui:define>
+    </ui:composition>
+
+</html>

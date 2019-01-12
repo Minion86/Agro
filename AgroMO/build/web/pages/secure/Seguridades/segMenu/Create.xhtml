@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="SegMenuCreateForm">
+            <p:dialog id="SegMenuCreateDlg" widgetVar="SegMenuCreateDialog"  resizable="false"  header="Nuevo Registro">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{segMenuController.selected != null}">
+                        <h:outputLabel value="*Nombre:"/>
+                        <h:panelGroup>
+                            <p:inputText maxlength="100" id="txtNombre" value="#{segMenuController.selected.textoMenu}" required="true" requiredMessage="Valor Requerido"/>
+                            <p:message for="txtNombre"/>
+                        </h:panelGroup>
+                        <h:outputLabel value="*Aplicación:"/>
+                        <h:panelGroup>
+                            <p:inputText maxlength="200" id="txtAplicacion" value="#{segMenuController.selected.aplicacionMenu}" required="true" requiredMessage="Valor Requerido"/>
+                            <p:message for="txtAplicacion"/>
+                        </h:panelGroup>
+                        <h:outputLabel value="*Descripción:"/>
+                        <h:panelGroup>
+                            <p:inputTextarea maxlength="300" id="txtDescripcion" value="#{segMenuController.selected.descripcionMenu}" required="true" requiredMessage="Valor Requerido"/>
+                            <p:message for="txtDescripcion"/>
+                        </h:panelGroup>
+
+                        <h:outputLabel value="*Tipo Menú:"/>
+                        <h:panelGroup>
+                            <p:selectOneMenu id="txtTipo" value="#{segMenuController.selected.tipoMenu}" style="width:270px">
+                                <f:selectItem itemLabel="Pagina" itemValue="Pagina"  />
+                                <f:selectItem itemLabel="Menu" itemValue="Menu"  />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+
+                        <h:outputLabel value="*Orden:"/>
+                        <h:panelGroup>
+                            <p:inputText id="txtOrden" value="#{segMenuController.selected.secuencialMenu}" required="true" requiredMessage="Valor Requerido"/>
+                            <p:message for="txtOrden"/>
+                        </h:panelGroup>
+
+                        <h:outputLabel value="*URL:"/>
+                        <h:panelGroup>
+                            <p:inputText maxlength="600" style="width:270px" id="txtURL" value="#{segMenuController.selected.urlMenu}" required="true" requiredMessage="Valor Requerido"/>
+                            <p:message for="txtURL"/>
+                        </h:panelGroup>
+
+                        <h:outputLabel value="*Hijo De:"/>
+                        <h:panelGroup>
+                            <p:selectOneMenu filter="true" filterMatchMode="contains" id="cmbMenu" value="#{segMenuController.selected.raizMenu}">
+                                <f:selectItems value="#{segMenuController.listaMenus}"/>
+                            </p:selectOneMenu>
+                            <p:message for="cmbMenu"/>
+                        </h:panelGroup>
+                        <h:outputLabel value="*Tiene Hijos:"/>
+                        <p:selectBooleanCheckbox value="#{segMenuController.selected.tieneHijosMenu}"/>
+                        <h:outputLabel rendered="#{segMenuController.selected.idMenu != null}" value="Acciones del menú:"/>
+
+                        <p:dataTable rendered="#{segMenuController.selected.idMenu != null}" id="accionList" var="accion" value="#{segMenuController.allAcciones}" >
+
+                            <p:column  width="20%" headerText="Accion">
+                                <p:selectBooleanCheckbox disabled="#{accion.existeAsignadoPerfil}"  value="#{accion.existeAsignadoMenu}"   />
+                            </p:column>
+                            <p:column  width="70%" headerText="Accion">
+                                <h:outputText value="#{accion.accion.nombreAccion}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </p:panelGrid>
+                    <p:commandButton rendered="#{segMenuController.selected.idMenu == null}" actionListener="#{segMenuController.create}" value="#{bundle.Save}" update="display,:SegMenuListForm:datalist,:growl"/>
+                    <p:commandButton rendered="#{segMenuController.selected.idMenu != null}" actionListener="#{segMenuController.update}" value="#{bundle.Save}" update="display,:SegMenuListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SegMenuCreateDialog');"/>
+
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PF('SegMenuCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>

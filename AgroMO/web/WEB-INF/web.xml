@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+   
+    <context-param> 
+        <param-name>primefaces.THEME</param-name> 
+        <param-value>redmond</param-value> 
+    </context-param> 
+    
+    <context-param>
+        <param-name>log4j</param-name>
+        <param-value>/WEB-INF/log4j.properties</param-value>
+    </context-param>
+    <!-- CONFIGURATION FILES END HERE -->
+    <!-- PROJECT STAGE START FOR DEVELOPEMENT MARK IT AS DEVELOPMENT, FOR TESTING, UAT, PRODUCTION REMOVE THIS -->
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <!-- PROJECT STAGE END -->
+    <!-- Enable JSF Servlet -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- Servlet de Primefaces -->
+    <servlet>
+        <servlet-name>Resource Servlet</servlet-name>
+        <servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Resource Servlet</servlet-name>
+        <url-pattern>/primefaces_resource/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/jrSpringXMLConfig.xml
+        </param-value>
+    </context-param>
+    <!-- Spring Security -->  
+    <!-- Enable JSF Server End-->
+    <!-- Integrate JSF and Spring -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- Enable Spring Filter End -->
+    <!-- Welcome File  -->
+    <welcome-file-list>
+        <welcome-file>LogIn.jsf</welcome-file>
+    </welcome-file-list>
+    <!-- Welcome File End-->
+</web-app>
