@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition template="/template/Template1_Menu.xhtml">
+
+
+        <ui:define name="title">
+            <p:graphicImage value="/images/cabecera_popup.jpg"  width="70%" height="10%" />
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ProductoListForm">
+                <p:menubar >
+
+
+                    <f:facet name="options" >
+                        <p:commandButton rendered="#{productoController.permisoBuscar}"  update=":FormSearch:ListaSearch" actionListener="#{productoController.prepareSearch}"
+                                         value="Búsqueda Avanzada"      oncomplete="PF('ProductoSearchDialog').show(); "  icon="ui-icon ui-icon-search" title="Búsqueda Avanzada" >
+                        </p:commandButton>
+                    </f:facet>
+                </p:menubar>
+                <p:panel header="Lista de Productos">
+                    <p:dataTable id="datalist" value="#{productoController.allProductoItems}" var="item"
+                                 selectionMode="single" selection="#{productoController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idProducto}"
+                                 rows="10"
+                                 widgetVar="datalistVar"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
+
+                        <f:facet name="header">
+                            <h:commandLink rendered="#{productoController.permisoImprimir}">
+                                <p:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                <p:dataExporter type="xls" target="datalist" fileName="ReporteLista" />
+                            </h:commandLink>
+
+
+                        </f:facet>
+                        <p:column width="5%">
+                            <f:facet name="header" >
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigoProducto}"/>
+                        </p:column>
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombreProducto}"/>
+                        </p:column>
+                        <p:column width="10%">
+                            <f:facet name="header">
+                                <h:outputText value="Valor"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorProducto}"/>
+                        </p:column>
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                <h:outputText value="Modelo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.modeloProducto}"/>
+                        </p:column>
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                <h:outputText value="Marca"/>
+                            </f:facet>
+                            <h:outputText value="#{item.marcaProducto}"/>
+                        </p:column>
+                        <p:column width="10%">
+                            <f:facet name="header">
+                                <h:outputText value="Serie"/>
+                            </f:facet>
+                            <h:outputText value="#{item.serieProducto}"/>
+                        </p:column>
+
+                        <p:column width="10%">
+                            <f:facet name="header">
+                                <h:outputText value="Vida Útil"/>
+                            </f:facet>
+                            <h:outputText value="#{item.vidaUtilProducto} años"/>
+                        </p:column>
+                        <p:column width="5%">
+                            <f:facet name="header">
+                                <h:outputText value="Estado"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.estadoProducto}"  disabled="true"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{productoController.prepareCreate}" update=":ProductoCreateForm" oncomplete="PF('ProductoCreateDialog').show()" rendered="#{productoController.permisoInsertar}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{productoController.prepareEdit}" update=":ProductoEditForm" oncomplete="PF('ProductoEditDialog').show()" disabled="#{empty productoController.selected}" rendered="#{productoController.permisoActualizar}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{productoController.destroy}" update=":growl,datalist" disabled="#{empty productoController.selected}" rendered="#{productoController.permisoEliminar}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <h:form id="FormSearch" rendered="#{productoController.permisoBuscar}">
+
+                <p:dialog closable="false" header="Búsqueda Avanzada" widgetVar="ProductoSearchDialog" resizable="false" id="ProductosearchDlg"
+                          width="780"  height="440">
+                    <br/>
+                    <center>
+                        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                            <f:facet name="start">
+                                <p:graphicImage value="/images/ajaxloadingbar.gif" />
+                            </f:facet>
+
+                            <f:facet name="complete">
+                                <h:outputText value="" />
+                            </f:facet>
+                        </p:ajaxStatus>
+
+                        <p:panelGrid id="ListaSearch"  >
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Código:" for="codigo" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText maxlength="200" id="codigo" value="#{productoController.selected.codigoProducto}"/>
+                                    <p:message for="codigo" display="icon"/>
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Nombre:" for="nombre" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText maxlength="100" id="nombre" value="#{productoController.selected.nombreProducto}"/>
+                                    <p:message for="nombre" display="icon"/>
+                                </p:column>
+
+                            </p:row>
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Tiempo de vida útil desde:" for="tiempodesde" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputNumber maxValue="30" minValue="0" id="tiempodesde" value="#{productoController.selected.vidaUtilProductoDesde}" symbol=" años" symbolPosition="suffix"/>
+                                    <p:message for="tiempodesde" display="icon"/>
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Tiempo de vida útil hasta:" for="tiempohasta" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputNumber maxValue="30" minValue="0" id="tiempohasta" value="#{productoController.selected.vidaUtilProductoHasta}" symbol=" años" symbolPosition="suffix"/>
+                                    <p:message for="tiempohasta" display="icon"/>
+                                </p:column>
+
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Marca:" for="marca" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="marca" maxlength="100" value="#{productoController.selected.marcaProducto}"/>
+                                    <p:message for="marca" display="icon"/>
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Serie:" for="serie" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText maxlength="100" id="serie" value="#{productoController.selected.serieProducto}"/>
+                                    <p:message for="serie" display="icon"/>
+                                </p:column>
+
+
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Medida (Longitud/profundidad):" for="medida" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText maxlength="100" id="medida" value="#{productoController.selected.medidaProducto}"/>
+                                    <p:message for="medida" display="icon"/>
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Peso en kgs:" for="peso" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText maxlength="100" id="peso" value="#{productoController.selected.pesoProducto}"/>
+                                    <p:message for="peso" display="icon"/>
+                                </p:column>
+
+
+                            </p:row>
+                            <p:row>                    
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Valor Desde:" for="valordesde" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputNumber minValue="0" id="valordesde" value="#{productoController.selected.valorProductoDesde}" symbol=" $" symbolPosition="suffix"/>
+                                    <p:message for="valordesde" display="icon"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Valor Hasta:" for="valorhasta" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputNumber minValue="0" id="valorhasta" value="#{productoController.selected.valorProductoHasta}" symbol=" $" symbolPosition="suffix"/>
+                                    <p:message for="valorhasta" display="icon"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Modelo:" for="modelo" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText maxlength="300" id="modelo" value="#{productoController.selected.modeloProducto}"/>
+                                    <p:message for="modelo" display="icon"/>
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Descripción:" for="descripcion" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputTextarea maxlength="2000" id="descripcion" counterTemplate="{0} caracteres restantes." counter="displaydescripcion" value="#{productoController.selected.descripcionProducto}"/>
+                                    <h:outputText id="displaydescripcion" />
+                                    <p:message for="descripcion" display="icon"/>
+                                </p:column>
+
+
+                            </p:row>
+
+
+                            <f:facet name="footer">
+                                <p:row>
+                                    <p:column colspan="4"  >
+                                        <p:outputPanel  layout="block" style="text-align:right">
+
+                                            <p:commandButton value="Buscar"  update=":growl,:ProductoListForm:datalist"
+                                                             oncomplete="handleListaProductosSearchCloseRequest(xhr, status, args)" actionListener="#{productoController.search}"
+                                                             icon="ui-icon ui-icon-check"/>
+
+                                            <p:commandButton value="Cancelar" onclick="PF('ProductoSearchDialog').hide()" type="button"
+                                                             icon="ui-icon ui-icon-close"/>
+
+                                        </p:outputPanel>
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+                        </p:panelGrid>
+                        <br/>
+
+                    </center>
+                </p:dialog>
+
+            </h:form>
+
+            <ui:include src="Create.xhtml" rendered="#{productoController.permisoInsertar}"/>
+            <ui:include src="Edit.xhtml" rendered="#{productoController.permisoActualizar}"/>
+
+            <script type="text/javascript">
+
+
+                function handleListaProductosSearchCloseRequest(xhr, status, args) {
+                    if (args.validationFailed) {
+                        jQuery('#ProductosearchDlg').effect("shake", {times: 3}, 100);
+                        alert('Error');
+                    } else {
+                        PF('ProductoSearchDialog').hide();
+                        PF('datalistVar').clearFilters();
+                    }
+
+                }
+
+
+
+
+
+            </script>
+        </ui:define>
+    </ui:composition>
+
+</html>

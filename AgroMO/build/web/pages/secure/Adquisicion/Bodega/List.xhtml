@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/Template1_Menu.xhtml">
+
+
+        <ui:define name="title">
+            <p:graphicImage value="/images/cabecera_popup.jpg"  width="70%" height="10%" />
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="BodegaListForm">
+                <p:menubar >
+
+
+                    <f:facet name="options" >
+                        <p:commandButton rendered="#{bodegaController.permisoBuscar}"  update=":FormSearch:ListaSearch" actionListener="#{bodegaController.prepareSearch}"
+                                         value="Búsqueda Avanzada"      oncomplete="PF('BodegaSearchDialog').show(); "  icon="ui-icon ui-icon-search" title="Búsqueda Avanzada" >
+                        </p:commandButton>
+                    </f:facet>
+                </p:menubar>
+                <p:panel header="Lista de Bodegas">
+                    <p:dataTable id="datalist" value="#{bodegaController.allBodegaItems}" var="item"
+                                 selectionMode="single" selection="#{bodegaController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idBodega}"
+                                 rows="10"
+                                 widgetVar="datalistVar"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
+
+                        <f:facet name="header">
+                            <h:commandLink rendered="#{bodegaController.permisoImprimir}">
+                                <p:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                <p:dataExporter type="xls" target="datalist" fileName="ReporteLista" />
+                            </h:commandLink>
+
+
+                        </f:facet>
+                        <p:column width="5%">
+                            <f:facet name="header" >
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idBodega}"/>
+                        </p:column>
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombreBodega}"/>
+                        </p:column>
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                <h:outputText value="Dirección"/>
+                            </f:facet>
+                            <h:outputText value="#{item.direccionBodega}"/>
+                        </p:column>
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                <h:outputText value="Tipo de Bodega"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tipoBodega.valorCatalogo}"/>
+                        </p:column>
+                        <p:column width="20%">
+                            <f:facet name="header">
+                                <h:outputText value="Clase de Bodega"/>
+                            </f:facet>
+                            <h:outputText value="#{item.claseBodega.valorCatalogo}"/>
+                        </p:column>
+                        <p:column width="5%">
+                            <f:facet name="header">
+                                <h:outputText value="Estado"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.estadoBodega}"  disabled="true"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{bodegaController.prepareCreate}" update=":BodegaCreateForm" oncomplete="PF('BodegaCreateDialog').show()" rendered="#{bodegaController.permisoInsertar}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{bodegaController.prepareEdit}" update=":BodegaEditForm" oncomplete="PF('BodegaEditDialog').show()" disabled="#{empty bodegaController.selected}" rendered="#{bodegaController.permisoActualizar}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{bodegaController.destroy}" update=":growl,datalist" disabled="#{empty bodegaController.selected}" rendered="#{bodegaController.permisoEliminar}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <h:form id="FormSearch" rendered="#{bodegaController.permisoBuscar}">
+
+                <p:dialog closable="false" header="Búsqueda Avanzada" widgetVar="BodegaSearchDialog" resizable="false" id="BodegasearchDlg"
+                          width="780"  height="440">
+                    <br/>
+                    <center>
+                        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                            <f:facet name="start">
+                                <p:graphicImage value="/images/ajaxloadingbar.gif" />
+                            </f:facet>
+
+                            <f:facet name="complete">
+                                <h:outputText value="" />
+                            </f:facet>
+                        </p:ajaxStatus>
+
+                        <p:panelGrid id="ListaSearch"  >
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Nombre:" for="nombre" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="nombre" value="#{bodegaController.selected.nombreBodega}"/>
+                                    <p:message for="nombre" display="icon"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Dirección:" for="direccion" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="direccion" value="#{bodegaController.selected.direccionBodega}"/>
+                                    <p:message for="direccion" display="icon"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Sector:" for="sector" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="sector" value="#{bodegaController.selected.sectorBodega}"/>
+                                    <p:message for="sector" display="icon"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Código Bodega:" for="codigobodega" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:inputText id="codigobodega" value="#{bodegaController.selected.codigoBodega}"/>
+                                    <p:message for="codigobodega" display="icon"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Institución:" for="institucion" />
+                                </p:column>
+                                <p:column colspan="3"  >
+
+                                    <p:selectOneMenu   id="institucion" value="#{bodegaController.selected.idInstitucion}" converter="ListaInstitucionControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{institucion}" var="institucion" value="#{listaInstitucionController.getbyAll()}"   />
+                                    </p:selectOneMenu>
+                                    <p:message for="institucion"/>
+                                </p:column>
+
+
+
+                            </p:row>
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Tipo de Bodega:" for="tipobodega" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:selectOneMenu id="tipobodega" value="#{bodegaController.selected.tipoBodega}" converter="ListaCatalogoControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{tipobodega}" var="tipobodega" value="#{listaCatalogoController.getbyGrupoCatalogoNemonico('TIP_BOD')}"   />
+
+                                    </p:selectOneMenu>
+                                    <p:message for="tipobodega"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Clase de Bodega:" for="clasebodega" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:selectOneMenu id="clasebodega" value="#{bodegaController.selected.claseBodega}" converter="ListaCatalogoControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{clasebodega}" var="clasebodega"  value="#{listaCatalogoController.getbyGrupoCatalogoNemonico('CLA_BOD')}" />
+
+                                    </p:selectOneMenu>
+                                    <p:message for="clasebodega"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:selectOneMenu id="ubicacionbodega" value="#{bodegaController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
+                                        <p:ajax update="ubicacionbodega2"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="ubicacionbodega"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:selectOneMenu id="ubicacionbodega2" value="#{bodegaController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(bodegaController.selected.idUbicacionPadre)}"   />
+                                    </p:selectOneMenu>
+                                    <p:message for="ubicacionbodega2"/>
+                                </p:column>
+
+                            </p:row>
+
+
+
+
+                            <f:facet name="footer">
+                                <p:row>
+                                    <p:column colspan="4"  >
+                                        <p:outputPanel  layout="block" style="text-align:right">
+
+                                            <p:commandButton value="Buscar"  update=":growl,:BodegaListForm:datalist"
+                                                             oncomplete="handleListaBodegaesSearchCloseRequest(xhr, status, args)" actionListener="#{bodegaController.search}"
+                                                             icon="ui-icon ui-icon-check"/>
+
+                                            <p:commandButton value="Cancelar" onclick="PF('BodegaSearchDialog').hide()" type="button"
+                                                             icon="ui-icon ui-icon-close"/>
+
+                                        </p:outputPanel>
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+                        </p:panelGrid>
+                        <br/>
+
+                    </center>
+                </p:dialog>
+
+            </h:form>
+
+            <ui:include src="Create.xhtml" rendered="#{bodegaController.permisoInsertar}"/>
+            <ui:include src="Edit.xhtml" rendered="#{bodegaController.permisoActualizar}"/>
+            
+            <script type="text/javascript">
+
+
+                function handleListaBodegaesSearchCloseRequest(xhr, status, args) {
+                    if (args.validationFailed) {
+                        jQuery('#BodegasearchDlg').effect("shake", {times: 3}, 100);
+                        alert('Error');
+                    } else {
+                        PF('BodegaSearchDialog').hide();
+                        PF('datalistVar').clearFilters();
+                    }
+
+                }
+
+
+
+
+
+            </script>
+        </ui:define>
+    </ui:composition>
+
+</html>
