@@ -58,8 +58,6 @@ public class Ubicacion implements Serializable {
     private Ubicacion padreId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
     private List<Bodega> bodegaList;
-    @OneToMany(mappedBy = "ubicacionAsignacionBien")
-    private List<AsignacionBien> asignacionBienList;
 
     public Ubicacion() {
     }
@@ -122,15 +120,6 @@ public class Ubicacion implements Serializable {
 
     public void setBodegaList(List<Bodega> bodegaList) {
         this.bodegaList = bodegaList;
-    }
-
-    @XmlTransient
-    public List<AsignacionBien> getAsignacionBienList() {
-        return asignacionBienList;
-    }
-
-    public void setAsignacionBienList(List<AsignacionBien> asignacionBienList) {
-        this.asignacionBienList = asignacionBienList;
     }
 
     @Override

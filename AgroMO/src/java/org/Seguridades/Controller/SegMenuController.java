@@ -326,7 +326,7 @@ public class SegMenuController implements Serializable {
     public List<SegMenu> getSonAllMenuItems() {
 
         if (sonAllMenuItems == null) {
-            //sonAllMenuItems = getFacade().findbyActivos();
+            //sonAllMenuItems = getFacade().findbyAdquisicion();
         }
         return sonAllMenuItems;
     }

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition>
+        <h:form id="ProductoCreateForm">
+            <p:dialog closable="false" id="ProductoCreateDlg" height="400"  widgetVar="ProductoCreateDialog"  resizable="false"  header="Nuevo Registro">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid rendered="#{productoController.selected != null}" >
+
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Código:" for="codigo" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="200" id="codigo" value="#{productoController.selected.codigoProducto}"/>
+                                <p:message for="codigo" display="icon"/>
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Nombre:" for="nombre" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="nombre" value="#{productoController.selected.nombreProducto}"/>
+                                <p:message for="nombre" display="icon"/>
+                            </p:column>
+
+                        </p:row>
+
+
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Tiempo de vida útil:" for="tiempo" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputNumber maxValue="30" minValue="0" id="tiempo" value="#{productoController.selected.vidaUtilProducto}" symbol=" años" symbolPosition="suffix"/>
+                                <p:message for="tiempo" display="icon"/>
+                            </p:column>
+
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Marca:" for="marca" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText id="marca" maxlength="100" value="#{productoController.selected.marcaProducto}"/>
+                                <p:message for="marca" display="icon"/>
+                            </p:column>
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Serie:" for="serie" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText maxlength="100" id="serie" value="#{productoController.selected.serieProducto}"/>
+                                <p:message for="serie" display="icon"/>
+                            </p:column>
+
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Medida (Longitud/profundidad):" for="medida" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText maxlength="100" id="medida" value="#{productoController.selected.medidaProducto}"/>
+                                <p:message for="medida" display="icon"/>
+                            </p:column>
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Peso en kgs:" for="peso" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText maxlength="100" id="peso" value="#{productoController.selected.pesoProducto}"/>
+                                <p:message for="peso" display="icon"/>
+                            </p:column>
+
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Valor:" for="valor" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputNumber minValue="0" id="valor" value="#{productoController.selected.valorProducto}" symbol=" $" symbolPosition="suffix"/>
+                                <p:message for="valor" display="icon"/>
+                            </p:column>
+
+                        </p:row>
+
+
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Modelo:" for="modelo" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText maxlength="300" id="modelo" value="#{productoController.selected.modeloProducto}"/>
+                                <p:message for="modelo" display="icon"/>
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Observaciones:" for="descripcion" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputTextarea maxlength="2000" id="descripcion" counterTemplate="{0} caracteres restantes." counter="displaydescripcion" value="#{productoController.selected.descripcionProducto}"/>
+                                <h:outputText id="displaydescripcion" />
+                                <p:message for="descripcion" display="icon"/>
+                            </p:column>
+
+
+                        </p:row>
+
+                    </p:panelGrid>
+                    <p:commandButton rendered="#{adquisicionController.currentDetalle.idDetalleAdquisicion == null}"  actionListener="#{productoController.create}" value="#{bundle.Save}" update=":AdquisicionCreateDetalleForm:producto,:growl" oncomplete="handleSubmit(args, 'ProductoCreateDialog');"/>
+                    <p:commandButton rendered="#{adquisicionController.currentDetalle.idDetalleAdquisicion != null}"  actionListener="#{productoController.create}" value="#{bundle.Save}" update=":AdquisicionEditDetalleForm:producto,:growl" oncomplete="handleSubmit(args, 'ProductoCreateDialog');"/>
+
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PF('ProductoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>

@@ -55,8 +55,8 @@ public class BodegaFacade extends AbstractFacade<Bodega> {
         if (bodega.getTipoBodega() != null) {
             query.append(" AND s.tipoBodega = :tipoBodega ");
         }
-        if (bodega.getIdInstitucion() != null) {
-            query.append(" AND s.idInstitucion = :idInstitucion ");
+        if (bodega.getIdBodega() != null) {
+            query.append(" AND s.idBodega = :idBodega ");
         }
         if (bodega.getIdUbicacionPadre() != null) {
             if (bodega.getIdUbicacion() != null) {
@@ -84,8 +84,8 @@ public class BodegaFacade extends AbstractFacade<Bodega> {
         if (bodega.getTipoBodega() != null) {
             q.setParameter("tipoBodega", bodega.getTipoBodega());
         }
-        if (bodega.getIdInstitucion() != null) {
-            q.setParameter("idInstitucion", bodega.getIdInstitucion());
+        if (bodega.getIdBodega() != null) {
+            q.setParameter("idBodega", bodega.getIdBodega());
         }
 
         if (bodega.getIdUbicacionPadre() != null) {
@@ -97,6 +97,37 @@ public class BodegaFacade extends AbstractFacade<Bodega> {
         }
 
         return q.getResultList();
+    }
+
+    /**
+     * Devuelve el listado de bodegas de acuerdo a la busqueda avanzada
+     *
+     * @param bodega
+     * @return
+     */
+    public List<Bodega> findbyNombreBodega(Bodega bodega) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM Bodega s ");
+
+        query.append(" WHERE UPPER(s.nombreBodega) like :nombreBodega ");
+
+        javax.persistence.Query q = em.createQuery(query.toString());
+
+        q.setParameter("nombreBodega", "%" + bodega.getNombreBodega().toUpperCase() + "%");
+
+        return q.getResultList();
+    }
+
+    /**
+     * Devuelve la lista de Bodegas
+     *
+     * @return
+     */
+    public List<Bodega> findTodos() {
+        javax.persistence.Query q = em.createQuery("SELECT u FROM Bodega u where u.estadoBodega=true");
+        return (List<Bodega>) q.getResultList();
     }
 
 }

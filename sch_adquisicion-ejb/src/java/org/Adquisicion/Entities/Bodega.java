@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -75,9 +74,6 @@ public class Bodega implements Serializable {
     @JoinColumn(name = "clase_bodega", referencedColumnName = "id_catalogo")
     @ManyToOne(optional = false)
     private Catalogo claseBodega;
-    @JoinColumn(name = "id_institucion", referencedColumnName = "id_institucion")
-    @ManyToOne
-    private Institucion idInstitucion;
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion")
     @ManyToOne(optional = false)
     private Ubicacion idUbicacion;
@@ -85,7 +81,9 @@ public class Bodega implements Serializable {
     private Ubicacion idUbicacionPadre;
     @Column(name = "estado_bodega")
     private Boolean estadoBodega;
-
+    @Transient
+    private List<DetalleAdquisicion> listaDetalleAdquisicion;
+    
     public Bodega() {
     }
 
@@ -188,13 +186,6 @@ public class Bodega implements Serializable {
         this.claseBodega = claseBodega;
     }
 
-    public Institucion getIdInstitucion() {
-        return idInstitucion;
-    }
-
-    public void setIdInstitucion(Institucion idInstitucion) {
-        this.idInstitucion = idInstitucion;
-    }
 
     public Ubicacion getIdUbicacion() {
         return idUbicacion;
@@ -255,6 +246,20 @@ public class Bodega implements Serializable {
      */
     public void setEstadoBodega(Boolean estadoBodega) {
         this.estadoBodega = estadoBodega;
+    }
+
+    /**
+     * @return the listaDetalleAdquisicion
+     */
+    public List<DetalleAdquisicion> getListaDetalleAdquisicion() {
+        return listaDetalleAdquisicion;
+    }
+
+    /**
+     * @param listaDetalleAdquisicion the listaDetalleAdquisicion to set
+     */
+    public void setListaDetalleAdquisicion(List<DetalleAdquisicion> listaDetalleAdquisicion) {
+        this.listaDetalleAdquisicion = listaDetalleAdquisicion;
     }
 
 }

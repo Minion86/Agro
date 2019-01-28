@@ -56,8 +56,6 @@ public class Catalogo implements Serializable {
     @Size(max = 300)
     @Column(name = "valor_catalogo")
     private String valorCatalogo;
-    @OneToMany(mappedBy = "idCatalogo")
-    private List<DetalleAsignacionBien> detalleAsignacionBienList;
     @OneToMany(mappedBy = "estadoBien")
     private List<DetalleAdquisicion> detalleAdquisicionList;
     @JoinColumn(name = "id_grupocatalogo", referencedColumnName = "id_grupocatalogo")
@@ -67,8 +65,6 @@ public class Catalogo implements Serializable {
     private List<Bodega> bodegaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "claseBodega")
     private List<Bodega> bodegaList1;
-    @OneToMany(mappedBy = "estadoAsignacionBien")
-    private List<AsignacionBien> asignacionBienList;
 
     public Catalogo() {
     }
@@ -116,15 +112,6 @@ public class Catalogo implements Serializable {
     }
 
     @XmlTransient
-    public List<DetalleAsignacionBien> getDetalleAsignacionBienList() {
-        return detalleAsignacionBienList;
-    }
-
-    public void setDetalleAsignacionBienList(List<DetalleAsignacionBien> detalleAsignacionBienList) {
-        this.detalleAsignacionBienList = detalleAsignacionBienList;
-    }
-
-    @XmlTransient
     public List<DetalleAdquisicion> getDetalleAdquisicionList() {
         return detalleAdquisicionList;
     }
@@ -157,15 +144,6 @@ public class Catalogo implements Serializable {
 
     public void setBodegaList1(List<Bodega> bodegaList1) {
         this.bodegaList1 = bodegaList1;
-    }
-
-    @XmlTransient
-    public List<AsignacionBien> getAsignacionBienList() {
-        return asignacionBienList;
-    }
-
-    public void setAsignacionBienList(List<AsignacionBien> asignacionBienList) {
-        this.asignacionBienList = asignacionBienList;
     }
 
     @Override

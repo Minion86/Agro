@@ -27,17 +27,17 @@
     
     <converter>
         <converter-id>ListaCatalogoControllerConverter</converter-id>
-        <converter-class>org.Activos.Controller.util.ListaCatalogoControllerConverter</converter-class>
+        <converter-class>org.Adquisicion.Controller.util.ListaCatalogoControllerConverter</converter-class>
     </converter>
     
     <converter>
         <converter-id>ListaUbicacionControllerConverter</converter-id>
-        <converter-class>org.Activos.Controller.util.ListaUbicacionControllerConverter</converter-class>
+        <converter-class>org.Adquisicion.Controller.util.ListaUbicacionControllerConverter</converter-class>
     </converter>
     
     <converter>
         <converter-id>ListaInstitucionControllerConverter</converter-id>
-        <converter-class>org.Activos.Controller.util.ListaInstitucionControllerConverter</converter-class>
+        <converter-class>org.Adquisicion.Controller.util.ListaInstitucionControllerConverter</converter-class>
     </converter>
     
     

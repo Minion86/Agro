@@ -6,7 +6,7 @@
 package org.Adquisicion.Entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,25 +19,46 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.Adquisicion.Entities.Adquisicion;
+import org.Adquisicion.Entities.Catalogo;
+import org.Adquisicion.Entities.Producto;
 
 /**
  *
  * @author fmullo
  */
 @Entity
-@Table(name = "detalle_adquisicion",schema = "sch_adquisicion")
+@Table(name = "detalle_adquisicion", schema = "sch_adquisiciones")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetalleAdquisicion.findAll", query = "SELECT d FROM DetalleAdquisicion d"),
-    @NamedQuery(name = "DetalleAdquisicion.findByIdDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.idDetalleAdquisicion = :idDetalleAdquisicion"),
-    @NamedQuery(name = "DetalleAdquisicion.findByCantidadDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.cantidadDetalleAdquisicion = :cantidadDetalleAdquisicion"),
-    @NamedQuery(name = "DetalleAdquisicion.findByValorDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.valorDetalleAdquisicion = :valorDetalleAdquisicion"),
-    @NamedQuery(name = "DetalleAdquisicion.findByValorLibrosDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.valorLibrosDetalleAdquisicion = :valorLibrosDetalleAdquisicion"),
-    @NamedQuery(name = "DetalleAdquisicion.findByCodigoBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.codigoBien = :codigoBien"),
-    @NamedQuery(name = "DetalleAdquisicion.findByCodigoAnteriorBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.codigoAnteriorBien = :codigoAnteriorBien"),
-    @NamedQuery(name = "DetalleAdquisicion.findByEstadoDetalle", query = "SELECT d FROM DetalleAdquisicion d WHERE d.estadoDetalle = :estadoDetalle")})
+    @NamedQuery(name = "DetalleAdquisicion.findAll", query = "SELECT d FROM DetalleAdquisicion d")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByIdDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.idDetalleAdquisicion = :idDetalleAdquisicion")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByCantidadDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.cantidadDetalleAdquisicion = :cantidadDetalleAdquisicion")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByValorDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.valorDetalleAdquisicion = :valorDetalleAdquisicion")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByValorLibrosDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.valorLibrosDetalleAdquisicion = :valorLibrosDetalleAdquisicion")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByCodigoProducto", query = "SELECT d FROM DetalleAdquisicion d WHERE d.codigoProducto = :codigoProducto")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByCodigoAnteriorProducto", query = "SELECT d FROM DetalleAdquisicion d WHERE d.codigoAnteriorProducto = :codigoAnteriorProducto")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByEstadoDetalle", query = "SELECT d FROM DetalleAdquisicion d WHERE d.estadoDetalle = :estadoDetalle")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByColorProducto", query = "SELECT d FROM DetalleAdquisicion d WHERE d.colorProducto = :colorProducto")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByNumeroSerieProducto", query = "SELECT d FROM DetalleAdquisicion d WHERE d.numeroSerieProducto = :numeroSerieProducto")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByObservaciones", query = "SELECT d FROM DetalleAdquisicion d WHERE d.observaciones = :observaciones")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByCantidadBodegaDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.cantidadBodegaDetalleAdquisicion = :cantidadBodegaDetalleAdquisicion")})
 public class DetalleAdquisicion implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,26 +73,47 @@ public class DetalleAdquisicion implements Serializable {
     @Column(name = "valor_libros_detalle_adquisicion")
     private Double valorLibrosDetalleAdquisicion;
     @Size(max = 100)
-    @Column(name = "codigo_bien")
-    private String codigoBien;
+    @Column(name = "codigo_producto")
+    private String codigoProducto;
     @Size(max = 100)
-    @Column(name = "codigo_anterior_bien")
-    private String codigoAnteriorBien;
+    @Column(name = "codigo_anterior_producto")
+    private String codigoAnteriorProducto;
     @Column(name = "estado_detalle")
     private Boolean estadoDetalle;
+    @Size(max = 100)
+    @Column(name = "color_producto")
+    private String colorProducto;
+    @Size(max = 200)
+    @Column(name = "numero_serie_producto")
+    private String numeroSerieProducto;
+    @Size(max = 2147483647)
+    @Column(name = "observaciones")
+    private String observaciones;
+    @Column(name = "cantidad_bodega_detalle_adquisicion")
+    private Double cantidadBodegaDetalleAdquisicion;
     @OneToMany(mappedBy = "idDetalleAdquisicion")
-    private List<DetalleAsignacionBien> detalleAsignacionBienList;
-    @OneToMany(mappedBy = "idDetalleAdquisicion")
-    private List<DepreciacionBien> depreciacionBienList;
-    @JoinColumn(name = "id_adquisicion", referencedColumnName = "id_adquisicion")
-    @ManyToOne
     private Adquisicion idAdquisicion;
-    @JoinColumn(name = "id_bien", referencedColumnName = "id_bien")
+    @JoinColumn(name = "id_producto", referencedColumnName = "id_producto")
     @ManyToOne
-    private Bien idBien;
-    @JoinColumn(name = "estado_bien", referencedColumnName = "id_catalogo")
+    private Producto idProducto;
+    @JoinColumn(name = "tipo_producto", referencedColumnName = "id_catalogo")
     @ManyToOne
-    private Catalogo estadoBien;
+    private Catalogo tipoProducto;
+    @JoinColumn(name = "estado_producto", referencedColumnName = "id_catalogo")
+    @ManyToOne
+    private Catalogo estadoProducto;
+    @Transient
+    private Integer valorProductoDesde;
+    @Transient
+    private Integer valorProductoHasta;
+    @Transient
+    private Object codigoBarras;
+    @Transient
+    private String nombreProducto;
+    @Column(name = "codigo_barras")
+    private BigInteger codigoBarra;
+    @Transient
+    private String claseproducto;
 
     public DetalleAdquisicion() {
     }
@@ -112,20 +154,20 @@ public class DetalleAdquisicion implements Serializable {
         this.valorLibrosDetalleAdquisicion = valorLibrosDetalleAdquisicion;
     }
 
-    public String getCodigoBien() {
-        return codigoBien;
+    public String getCodigoProducto() {
+        return codigoProducto;
     }
 
-    public void setCodigoBien(String codigoBien) {
-        this.codigoBien = codigoBien;
+    public void setCodigoProducto(String codigoProducto) {
+        this.codigoProducto = codigoProducto;
     }
 
-    public String getCodigoAnteriorBien() {
-        return codigoAnteriorBien;
+    public String getCodigoAnteriorProducto() {
+        return codigoAnteriorProducto;
     }
 
-    public void setCodigoAnteriorBien(String codigoAnteriorBien) {
-        this.codigoAnteriorBien = codigoAnteriorBien;
+    public void setCodigoAnteriorProducto(String codigoAnteriorProducto) {
+        this.codigoAnteriorProducto = codigoAnteriorProducto;
     }
 
     public Boolean getEstadoDetalle() {
@@ -136,22 +178,36 @@ public class DetalleAdquisicion implements Serializable {
         this.estadoDetalle = estadoDetalle;
     }
 
-    @XmlTransient
-    public List<DetalleAsignacionBien> getDetalleAsignacionBienList() {
-        return detalleAsignacionBienList;
+    public String getColorProducto() {
+        return colorProducto;
     }
 
-    public void setDetalleAsignacionBienList(List<DetalleAsignacionBien> detalleAsignacionBienList) {
-        this.detalleAsignacionBienList = detalleAsignacionBienList;
+    public void setColorProducto(String colorProducto) {
+        this.colorProducto = colorProducto;
     }
 
-    @XmlTransient
-    public List<DepreciacionBien> getDepreciacionBienList() {
-        return depreciacionBienList;
+    public String getNumeroSerieProducto() {
+        return numeroSerieProducto;
     }
 
-    public void setDepreciacionBienList(List<DepreciacionBien> depreciacionBienList) {
-        this.depreciacionBienList = depreciacionBienList;
+    public void setNumeroSerieProducto(String numeroSerieProducto) {
+        this.numeroSerieProducto = numeroSerieProducto;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public Double getCantidadBodegaDetalleAdquisicion() {
+        return cantidadBodegaDetalleAdquisicion;
+    }
+
+    public void setCantidadBodegaDetalleAdquisicion(Double cantidadBodegaDetalleAdquisicion) {
+        this.cantidadBodegaDetalleAdquisicion = cantidadBodegaDetalleAdquisicion;
     }
 
     public Adquisicion getIdAdquisicion() {
@@ -162,21 +218,30 @@ public class DetalleAdquisicion implements Serializable {
         this.idAdquisicion = idAdquisicion;
     }
 
-    public Bien getIdBien() {
-        return idBien;
+    public Producto getIdProducto() {
+        return idProducto;
     }
 
-    public void setIdBien(Bien idBien) {
-        this.idBien = idBien;
+    public void setIdProducto(Producto idProducto) {
+        this.idProducto = idProducto;
     }
 
-    public Catalogo getEstadoBien() {
-        return estadoBien;
+    public Catalogo getTipoProducto() {
+        return tipoProducto;
     }
 
-    public void setEstadoBien(Catalogo estadoBien) {
-        this.estadoBien = estadoBien;
+    public void setTipoProducto(Catalogo tipoProducto) {
+        this.tipoProducto = tipoProducto;
     }
+
+    public Catalogo getEstadoProducto() {
+        return estadoProducto;
+    }
+
+    public void setEstadoProducto(Catalogo estadoProducto) {
+        this.estadoProducto = estadoProducto;
+    }
+
 
     @Override
     public int hashCode() {
@@ -200,7 +265,95 @@ public class DetalleAdquisicion implements Serializable {
 
     @Override
     public String toString() {
-        return "org.Activos.Entities.DetalleAdquisicion[ idDetalleAdquisicion=" + idDetalleAdquisicion + " ]";
+        if (getIdProducto() != null) {
+            return getIdProducto().getNombreProducto() + " - Color:" + getColorProducto() + " Estado:" + getEstadoProducto().getNombreCatalogo() + " Valor:$" + getValorDetalleAdquisicion();
+        }  else {
+            return "";
+        }
     }
-    
+
+    /**
+     * @return the valorProductoDesde
+     */
+    public Integer getValorProductoDesde() {
+        return valorProductoDesde;
+    }
+
+    /**
+     * @param valorProductoDesde the valorProductoDesde to set
+     */
+    public void setValorProductoDesde(Integer valorProductoDesde) {
+        this.valorProductoDesde = valorProductoDesde;
+    }
+
+    /**
+     * @return the valorProductoHasta
+     */
+    public Integer getValorProductoHasta() {
+        return valorProductoHasta;
+    }
+
+    /**
+     * @param valorProductoHasta the valorProductoHasta to set
+     */
+    public void setValorProductoHasta(Integer valorProductoHasta) {
+        this.valorProductoHasta = valorProductoHasta;
+    }
+
+    /**
+     * @return the codigoBarras
+     */
+    public Object getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    /**
+     * @param codigoBarras the codigoBarras to set
+     */
+    public void setCodigoBarras(Object codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
+
+    /**
+     * @return the nombreProducto
+     */
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    /**
+     * @param nombreProducto the nombreProducto to set
+     */
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    /**
+     * @return the codigoBarra
+     */
+    public BigInteger getCodigoBarra() {
+        return codigoBarra;
+    }
+
+    /**
+     * @param codigoBarra the codigoBarra to set
+     */
+    public void setCodigoBarra(BigInteger codigoBarra) {
+        this.codigoBarra = codigoBarra;
+    }
+
+    /**
+     * @return the claseproducto
+     */
+    public String getClaseproducto() {
+        return claseproducto;
+    }
+
+    /**
+     * @param claseproducto the claseproducto to set
+     */
+    public void setClaseproducto(String claseproducto) {
+        this.claseproducto = claseproducto;
+    }
+
 }

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,25 +23,39 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.Adquisicion.Entities.Bodega;
 
 /**
  *
  * @author fmullo
  */
 @Entity
-@Table(name = "adquisicion",schema = "sch_adquisicion")
+@Table(name = "adquisicion", schema = "sch_activos")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Adquisicion.findAll", query = "SELECT a FROM Adquisicion a"),
-    @NamedQuery(name = "Adquisicion.findByIdAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.idAdquisicion = :idAdquisicion"),
-    @NamedQuery(name = "Adquisicion.findByCedulaResponsableAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.cedulaResponsableAdquisicion = :cedulaResponsableAdquisicion"),
-    @NamedQuery(name = "Adquisicion.findByNombresResponsableAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.nombresResponsableAdquisicion = :nombresResponsableAdquisicion"),
-    @NamedQuery(name = "Adquisicion.findByApellidosResponsableAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.apellidosResponsableAdquisicion = :apellidosResponsableAdquisicion"),
-    @NamedQuery(name = "Adquisicion.findByEmailResponsableAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.emailResponsableAdquisicion = :emailResponsableAdquisicion"),
-    @NamedQuery(name = "Adquisicion.findByFechaAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.fechaAdquisicion = :fechaAdquisicion"),
-    @NamedQuery(name = "Adquisicion.findByOrigenAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.origenAdquisicion = :origenAdquisicion")})
+    @NamedQuery(name = "Adquisicion.findAll", query = "SELECT a FROM Adquisicion a")
+    ,
+    @NamedQuery(name = "Adquisicion.findByIdAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.idAdquisicion = :idAdquisicion")
+    ,
+    @NamedQuery(name = "Adquisicion.findByCedulaResponsableAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.cedulaResponsableAdquisicion = :cedulaResponsableAdquisicion")
+    ,
+    @NamedQuery(name = "Adquisicion.findByNombresResponsableAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.nombresResponsableAdquisicion = :nombresResponsableAdquisicion")
+    ,
+    @NamedQuery(name = "Adquisicion.findByApellidosResponsableAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.apellidosResponsableAdquisicion = :apellidosResponsableAdquisicion")
+    ,
+    @NamedQuery(name = "Adquisicion.findByEmailResponsableAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.emailResponsableAdquisicion = :emailResponsableAdquisicion")
+    ,
+    @NamedQuery(name = "Adquisicion.findByFechaAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.fechaAdquisicion = :fechaAdquisicion")
+    ,
+    @NamedQuery(name = "Adquisicion.findByOrigenAdquisicion", query = "SELECT a FROM Adquisicion a WHERE a.origenAdquisicion = :origenAdquisicion")
+    ,
+    @NamedQuery(name = "Adquisicion.findByNumeroFacturaProducto", query = "SELECT a FROM Adquisicion a WHERE a.numeroFacturaProducto = :numeroFacturaProducto")})
 public class Adquisicion implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,17 +80,18 @@ public class Adquisicion implements Serializable {
     @Size(max = 100)
     @Column(name = "origen_adquisicion")
     private String origenAdquisicion;
+    @Size(max = 100)
+    @Column(name = "numero_factura_producto")
+    private String numeroFacturaProducto;
     @JoinColumn(name = "id_bodega", referencedColumnName = "id_bodega")
     @ManyToOne
     private Bodega idBodega;
-    @JoinColumn(name = "id_ejercicio", referencedColumnName = "id_ejercicio")
-    @ManyToOne
-    private Ejercicio idEjercicio;
-    @JoinColumn(name = "id_institucion", referencedColumnName = "id_institucion")
-    @ManyToOne
-    private Institucion idInstitucion;
-    @OneToMany(mappedBy = "idAdquisicion")
+    @OneToMany(mappedBy = "idAdquisicion", cascade = CascadeType.ALL)
     private List<DetalleAdquisicion> detalleAdquisicionList;
+    @Transient
+    private Date fechaAdquisicionDesde;
+    @Transient
+    private Date fechaAdquisicionHasta;
 
     public Adquisicion() {
     }
@@ -140,28 +156,20 @@ public class Adquisicion implements Serializable {
         this.origenAdquisicion = origenAdquisicion;
     }
 
+    public String getNumeroFacturaProducto() {
+        return numeroFacturaProducto;
+    }
+
+    public void setNumeroFacturaProducto(String numeroFacturaProducto) {
+        this.numeroFacturaProducto = numeroFacturaProducto;
+    }
+
     public Bodega getIdBodega() {
         return idBodega;
     }
 
     public void setIdBodega(Bodega idBodega) {
         this.idBodega = idBodega;
-    }
-
-    public Ejercicio getIdEjercicio() {
-        return idEjercicio;
-    }
-
-    public void setIdEjercicio(Ejercicio idEjercicio) {
-        this.idEjercicio = idEjercicio;
-    }
-
-    public Institucion getIdInstitucion() {
-        return idInstitucion;
-    }
-
-    public void setIdInstitucion(Institucion idInstitucion) {
-        this.idInstitucion = idInstitucion;
     }
 
     @XmlTransient
@@ -197,5 +205,33 @@ public class Adquisicion implements Serializable {
     public String toString() {
         return "org.Activos.Entities.Adquisicion[ idAdquisicion=" + idAdquisicion + " ]";
     }
-    
+
+    /**
+     * @return the fechaAdquisicionDesde
+     */
+    public Date getFechaAdquisicionDesde() {
+        return fechaAdquisicionDesde;
+    }
+
+    /**
+     * @param fechaAdquisicionDesde the fechaAdquisicionDesde to set
+     */
+    public void setFechaAdquisicionDesde(Date fechaAdquisicionDesde) {
+        this.fechaAdquisicionDesde = fechaAdquisicionDesde;
+    }
+
+    /**
+     * @return the fechaAdquisicionHasta
+     */
+    public Date getFechaAdquisicionHasta() {
+        return fechaAdquisicionHasta;
+    }
+
+    /**
+     * @param fechaAdquisicionHasta the fechaAdquisicionHasta to set
+     */
+    public void setFechaAdquisicionHasta(Date fechaAdquisicionHasta) {
+        this.fechaAdquisicionHasta = fechaAdquisicionHasta;
+    }
+
 }
