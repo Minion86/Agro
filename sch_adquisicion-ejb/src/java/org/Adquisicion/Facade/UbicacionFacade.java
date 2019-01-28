@@ -18,7 +18,7 @@ import org.Adquisicion.Entities.Ubicacion;
 @Stateless
 public class UbicacionFacade extends AbstractFacade<Ubicacion> {
 
-    @PersistenceContext(unitName = "sch_activosPU")
+    @PersistenceContext(unitName = "sch_adquisicion")
     private EntityManager em;
 
     @Override

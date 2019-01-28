@@ -18,7 +18,7 @@ import org.Adquisicion.Entities.Bodega;
 @Stateless
 public class BodegaFacade extends AbstractFacade<Bodega> {
 
-    @PersistenceContext(unitName = "sch_activosPU")
+    @PersistenceContext(unitName = "sch_adquisicion")
     private EntityManager em;
 
     @Override

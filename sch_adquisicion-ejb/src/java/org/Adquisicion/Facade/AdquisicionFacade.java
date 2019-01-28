@@ -17,7 +17,7 @@ import org.Adquisicion.Entities.Adquisicion;
  */
 @Stateless
 public class AdquisicionFacade extends AbstractFacade<Adquisicion> {
-    @PersistenceContext(unitName = "sch_activosPU")
+    @PersistenceContext(unitName = "sch_adquisicion")
     private EntityManager em;
 
     @Override
@@ -42,7 +42,7 @@ public class AdquisicionFacade extends AbstractFacade<Adquisicion> {
         query.append("SELECT s FROM Adquisicion s ");
         query.append(" WHERE 1=1 ");
 
-        if (!"".equals(adquisicion.getNumeroFacturaProducto())) {
+        if (!"".equals(adquisicion.getNumeroFacturaBien())) {
             query.append(" AND UPPER(s.numeroFacturaProducto) like :numeroFacturaProducto ");
         }
         if (!"".equals(adquisicion.getCedulaResponsableAdquisicion())) {
@@ -66,8 +66,8 @@ public class AdquisicionFacade extends AbstractFacade<Adquisicion> {
 
         javax.persistence.Query q = em.createQuery(query.toString());
 
-        if (!"".equals(adquisicion.getNumeroFacturaProducto())) {
-            q.setParameter("numeroFacturaProducto", "%" + adquisicion.getNumeroFacturaProducto().toUpperCase() + "%");
+        if (!"".equals(adquisicion.getNumeroFacturaBien())) {
+            q.setParameter("numeroFacturaProducto", "%" + adquisicion.getNumeroFacturaBien().toUpperCase() + "%");
         }
         if (!"".equals(adquisicion.getCedulaResponsableAdquisicion())) {
             q.setParameter("cedulaResponsableAdquisicion", "%" + adquisicion.getCedulaResponsableAdquisicion().toUpperCase() + "%");

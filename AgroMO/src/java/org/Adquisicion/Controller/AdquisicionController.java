@@ -122,14 +122,14 @@ public class AdquisicionController implements Serializable {
 
     public void changeProducto() {
         if (currentDetalle != null) {
-            currentDetalle.setValorDetalleAdquisicion(currentDetalle.getIdProducto().getValorProducto());
-            currentDetalle.setValorLibrosDetalleAdquisicion(currentDetalle.getIdProducto().getValorProducto());
+            currentDetalle.setValorDetalleAdquisicion(currentDetalle.getIdBien().getValorProducto());
+            currentDetalle.setValorLibrosDetalleAdquisicion(currentDetalle.getIdBien().getValorProducto());
         }
     }
 
     public void changeTipoProducto() {
         if (currentDetalle != null) {
-            currentDetalle.setIdProducto(null);
+            currentDetalle.setIdBien(null);
         }
     }
 
@@ -159,13 +159,13 @@ public class AdquisicionController implements Serializable {
         try {
 
          
-            if (currentDetalle.getIdProducto() != null) {
-                currentDetalle.setNombreProducto(currentDetalle.getIdProducto().getNombreProducto());
+            if (currentDetalle.getIdBien() != null) {
+                currentDetalle.setNombreBien(currentDetalle.getIdBien().getNombreProducto());
             }
 
             Document document = new Document(new Rectangle(PageSize.A6.rotate()));
 
-            String path = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession().getServletContext().getRealPath("/upload") + "/" + currentDetalle.getCodigoProducto() + ".pdf";
+            String path = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession().getServletContext().getRealPath("/upload") + "/" + currentDetalle.getCodigoBien() + ".pdf";
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
 
             document.open();
@@ -173,7 +173,7 @@ public class AdquisicionController implements Serializable {
             document.add(new Paragraph("MCDS", fontTexto));
             Barcode128 code128 = new Barcode128();
             code128.setGenerateChecksum(true);
-            code128.setCode(currentDetalle.getCodigoProducto().toString());
+            code128.setCode(currentDetalle.getCodigoBien().toString());
             Image code128Image = code128.createImageWithBarcode(writer.getDirectContent(), null, null);
             code128Image.scalePercent(450f);
             document.addTitle("MCDS");

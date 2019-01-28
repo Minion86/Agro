@@ -37,23 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     ,
     @NamedQuery(name = "Producto.findByValorProducto", query = "SELECT b FROM Producto b WHERE b.valorProducto = :valorProducto")
     ,
-    @NamedQuery(name = "Producto.findByCodigoProducto", query = "SELECT b FROM Producto b WHERE b.codigoProducto = :codigoProducto")
-    ,
-    @NamedQuery(name = "Producto.findByMarcaProducto", query = "SELECT b FROM Producto b WHERE b.marcaProducto = :marcaProducto")
-    ,
-    @NamedQuery(name = "Producto.findByIdUsuarioIngresa", query = "SELECT b FROM Producto b WHERE b.idUsuarioIngresa = :idUsuarioIngresa")
-    ,
-    @NamedQuery(name = "Producto.findBySerieProducto", query = "SELECT b FROM Producto b WHERE b.serieProducto = :serieProducto")
-    ,
-    @NamedQuery(name = "Producto.findByMedidaProducto", query = "SELECT b FROM Producto b WHERE b.medidaProducto = :medidaProducto")
-    ,
-    @NamedQuery(name = "Producto.findByPesoProducto", query = "SELECT b FROM Producto b WHERE b.pesoProducto = :pesoProducto")
-    ,
-    @NamedQuery(name = "Producto.findByVidaUtilProducto", query = "SELECT b FROM Producto b WHERE b.vidaUtilProducto = :vidaUtilProducto")
-    ,
-    @NamedQuery(name = "Producto.findByEstadoProducto", query = "SELECT b FROM Producto b WHERE b.estadoProducto = :estadoProducto")
-    ,
-    @NamedQuery(name = "Producto.findByNombreProducto", query = "SELECT b FROM Producto b WHERE b.nombreProducto = :nombreProducto")})
+     @NamedQuery(name = "Producto.findByNombreProducto", query = "SELECT b FROM Producto b WHERE b.nombreProducto = :nombreProducto")})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -87,7 +71,7 @@ public class Producto implements Serializable {
     @Size(max = 100)
     @Column(name = "nombre_producto")
     private String nombreProducto;
-    @OneToMany(mappedBy = "idProducto")
+    @OneToMany(mappedBy = "idBien")
     private List<DetalleAdquisicion> detalleAdquisicionList;
     @Transient
     private Integer valorProductoDesde;

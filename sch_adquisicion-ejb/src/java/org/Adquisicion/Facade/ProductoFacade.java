@@ -18,7 +18,7 @@ import org.Adquisicion.Entities.Producto;
 @Stateless
 public class ProductoFacade extends AbstractFacade<Producto> {
 
-    @PersistenceContext(unitName = "sch_activosPU")
+    @PersistenceContext(unitName = "sch_adquisicion")
     private EntityManager em;
 
     @Override

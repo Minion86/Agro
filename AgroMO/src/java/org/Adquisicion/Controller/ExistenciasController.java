@@ -127,7 +127,7 @@ public class ExistenciasController extends UtilReporte implements Serializable {
    
     public void prepareSearch(ActionEvent event) {
         current = new DetalleAdquisicion();
-        current.setIdProducto(new Producto());
+        current.setIdBien(new Producto());
     }
 
     public void search(ActionEvent event) {

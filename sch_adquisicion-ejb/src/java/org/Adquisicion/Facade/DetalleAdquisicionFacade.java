@@ -20,7 +20,7 @@ import org.Adquisicion.Entities.DetalleAdquisicion;
 @Stateless
 public class DetalleAdquisicionFacade extends AbstractFacade<DetalleAdquisicion> {
 
-    @PersistenceContext(unitName = "sch_activosPU")
+    @PersistenceContext(unitName = "sch_adquisicion")
     private EntityManager em;
 
     @Override
@@ -57,50 +57,50 @@ public class DetalleAdquisicionFacade extends AbstractFacade<DetalleAdquisicion>
         query.append("SELECT s FROM DetalleAdquisicion s ");
         query.append(" WHERE 1=1 ");
 
-        if (!"".equals(detalleAdquisicion.getIdProducto().getCodigoProducto())) {
+        if (!"".equals(detalleAdquisicion.getIdBien().getCodigoProducto())) {
             query.append(" AND UPPER(s.idProducto.codigoProducto) like :codigoProducto ");
         }
-        if (!"".equals(detalleAdquisicion.getIdProducto().getNombreProducto())) {
+        if (!"".equals(detalleAdquisicion.getIdBien().getNombreProducto())) {
             query.append(" AND UPPER(s.idProducto.nombreProducto) like :nombreProducto ");
         }
-        if (detalleAdquisicion.getValorProductoDesde() != null) {
+        if (detalleAdquisicion.getValorBienDesde() != null) {
             query.append(" AND s.valorDetalleAdquisicion >= :valorProductoDesde ");
         }
-        if (detalleAdquisicion.getValorProductoHasta() != null) {
+        if (detalleAdquisicion.getValorBienHasta() != null) {
             query.append(" AND s.valorDetalleAdquisicion <= :valorProductoHasta ");
         }
-        if (!"".equals(detalleAdquisicion.getIdProducto().getMedidaProducto())) {
+        if (!"".equals(detalleAdquisicion.getIdBien().getMedidaProducto())) {
             query.append(" AND UPPER(s.idProducto.medidaProducto) like :medidaProducto ");
         }
-        if (!"".equals(detalleAdquisicion.getIdProducto().getPesoProducto())) {
+        if (!"".equals(detalleAdquisicion.getIdBien().getPesoProducto())) {
             query.append(" AND UPPER(s.idProducto.pesoProducto) like :pesoProducto ");
         }
-        if (!"".equals(detalleAdquisicion.getIdProducto().getDescripcionProducto())) {
+        if (!"".equals(detalleAdquisicion.getIdBien().getDescripcionProducto())) {
             query.append(" AND UPPER(s.idProducto.descripcionProducto) like :descripcionProducto ");
         }
 
         javax.persistence.Query q = em.createQuery(query.toString());
 
-        if (!"".equals(detalleAdquisicion.getIdProducto().getCodigoProducto())) {
-            q.setParameter("codigoProducto", "%" + detalleAdquisicion.getIdProducto().getCodigoProducto().toUpperCase() + "%");
+        if (!"".equals(detalleAdquisicion.getIdBien().getCodigoProducto())) {
+            q.setParameter("codigoProducto", "%" + detalleAdquisicion.getIdBien().getCodigoProducto().toUpperCase() + "%");
         }
-        if (!"".equals(detalleAdquisicion.getIdProducto().getNombreProducto())) {
-            q.setParameter("nombreProducto", "%" + detalleAdquisicion.getIdProducto().getNombreProducto().toUpperCase() + "%");
+        if (!"".equals(detalleAdquisicion.getIdBien().getNombreProducto())) {
+            q.setParameter("nombreProducto", "%" + detalleAdquisicion.getIdBien().getNombreProducto().toUpperCase() + "%");
         }
-        if (!"".equals(detalleAdquisicion.getIdProducto().getMedidaProducto())) {
-            q.setParameter("medidaProducto", "%" + detalleAdquisicion.getIdProducto().getMedidaProducto().toUpperCase() + "%");
+        if (!"".equals(detalleAdquisicion.getIdBien().getMedidaProducto())) {
+            q.setParameter("medidaProducto", "%" + detalleAdquisicion.getIdBien().getMedidaProducto().toUpperCase() + "%");
         }
-        if (!"".equals(detalleAdquisicion.getIdProducto().getPesoProducto())) {
-            q.setParameter("pesoProducto", "%" + detalleAdquisicion.getIdProducto().getPesoProducto().toUpperCase() + "%");
+        if (!"".equals(detalleAdquisicion.getIdBien().getPesoProducto())) {
+            q.setParameter("pesoProducto", "%" + detalleAdquisicion.getIdBien().getPesoProducto().toUpperCase() + "%");
         }
-        if (detalleAdquisicion.getValorProductoDesde() != null) {
-            q.setParameter("valorProductoDesde", detalleAdquisicion.getValorProductoDesde());
+        if (detalleAdquisicion.getValorBienDesde() != null) {
+            q.setParameter("valorProductoDesde", detalleAdquisicion.getValorBienDesde());
         }
-        if (detalleAdquisicion.getValorProductoHasta() != null) {
-            q.setParameter("valorProductoHasta", detalleAdquisicion.getValorProductoHasta());
+        if (detalleAdquisicion.getValorBienHasta() != null) {
+            q.setParameter("valorProductoHasta", detalleAdquisicion.getValorBienHasta());
         }
-        if (!"".equals(detalleAdquisicion.getIdProducto().getDescripcionProducto())) {
-            q.setParameter("descripcionProducto", "%" + detalleAdquisicion.getIdProducto().getDescripcionProducto().toUpperCase() + "%");
+        if (!"".equals(detalleAdquisicion.getIdBien().getDescripcionProducto())) {
+            q.setParameter("descripcionProducto", "%" + detalleAdquisicion.getIdBien().getDescripcionProducto().toUpperCase() + "%");
         }
 
         return q.getResultList();

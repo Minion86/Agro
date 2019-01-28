@@ -16,7 +16,7 @@ import org.Adquisicion.Entities.Grupocatalogo;
  */
 @Stateless
 public class GrupocatalogoFacade extends AbstractFacade<Grupocatalogo> {
-    @PersistenceContext(unitName = "sch_activosPU")
+    @PersistenceContext(unitName = "sch_adquisicion")
     private EntityManager em;
 
     @Override
