@@ -84,7 +84,7 @@ public class ProductoController implements Serializable {
     @PostConstruct
     private void verificarPermisos() {
 
-        List<SegAccionMenuPerfil> listaPermisos = ejbSegAccionMenuPerfilFacade.findbyMenuPerfil("Productoes", loginController.getRol());
+        List<SegAccionMenuPerfil> listaPermisos = ejbSegAccionMenuPerfilFacade.findbyMenuPerfil("Productos", loginController.getRol());
         for (SegAccionMenuPerfil segAccionMenuPerfil : listaPermisos) {
             if (segAccionMenuPerfil.getIdAccionOpcion().getIdAcciones().getNombreAccion().equals("insertar")) {
                 permisoInsertar = true;

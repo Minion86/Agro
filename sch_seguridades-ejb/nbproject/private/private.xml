@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="siith"/>
         <group>
-            <file>file:/M:/projectsMDT/git/Agro/sch_seguridades-ejb/src/conf/persistence.xml</file>
+            <file>file:/M:/projectsMDT/git/Agro/sch_seguridades-ejb/src/java/org/Seguridades/Entities/SegAccionMenu.java</file>
+            <file>file:/M:/projectsMDT/git/Agro/sch_seguridades-ejb/src/java/org/Seguridades/Entities/SegAcciones.java</file>
         </group>
     </open-files>
 </project-private>

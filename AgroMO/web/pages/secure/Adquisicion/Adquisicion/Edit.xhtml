@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition>
+        <h:form id="AdquisicionEditForm">
+            <p:dialog closable="false" id="AdquisicionEditDlg" widgetVar="AdquisicionEditDialog" height="400"  resizable="false"  header="Editar Registro">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid rendered="#{adquisicionController.selected != null}" >
+
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Ejercicio Fiscal:" for="ejercicio" />
+                            </p:column>
+                            <p:column colspan="3"  >
+
+                                <p:selectOneMenu disabled="true" id="ejercicio" value="#{adquisicionController.selected.idEjercicio}" converter="ListaEjercicioControllerConverter">
+                                    <f:selectItems itemValue="#{ejercicio}" var="ejercicio" value="#{listaEjercicioController.getbyAll()}"   />
+                                </p:selectOneMenu>
+                                <p:message for="ejercicio"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Institución:" for="institucion" />
+                            </p:column>
+                            <p:column colspan="3"  >
+
+                                <p:selectOneMenu   id="institucion" value="#{adquisicionController.selected.idInstitucion}" converter="ListaInstitucionControllerConverter">
+                                    <f:selectItems itemValue="#{institucion}" var="institucion" value="#{listaInstitucionController.getbyAll()}"   />
+                                </p:selectOneMenu>
+                                <p:message for="institucion"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Bodega:" for="bodega" />
+                            </p:column>
+                            <p:column colspan="3"  >
+
+                                <p:selectOneMenu   id="bodega" value="#{adquisicionController.selected.idBodega}" converter="ListaBodegaControllerConverter">
+                                    <f:selectItems itemValue="#{bodega}" var="institucion" value="#{listaBodegaController.getbyAll()}"   />
+                                </p:selectOneMenu>
+                                <p:message for="bodega"/>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Número de factura:" for="factura" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="factura" value="#{adquisicionController.selected.numeroFacturaProducto}"/>
+                                <p:message for="factura" display="icon"/>
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Cédula responsable:" for="cedula" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText maxlength="20" id="cedula" value="#{adquisicionController.selected.cedulaResponsableAdquisicion}">
+                                    <f:validator for="cedula" validatorId="numerosValidacion"/>
+                                    <f:validator for="cedula" validatorId="rucValidacion"/>
+                                </p:inputText>
+                                <p:message for="cedula" display="icon"/>
+                            </p:column>
+
+                        </p:row>
+
+
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Nombre responsable:" for="nombre" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="nombre" value="#{adquisicionController.selected.nombresResponsableAdquisicion}"/>
+                                <p:message for="nombre" display="icon"/>
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Apellido responsable:" for="apellido" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="apellido" value="#{adquisicionController.selected.apellidosResponsableAdquisicion}"/>
+                                <p:message for="apellido" display="icon"/>
+                            </p:column>
+
+                        </p:row>
+
+                        <p:row>     
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Email responsable:" for="email" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="email" value="#{adquisicionController.selected.emailResponsableAdquisicion}">
+                                    <f:validator validatorId="org.Seguridades.validators.EmailValidator"/>
+                                </p:inputText>
+                                <p:message for="email" display="icon"/>
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Fecha Adquisición:" for="fecha" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:calendar id="fecha" value="#{adquisicionController.selected.fechaAdquisicion}" />
+                                <p:message for="fecha" display="icon"/>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>     
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Lista de Productos" />
+                            </p:column>
+                            <p:column colspan="3"  >
+                                <p:dataTable id="datalistProductos" value="#{adquisicionController.selected.detalleAdquisicionList}" var="item"
+                                             selectionMode="single" selection="#{adquisicionController.currentDetalle}"
+                                             paginator="true"
+                                             rowKey="#{item.idDetalleAdquisicion}"
+                                             rows="10"
+                                             widgetVar="datalistVar"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             >
+
+                                    <p:ajax event="rowSelect"   update="imprimeDetalleButton createDetalleButton editDetalleButton deleteDetalleButton"/>
+                                    <p:ajax event="rowUnselect" update="imprimeDetalleButton createDetalleButton editDetalleButton deleteDetalleButton"/>
+
+                                    <p:column width="10%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Producto"/>
+                                        </f:facet>
+                                        <h:outputText rendered="#{not empty item.idProducto}" value="#{item.idProducto.nombreProducto}"/>
+
+                                    </p:column>
+                                    <p:column width="5%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Tipo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tipoProducto.nombreCatalogo}"/>
+                                    </p:column>
+                                    <p:column width="10%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Color"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.colorProducto}"/>
+                                    </p:column>
+                                    <p:column width="10%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="# de Serie"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.numeroSerieProducto}"/>
+                                    </p:column>
+                                    <p:column width="5%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Valor"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.valorDetalleAdquisicion}"/>
+                                    </p:column>
+                                    <p:column width="5%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Valor en Libros"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.valorLibrosDetalleAdquisicion}"/>
+                                    </p:column>
+                                    <p:column width="5%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Cantidad"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cantidadDetalleAdquisicion}"/>
+                                    </p:column>
+
+                                    <p:column width="10%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Estado"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estadoProducto.nombreCatalogo}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:commandButton id="imprimeDetalleButton" immediate="true" icon="ui-icon-print"   value="Imprimir Código de Barras" ajax="false" actionListener="#{adquisicionController.imprimeDetalleBarras}" rendered="#{adquisicionController.permisoImprimir}" disabled="#{empty adquisicionController.currentDetalle}"/>
+                                        <p:commandButton id="createDetalleButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{adquisicionController.prepareCreateDetalle}" update=":AdquisicionCreateDetalleForm" oncomplete="handleSubmitOpen(args, 'AdquisicionCreateDetalleDialog');" immediate="true" rendered="#{adquisicionController.permisoInsertar}"/>
+                                        <p:commandButton id="editDetalleButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{adquisicionController.prepareEditDetalle}" update=":AdquisicionEditDetalleForm" oncomplete="PF('AdquisicionEditDetalleDialog').show()" disabled="#{empty adquisicionController.currentDetalle}" rendered="#{adquisicionController.permisoActualizar}"/>
+                                        <p:commandButton id="deleteDetalleButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{adquisicionController.destroyDetalle}" update=":growl,datalistProductos" disabled="#{empty adquisicionController.currentDetalle}" rendered="#{adquisicionController.permisoEliminar}"/>
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{adquisicionController.update}" value="#{bundle.Save}" update="display,:adquisicionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AdquisicionEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('AdquisicionEditDialog').hide()"  immediate="true" actionListener="#{adquisicionController.cancelar}" update=":adquisicionListForm:datalist"/>
+                </h:panelGroup>
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>
