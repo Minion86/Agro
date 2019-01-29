@@ -83,6 +83,9 @@ public class Adquisicion implements Serializable {
     private Date fechaAdquisicionDesde;
     @Transient
     private Date fechaAdquisicionHasta;
+    @Transient
+    private Integer idBodegaInt;
+    
 
     public Adquisicion() {
     }
@@ -223,6 +226,20 @@ public class Adquisicion implements Serializable {
      */
     public void setFechaAdquisicionHasta(Date fechaAdquisicionHasta) {
         this.fechaAdquisicionHasta = fechaAdquisicionHasta;
+    }
+
+    /**
+     * @return the idBodegaInt
+     */
+    public Integer getIdBodegaInt() {
+        return idBodegaInt;
+    }
+
+    /**
+     * @param idBodegaInt the idBodegaInt to set
+     */
+    public void setIdBodegaInt(Integer idBodegaInt) {
+        this.idBodegaInt = idBodegaInt;
     }
 
 }

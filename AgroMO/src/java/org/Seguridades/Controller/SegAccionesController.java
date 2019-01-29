@@ -3,8 +3,8 @@ package org.Seguridades.Controller;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -13,7 +13,7 @@ import javax.faces.model.SelectItem;
 import org.Seguridades.Controller.util.JsfUtil;
 import org.Seguridades.Entities.SegAcciones;
 
-@ManagedBean(name="segAccionesController")
+@Named(value="segAccionesController")
 @SessionScoped
 public class SegAccionesController implements Serializable {
 

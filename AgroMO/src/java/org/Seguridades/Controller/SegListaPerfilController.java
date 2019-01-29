@@ -6,8 +6,8 @@ import org.Seguridades.Controller.util.JsfUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.faces.model.SelectItem;
 import org.Seguridades.Entities.SegUsuario;
 
@@ -15,7 +15,7 @@ import org.Seguridades.Entities.SegUsuario;
  *
  * @author nmartinez
  */
-@ManagedBean(name = "segListaPerfilController")
+@Named(value =  "segListaPerfilController")
 @ViewScoped
 public class SegListaPerfilController implements Serializable {
 

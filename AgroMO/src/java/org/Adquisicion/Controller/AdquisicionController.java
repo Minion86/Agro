@@ -12,9 +12,9 @@ import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
@@ -37,6 +37,7 @@ import com.itextpdf.text.pdf.Barcode128;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import javax.inject.Inject;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +46,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nmartinez
  */
-@ManagedBean(name = "adquisicionController")
+@Named(value =  "adquisicionController")
 @ViewScoped
 public class AdquisicionController implements Serializable {
 
@@ -59,7 +60,7 @@ public class AdquisicionController implements Serializable {
 
     static Logger log = Logger.getLogger(AdquisicionController.class.getName());
 
-    @ManagedProperty(value = "#{loginController}")
+    @Inject
     private LoginController loginController;
 
 

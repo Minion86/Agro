@@ -4,30 +4,36 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import org.Adquisicion.Entities.Bodega;
 
 /**
  *
  * @author nmartinez
  */
-@ManagedBean(name = "listaBodegaController")
+@Named(value = "listaBodegaController")
 @ViewScoped
 public class ListaBodegaController implements Serializable {
 
     @EJB
     private org.Adquisicion.Facade.BodegaFacade ejbBodegaFacade;
 
-    private List<Bodega> catalogoItems;
+    private List<SelectItem> catalogoItems;
 
     public ListaBodegaController() {
 
     }
 
-    public List<Bodega> getbyAll() {
-
-        catalogoItems = ejbBodegaFacade.findTodos();
+    public List<SelectItem> getbyAll() {
+        if (catalogoItems == null) {
+            List<Bodega> lista = ejbBodegaFacade.findTodos();
+            catalogoItems = new ArrayList<>();
+            for (Bodega c : lista) {
+                catalogoItems.add(new SelectItem(c.getIdBodega(), c.getNombreBodega()));
+            }
+        }
         return catalogoItems;
     }
 

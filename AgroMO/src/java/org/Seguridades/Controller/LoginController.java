@@ -15,9 +15,9 @@ import javax.el.ExpressionFactory;
 import javax.el.MethodExpression;
 import javax.faces.application.NavigationHandler;
 //import javax.faces.bean.RequestScoped;
-//import javax.faces.bean.ViewScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+//import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.Seguridades.Controller.util.JsfUtil;
@@ -44,7 +44,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * The Class LoginBean.
  */
-@ManagedBean(name = "loginController")
+@Named(value =  "loginController")
 @SessionScoped
 public class LoginController
         implements Serializable {

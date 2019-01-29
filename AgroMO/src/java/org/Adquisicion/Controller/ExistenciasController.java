@@ -9,11 +9,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 import javax.transaction.UserTransaction;
 import org.Adquisicion.Controller.util.UtilReporte;
 import org.Adquisicion.Entities.Producto;
@@ -28,7 +29,7 @@ import org.primefaces.model.TreeNode;
  *
  * @author nmartinez
  */
-@ManagedBean(name = "existenciasController")
+@Named(value =  "existenciasController")
 @ViewScoped
 public class ExistenciasController extends UtilReporte implements Serializable {
 
@@ -40,7 +41,7 @@ public class ExistenciasController extends UtilReporte implements Serializable {
 
     static Logger log = Logger.getLogger(ExistenciasController.class.getName());
 
-    @ManagedProperty(value = "#{loginController}")
+    @Inject
     private LoginController loginController;
 
     @Resource

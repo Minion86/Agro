@@ -3,8 +3,8 @@ package org.Seguridades.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import org.Seguridades.Entities.SegUsuario;
 import org.Seguridades.details.Login;
 import org.Seguridades.servicio.IfaceLogin;
@@ -20,7 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
  *
  * @author SergioRios
  */
-@ManagedBean(name = "beanLogin")
+@Named(value =  "beanLogin")
 @SessionScoped
 public class BeanLogin implements AuthenticationProvider, Serializable {
 

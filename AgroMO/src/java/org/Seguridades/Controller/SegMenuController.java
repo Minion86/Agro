@@ -12,12 +12,13 @@ import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.Seguridades.DTO.SegAccionesDTO;
@@ -33,7 +34,7 @@ import org.primefaces.model.TreeNode;
  *
  * @author nmartinez
  */
-@ManagedBean(name = "segMenuController")
+@Named(value =  "segMenuController")
 @ViewScoped
 public class SegMenuController implements Serializable {
 
@@ -46,7 +47,7 @@ public class SegMenuController implements Serializable {
 
     static Logger log = Logger.getLogger(SegMenuController.class.getName());
 
-    @ManagedProperty(value = "#{loginController}")
+    @Inject
     private LoginController loginController;
 
     @Resource

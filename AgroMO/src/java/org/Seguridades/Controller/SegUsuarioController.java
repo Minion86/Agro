@@ -12,12 +12,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.Seguridades.Entities.SegAccionMenuPerfil;
@@ -29,7 +30,7 @@ import org.apache.log4j.Logger;
  *
  * @author nmartinez
  */
-@ManagedBean(name = "segUsuarioController")
+@Named(value =  "segUsuarioController")
 @ViewScoped
 public class SegUsuarioController implements Serializable {
 
@@ -42,7 +43,7 @@ public class SegUsuarioController implements Serializable {
 
     static Logger log = Logger.getLogger(SegUsuarioController.class.getName());
 
-    @ManagedProperty(value = "#{loginController}")
+    @Inject
     private LoginController loginController;
 
     @Resource

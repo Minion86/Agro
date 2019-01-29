@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,16 +19,16 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author james
  */
-@ManagedBean(name = "validaciones")
+@Named(value =  "validaciones")
 @SessionScoped
-public class Validation {
+public class Validation implements Serializable{
 
     public static final String DATE_PATTERN = "dd/MM/yyyy";
     public static final int CEDULA = 0x00A;

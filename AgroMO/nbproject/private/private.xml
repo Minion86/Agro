@@ -5,20 +5,20 @@
         <group>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/AdquisicionController.java</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Producto/List.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisiciones/Edit.xhtml</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Bodega/List.xhtml</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/util/ListaProductoControllerConverter.java</file>
+            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/CreateDetalle.xhtml</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/ListaProductoController.java</file>
+            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/CreateProducto.xhtml</file>
+            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/Create.xhtml</file>
+            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/Edit.xhtml</file>
+            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/List.xhtml</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Bodega/Create.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisiciones/CreateDetalle.xhtml</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/ExistenciasController.java</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/util/UtilReporte.java</file>
+            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/EditDetalle.xhtml</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Producto/Edit.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisiciones/List.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisiciones/CreateProducto.xhtml</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Bodega/Edit.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisiciones/Create.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisiciones/EditDetalle.xhtml</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/ProductoController.java</file>
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Producto/Create.xhtml</file>
         </group>

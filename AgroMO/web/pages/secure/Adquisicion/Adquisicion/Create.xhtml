@@ -26,26 +26,14 @@
                             </p:column>
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
-                                <h:outputLabel value="Institución:" for="institucion" />
-                            </p:column>
-                            <p:column colspan="3"  >
-
-                                <p:selectOneMenu   id="institucion" value="#{adquisicionController.selected.idInstitucion}" converter="ListaInstitucionControllerConverter">
-                                    <f:selectItems itemValue="#{institucion}" var="institucion" value="#{listaInstitucionController.getbyAll()}"   />
-                                </p:selectOneMenu>
-                                <p:message for="institucion"/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
 
                             <p:column colspan="1"  >
                                 <h:outputLabel value="Bodega:" for="bodega" />
                             </p:column>
                             <p:column colspan="3"  >
 
-                                <p:selectOneMenu   id="bodega" value="#{adquisicionController.selected.idBodega}" converter="ListaBodegaControllerConverter">
-                                    <f:selectItems itemValue="#{bodega}" var="institucion" value="#{listaBodegaController.getbyAll()}"   />
+                                <p:selectOneMenu   id="bodega" value="#{adquisicionController.selected.idBodegaInt}">
+                                    <f:selectItems itemValue="#{bodegavar}" var="bodegavar" value="#{listaBodegaController.getbyAll()}"   />
                                 </p:selectOneMenu>
                                 <p:message for="bodega"/>
                             </p:column>

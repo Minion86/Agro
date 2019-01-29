@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import org.Adquisicion.Entities.Producto;
 
 /**
  *
  * @author nmartinez
  */
-@ManagedBean(name = "listaProductoController")
+@Named(value =  "listaProductoController")
 @ViewScoped
 public class ListaProductoController implements Serializable {
 

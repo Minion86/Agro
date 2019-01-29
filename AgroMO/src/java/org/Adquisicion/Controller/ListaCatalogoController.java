@@ -3,15 +3,15 @@ package org.Adquisicion.Controller;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import org.Adquisicion.Entities.Catalogo;
 
 /**
  *
  * @author nmartinez
  */
-@ManagedBean(name = "listaCatalogoController")
+@Named(value =  "listaCatalogoController")
 @ViewScoped
 public class ListaCatalogoController implements Serializable {
 
