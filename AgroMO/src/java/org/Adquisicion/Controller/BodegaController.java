@@ -129,7 +129,7 @@ public class BodegaController implements Serializable {
         try {
             utx.begin();
 
-            //this.current.setEstadoPerfil(false);
+            this.current.setEstadoBodega(false);
             setEditando(false);
             getFacade().edit(current);
             allBodegaItems.remove(current);

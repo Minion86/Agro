@@ -126,7 +126,7 @@ public class ProductoController implements Serializable {
         try {
             utx.begin();
 
-            //this.current.setEstadoPerfil(false);
+            this.current.setEstadoProducto(false);
             setEditando(false);
             getFacade().edit(current);
             allProductoItems.remove(current);

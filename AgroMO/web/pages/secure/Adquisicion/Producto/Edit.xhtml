@@ -32,19 +32,15 @@
 
                         </p:row>
                         <p:row>
-                           
 
-                            <p:column colspan="2"  >
+
+                            <p:column colspan="1"  >
                                 <h:outputLabel value="Medida (Longitud/profundidad):" for="medida" />
                             </p:column>
-                            <p:column colspan="2"  >
+                            <p:column colspan="1"  >
                                 <p:inputText maxlength="100" id="medida" value="#{productoController.selected.medidaProducto}"/>
                                 <p:message for="medida" display="icon"/>
                             </p:column>
-
-                        </p:row>
-
-                        <p:row>
                             <p:column colspan="1"  >
                                 <h:outputLabel value="Peso en kgs:" for="peso" />
                             </p:column>
@@ -52,6 +48,10 @@
                                 <p:inputText maxlength="100" id="peso" value="#{productoController.selected.pesoProducto}"/>
                                 <p:message for="peso" display="icon"/>
                             </p:column>
+                        </p:row>
+
+
+                        <p:row>
 
                             <p:column colspan="1"  >
                                 <h:outputLabel value="Valor:" for="valor" />
@@ -60,16 +60,10 @@
                                 <p:inputNumber minValue="0" id="valor" value="#{productoController.selected.valorProducto}" symbol=" $" symbolPosition="suffix"/>
                                 <p:message for="valor" display="icon"/>
                             </p:column>
-
-                        </p:row>
-
-
-                        <p:row>
-                          
-                            <p:column colspan="2"  >
+                            <p:column colspan="1"  >
                                 <h:outputLabel value="Observaciones:" for="descripcion" />
                             </p:column>
-                            <p:column colspan="2"  >
+                            <p:column colspan="1"  >
                                 <p:inputTextarea maxlength="2000" id="descripcion" counterTemplate="{0} caracteres restantes." counter="displaydescripcion" value="#{productoController.selected.descripcionProducto}"/>
                                 <h:outputText id="displaydescripcion" />
                                 <p:message for="descripcion" display="icon"/>

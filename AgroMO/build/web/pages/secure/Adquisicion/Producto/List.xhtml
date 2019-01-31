@@ -64,31 +64,7 @@
                             </f:facet>
                             <h:outputText value="#{item.valorProducto}"/>
                         </p:column>
-                        <p:column width="20%">
-                            <f:facet name="header">
-                                <h:outputText value="Modelo"/>
-                            </f:facet>
-                            <h:outputText value="#{item.modeloProducto}"/>
-                        </p:column>
-                        <p:column width="20%">
-                            <f:facet name="header">
-                                <h:outputText value="Marca"/>
-                            </f:facet>
-                            <h:outputText value="#{item.marcaProducto}"/>
-                        </p:column>
-                        <p:column width="10%">
-                            <f:facet name="header">
-                                <h:outputText value="Serie"/>
-                            </f:facet>
-                            <h:outputText value="#{item.serieProducto}"/>
-                        </p:column>
 
-                        <p:column width="10%">
-                            <f:facet name="header">
-                                <h:outputText value="Vida Útil"/>
-                            </f:facet>
-                            <h:outputText value="#{item.vidaUtilProducto} años"/>
-                        </p:column>
                         <p:column width="5%">
                             <f:facet name="header">
                                 <h:outputText value="Estado"/>
@@ -144,45 +120,6 @@
 
                             <p:row>
                                 <p:column colspan="1"  >
-                                    <h:outputLabel value="Tiempo de vida útil desde:" for="tiempodesde" />
-                                </p:column>
-                                <p:column colspan="1"  >
-                                    <p:inputNumber maxValue="30" minValue="0" id="tiempodesde" value="#{productoController.selected.vidaUtilProductoDesde}" symbol=" años" symbolPosition="suffix"/>
-                                    <p:message for="tiempodesde" display="icon"/>
-                                </p:column>
-                                <p:column colspan="1"  >
-                                    <h:outputLabel value="Tiempo de vida útil hasta:" for="tiempohasta" />
-                                </p:column>
-                                <p:column colspan="1"  >
-                                    <p:inputNumber maxValue="30" minValue="0" id="tiempohasta" value="#{productoController.selected.vidaUtilProductoHasta}" symbol=" años" symbolPosition="suffix"/>
-                                    <p:message for="tiempohasta" display="icon"/>
-                                </p:column>
-
-
-                            </p:row>
-
-                            <p:row>
-                                <p:column colspan="1"  >
-                                    <h:outputLabel value="Marca:" for="marca" />
-                                </p:column>
-                                <p:column colspan="1"  >
-                                    <p:inputText id="marca" maxlength="100" value="#{productoController.selected.marcaProducto}"/>
-                                    <p:message for="marca" display="icon"/>
-                                </p:column>
-                                <p:column colspan="1"  >
-                                    <h:outputLabel value="Serie:" for="serie" />
-                                </p:column>
-                                <p:column colspan="1"  >
-                                    <p:inputText maxlength="100" id="serie" value="#{productoController.selected.serieProducto}"/>
-                                    <p:message for="serie" display="icon"/>
-                                </p:column>
-
-
-
-                            </p:row>
-
-                            <p:row>
-                                <p:column colspan="1"  >
                                     <h:outputLabel value="Medida (Longitud/profundidad):" for="medida" />
                                 </p:column>
                                 <p:column colspan="1"  >
@@ -220,17 +157,11 @@
                             </p:row>
 
                             <p:row>
-                                <p:column colspan="1"  >
-                                    <h:outputLabel value="Modelo:" for="modelo" />
-                                </p:column>
-                                <p:column colspan="1"  >
-                                    <p:inputText maxlength="300" id="modelo" value="#{productoController.selected.modeloProducto}"/>
-                                    <p:message for="modelo" display="icon"/>
-                                </p:column>
+                               
                                 <p:column colspan="1"  >
                                     <h:outputLabel value="Descripción:" for="descripcion" />
                                 </p:column>
-                                <p:column colspan="1"  >
+                                <p:column colspan="3"  >
                                     <p:inputTextarea maxlength="2000" id="descripcion" counterTemplate="{0} caracteres restantes." counter="displaydescripcion" value="#{productoController.selected.descripcionProducto}"/>
                                     <h:outputText id="displaydescripcion" />
                                     <p:message for="descripcion" display="icon"/>
