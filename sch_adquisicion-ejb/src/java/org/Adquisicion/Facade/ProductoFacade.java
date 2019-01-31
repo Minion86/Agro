@@ -41,7 +41,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         StringBuilder query = new StringBuilder();
 
         query.append("SELECT s FROM Producto s ");
-        query.append(" WHERE 1=1 ");
+        query.append(" WHERE s.estadoProducto=true ");
 
         if (!"".equals(bien.getCodigoProducto())) {
             query.append(" AND UPPER(s.codigoProducto) like :codigoProducto ");

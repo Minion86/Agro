@@ -77,7 +77,7 @@ public class Producto implements Serializable {
     private Integer valorProductoDesde;
     @Transient
     private Integer valorProductoHasta;
-
+ 
     public Producto() {
     }
 

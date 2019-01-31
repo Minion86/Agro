@@ -41,7 +41,7 @@ public class BodegaFacade extends AbstractFacade<Bodega> {
         StringBuilder query = new StringBuilder();
 
         query.append("SELECT s FROM Bodega s ");
-        query.append(" WHERE 1=1 ");
+        query.append(" WHERE s.estadoBodega=true ");
 
         if (!"".equals(bodega.getNombreBodega())) {
             query.append(" AND UPPER(s.nombreBodega) like :nombreBodega ");
