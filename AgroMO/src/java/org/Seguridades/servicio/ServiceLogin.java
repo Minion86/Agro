@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceLogin implements IfaceLogin {
 
-    @EJB
-    private org.Seguridades.Facade.SegUsuarioFacade ejbUsuarioFacade;
+    //@EJB
+    //private org.Seguridades.Facade.SegUsuarioFacade ejbUsuarioFacade;
 
     @Override
     public SegUsuario validarLogin(SegUsuario obj) throws Exception {

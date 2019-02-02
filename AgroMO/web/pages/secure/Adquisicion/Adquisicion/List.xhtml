@@ -51,7 +51,7 @@
                             <f:facet name="header" >
                                 <h:outputText value="Factura"/>
                             </f:facet>
-                            <h:outputText value="#{item.numeroFacturaProducto}"/>
+                            <h:outputText value="#{item.numeroFacturaBien}"/>
                         </p:column>
                         <p:column width="20%">
                             <f:facet name="header">
@@ -75,31 +75,19 @@
                             </f:facet>
                             <h:outputText value="#{item.idBodega.codigoBodega}-#{item.idBodega.nombreBodega}"/>
                         </p:column>
-                        <p:column width="10%">
-                            <f:facet name="header">
-                                <h:outputText value="Ejercicio"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idEjercicio.anioEjercicio}"/>
-                        </p:column>
 
-                        <p:column width="10%">
-                            <f:facet name="header">
-                                <h:outputText value="Institución"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idInstitucion.nombreInstitucion}"/>
-                        </p:column>
                         <p:column width="30%">
                             <f:facet name="header">
                                 <h:outputText value="Productos"/>
                             </f:facet>
                             <p:dataList value="#{item.detalleAdquisicionList}" var="detalle" type="ordered">
-                                <p:outputLabel rendered="#{not empty detalle.idProducto}" value="Cantidad:#{detalle.cantidadDetalleAdquisicion}  Producto:#{detalle.idProducto.nombreProducto} - Color:#{detalle.colorProducto}  Serie:#{detalle.numeroSerieProducto} -- $ #{detalle.valorDetalleAdquisicion}"/>
-                               </p:dataList>
+                                <p:outputLabel rendered="#{not empty detalle.idBien}" value="Cantidad:#{detalle.cantidadDetalleAdquisicion} #{detalle.tipoCantidad}--  Producto:#{detalle.idBien.nombreProducto} -- $ #{detalle.valorDetalleAdquisicion}"/>
+                            </p:dataList>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{adquisicionController.prepareCreate}" update=":AdquisicionCreateForm" oncomplete="PF('AdquisicionCreateDialog').show()" rendered="#{adquisicionController.permisoInsertar}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{adquisicionController.prepareEdit}" update=":AdquisicionEditForm" oncomplete="PF('AdquisicionEditDialog').show()" disabled="#{empty adquisicionController.selected}" rendered="#{adquisicionController.permisoActualizar}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{adquisicionController.destroy}" update=":growl,datalist" disabled="#{empty adquisicionController.selected}" rendered="#{adquisicionController.permisoEliminar}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{adquisicionController.prepareEdit}" update=":AdquisicionEditForm" oncomplete="PF('AdquisicionEditDialog').show()" disabled="#{adquisicionController.selected.idAdquisicion==null}" rendered="#{adquisicionController.permisoActualizar}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{adquisicionController.destroy}" update=":growl,datalist" disabled="#{adquisicionController.selected.idAdquisicion==null}" rendered="#{adquisicionController.permisoEliminar}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
@@ -129,7 +117,7 @@
                                     <h:outputLabel value="Número de factura:" for="factura" />
                                 </p:column>
                                 <p:column colspan="1"  >
-                                    <p:inputText maxlength="100" id="factura" value="#{adquisicionController.selected.numeroFacturaProducto}"/>
+                                    <p:inputText maxlength="100" id="factura" value="#{adquisicionController.selected.numeroFacturaBien}"/>
                                     <p:message for="factura" display="icon"/>
                                 </p:column>
                                 <p:column colspan="1"  >
@@ -168,9 +156,9 @@
                                 </p:column>
                                 <p:column colspan="1"  >
 
-                                    <p:selectOneMenu   id="bodega" value="#{adquisicionController.selected.idBodega}" converter="ListaBodegaControllerConverter">
-                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
-                                        <f:selectItems itemValue="#{bodega}" var="institucion" value="#{listaBodegaController.getbyAll()}"   />
+                                    <p:selectOneMenu   id="bodega" value="#{adquisicionController.selected.idBodegaInt}">
+                                        <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems  value="#{listaBodegaController.getbyAll()}"   />
                                     </p:selectOneMenu>
                                     <p:message for="bodega"/>
                                 </p:column>

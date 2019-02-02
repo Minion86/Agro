@@ -19,23 +19,19 @@
 
                             </p:column>
                             <p:column>
-                                <p:selectOneMenu id="tipodeproducto" value="#{adquisicionController.currentDetalle.tipoProducto}" converter="ListaCatalogoControllerConverter" required="true" requiredMessage="Valor Requerido">
-                                    <f:selectItems itemValue="#{tipodeproducto}" var="tipodeproducto"  value="#{listaCatalogoController.getbyGrupoCatalogoNemonico('TIP_BIEN')}" />
+                                <p:selectOneMenu id="tipodeproducto" value="#{adquisicionController.currentDetalle.tipoBienInt}" required="true" requiredMessage="Valor Requerido">
+                                    <f:selectItems  value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoTipoProducto('TIP_BIEN')}" />
                                     <p:ajax listener="#{adquisicionController.changeTipoProducto}" update="producto,panelProductosLista"/>
                                 </p:selectOneMenu>
                                 <p:message for="tipodeproducto"/>
                             </p:column>
                             <p:column colspan="3"   >
                                 <p:outputPanel id="panelProductosLista">
-                                    <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="producto" value="#{adquisicionController.currentDetalle.idProducto}" converter="ListaProductoControllerConverter">
-                                        <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
-                                        <f:selectItems itemValue="#{producto}" var="producto" value="#{listaProductoController.getbyAll()}"   />
-                                        <p:ajax listener="#{adquisicionController.changeProducto}" update="serie,valor,valorlibros"/>
+                                    <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="producto" value="#{adquisicionController.currentDetalle.idProductoint}">
+                                        <f:selectItems value="#{listaProductoController.getbyAll()}"   />
+                                        <p:ajax listener="#{adquisicionController.changeProducto}" update="valor,valorlibros"/>
                                     </p:selectOneMenu>
 
-                                    <p:commandLink actionListener="#{productoController.prepareCreate}" immediate="true" id="addproducto" rendered="#{productoController.permisoInsertar}" update=":ProductoCreateForm" oncomplete="PF('ProductoCreateDialog').show();">
-                                        <h:graphicImage url="/images/aumentar16.png"/>
-                                    </p:commandLink>
                                 </p:outputPanel>
                             </p:column>
 
@@ -55,9 +51,9 @@
                                 <h:outputLabel value="Estado del Producto:" for="estado" />
                             </p:column>
                             <p:column colspan="1"  >
-                                <p:selectOneMenu id="estado" value="#{adquisicionController.currentDetalle.estadoProducto}" converter="ListaCatalogoControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                <p:selectOneMenu id="estado" value="#{adquisicionController.currentDetalle.estadoBienInt}" required="true" requiredMessage="Valor Requerido">
 
-                                    <f:selectItems itemValue="#{estado}" var="estado"  value="#{listaCatalogoController.getbyGrupoCatalogoNemonico('EST_BIEN')}" />
+                                    <f:selectItems  value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoEstadoBien('EST_BIEN')}" />
                                 </p:selectOneMenu>
                                 <p:message for="estado"/>
                             </p:column>
@@ -110,11 +106,22 @@
                             <p:column colspan="1"  >
                                 <h:outputLabel value="Cantidad:" for="cantidad" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column colspan="2"  >
                                 <p:inputNumber required="true" requiredMessage="Valor Requerido"  minValue="0" id="cantidad" value="#{adquisicionController.currentDetalle.cantidadDetalleAdquisicion}"/> 
                                 <p:message for="cantidad" display="icon"/>
                             </p:column>
+                            <p:column colspan="1"  >
+                                <p:selectOneMenu  id="tipodecantidad" value="#{adquisicionController.currentDetalle.tipoCantidad}" required="true" requiredMessage="Valor Requerido">
+                                    <f:selectItem itemLabel="Por favor escoja un valor" itemValue="#{null}" />
+                                    <f:selectItem itemLabel="Kilogramos" itemValue="Kilogramos" />
+                                    <f:selectItem itemLabel="Toneladas" itemValue="Toneladas" />
+                                    <f:selectItem itemLabel="Galones" itemValue="Galones" />
+                                    <f:selectItem itemLabel="Litros" itemValue="Litros" />
+                                    <f:selectItem itemLabel="Individual" itemValue="Individual" />
+                                </p:selectOneMenu>
 
+                                <p:message for="tipodecantidad"/>
+                            </p:column>
                         </p:row>
                         <p:row>
                             <p:column colspan="1"  >

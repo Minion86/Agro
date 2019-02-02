@@ -83,8 +83,8 @@
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{bodegaController.prepareCreate}" update=":BodegaCreateForm" oncomplete="PF('BodegaCreateDialog').show()" rendered="#{bodegaController.permisoInsertar}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{bodegaController.prepareEdit}" update=":BodegaEditForm" oncomplete="PF('BodegaEditDialog').show()" disabled="#{empty bodegaController.selected}" rendered="#{bodegaController.permisoActualizar}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{bodegaController.destroy}" update=":growl,datalist" disabled="#{empty bodegaController.selected}" rendered="#{bodegaController.permisoEliminar}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{bodegaController.prepareEdit}" update=":BodegaEditForm" oncomplete="PF('BodegaEditDialog').show()" disabled="#{bodegaController.selected.idBodega==null}" rendered="#{bodegaController.permisoActualizar}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{bodegaController.destroy}" update=":growl,datalist" disabled="#{bodegaController.selected.idBodega==null}" rendered="#{bodegaController.permisoEliminar}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
@@ -153,9 +153,9 @@
                                     <h:outputLabel value="Tipo de Bodega:" for="tipobodega" />
                                 </p:column>
                                 <p:column colspan="1"  >
-                                    <p:selectOneMenu id="tipobodega" value="#{bodegaController.selected.tipoBodega}" converter="ListaCatalogoControllerConverter">
+                                    <p:selectOneMenu id="tipobodega" value="#{bodegaController.selected.tipoBodegaInt}">
                                         <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
-                                        <f:selectItems itemValue="#{tipobodega}" var="tipobodega" value="#{listaCatalogoController.getbyGrupoCatalogoNemonico('TIP_BOD')}"   />
+                                        <f:selectItems itemValue="#{tipobodega}" var="tipobodega" value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoTipoBodega('TIP_BOD')}"   />
 
                                     </p:selectOneMenu>
                                     <p:message for="tipobodega"/>
@@ -165,9 +165,9 @@
                                     <h:outputLabel value="Clase de Bodega:" for="clasebodega" />
                                 </p:column>
                                 <p:column colspan="1"  >
-                                    <p:selectOneMenu id="clasebodega" value="#{bodegaController.selected.claseBodega}" converter="ListaCatalogoControllerConverter">
+                                    <p:selectOneMenu id="clasebodega" value="#{bodegaController.selected.claseBodegaInt}" >
                                         <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
-                                        <f:selectItems itemValue="#{clasebodega}" var="clasebodega"  value="#{listaCatalogoController.getbyGrupoCatalogoNemonico('CLA_BOD')}" />
+                                        <f:selectItems itemValue="#{clasebodega}" var="clasebodega"  value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoClaseBodega('CLA_BOD')}" />
 
                                     </p:selectOneMenu>
                                     <p:message for="clasebodega"/>

@@ -13,18 +13,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid rendered="#{adquisicionController.selected != null}" >
-                        <p:row>
-                            <p:column colspan="1"  >
-                                <h:outputLabel value="Ejercicio Fiscal:" for="ejercicio" />
-                            </p:column>
-                            <p:column colspan="3"  >
 
-                                <p:selectOneMenu disabled="true" id="ejercicio" value="#{adquisicionController.selected.idEjercicio}" converter="ListaEjercicioControllerConverter">
-                                    <f:selectItems itemValue="#{ejercicio}" var="ejercicio" value="#{listaEjercicioController.getbyAll()}"   />
-                                </p:selectOneMenu>
-                                <p:message for="ejercicio"/>
-                            </p:column>
-                        </p:row>
                         <p:row>
 
                             <p:column colspan="1"  >
@@ -33,7 +22,7 @@
                             <p:column colspan="3"  >
 
                                 <p:selectOneMenu   id="bodega" value="#{adquisicionController.selected.idBodegaInt}">
-                                    <f:selectItems itemValue="#{bodegavar}" var="bodegavar" value="#{listaBodegaController.getbyAll()}"   />
+                                    <f:selectItems  value="#{listaBodegaController.getbyAll()}"   />
                                 </p:selectOneMenu>
                                 <p:message for="bodega"/>
                             </p:column>
@@ -45,7 +34,7 @@
                                 <h:outputLabel value="Número de factura:" for="factura" />
                             </p:column>
                             <p:column colspan="1"  >
-                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="factura" value="#{adquisicionController.selected.numeroFacturaProducto}"/>
+                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="factura" value="#{adquisicionController.selected.numeroFacturaBien}"/>
                                 <p:message for="factura" display="icon"/>
                             </p:column>
                             <p:column colspan="1"  >
@@ -120,25 +109,13 @@
                                         <f:facet name="header" >
                                             <h:outputText value="Producto"/>
                                         </f:facet>
-                                        <h:outputText rendered="#{not empty item.idProducto}" value="#{item.idProducto.nombreProducto}"/>
+                                        <h:outputText rendered="#{not empty item.idBien}" value="#{item.idBien.nombreProducto}"/>
                                     </p:column>
                                     <p:column width="5%">
                                         <f:facet name="header" >
                                             <h:outputText value="Tipo"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.tipoProducto.nombreCatalogo}"/>
-                                    </p:column>
-                                    <p:column width="10%">
-                                        <f:facet name="header" >
-                                            <h:outputText value="Color"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.colorProducto}"/>
-                                    </p:column>
-                                    <p:column width="10%">
-                                        <f:facet name="header" >
-                                            <h:outputText value="# de Serie"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.numeroSerieProducto}"/>
+                                        <h:outputText value="#{item.tipoBien.nombreCatalogo}"/>
                                     </p:column>
                                     <p:column width="5%">
                                         <f:facet name="header" >
@@ -157,18 +134,20 @@
                                             <h:outputText value="Cantidad"/>
                                         </f:facet>
                                         <h:outputText value="#{item.cantidadDetalleAdquisicion}"/>
+                                        <h:outputText value="#{item.tipoCantidad}"/>
+                                  
                                     </p:column>
 
                                     <p:column width="10%">
                                         <f:facet name="header" >
                                             <h:outputText value="Estado"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.estadoProducto.nombreCatalogo}"/>
+                                        <h:outputText value="#{item.estadoBien.nombreCatalogo}"/>
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton id="createDetalleButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{adquisicionController.prepareCreateDetalle}" update=":AdquisicionCreateDetalleForm" oncomplete="handleSubmitOpen(args, 'AdquisicionCreateDetalleDialog');" immediate="true" rendered="#{adquisicionController.permisoInsertar}"/>
-                                        <p:commandButton id="editDetalleButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{adquisicionController.prepareEditDetalle}" update=":AdquisicionEditDetalleForm" oncomplete="PF('AdquisicionEditDetalleDialog').show()" disabled="#{empty adquisicionController.currentDetalle}" rendered="#{adquisicionController.permisoActualizar}"/>
-                                        <p:commandButton id="deleteDetalleButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{adquisicionController.destroyDetalle}" update=":growl,datalistProductos" disabled="#{empty adquisicionController.currentDetalle}" rendered="#{adquisicionController.permisoEliminar}"/>
+                                        <p:commandButton id="createDetalleButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{adquisicionController.prepareCreateDetalle}" update=":AdquisicionCreateDetalleForm" process=":AdquisicionCreateDetalleForm,createDetalleButton" oncomplete="handleSubmitOpen(args, 'AdquisicionCreateDetalleDialog');"  rendered="#{adquisicionController.permisoInsertar}"/>
+                                        <p:commandButton id="editDetalleButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{adquisicionController.prepareEditDetalle}" update=":AdquisicionEditDetalleForm" process=":AdquisicionEditDetalleForm,editDetalleButton" oncomplete="PF('AdquisicionEditDetalleDialog').show()" disabled="#{empty adquisicionController.currentDetalle}" rendered="#{adquisicionController.permisoActualizar}"/>
+                                        <p:commandButton id="deleteDetalleButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{adquisicionController.destroyDetalle}" process="datalistProductos" update=":growl,datalistProductos" disabled="#{empty adquisicionController.currentDetalle}" rendered="#{adquisicionController.permisoEliminar}"/>
                                     </f:facet>
                                 </p:dataTable>
                             </p:column>

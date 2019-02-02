@@ -49,11 +49,11 @@ public class BodegaFacade extends AbstractFacade<Bodega> {
         if (!"".equals(bodega.getDireccionBodega())) {
             query.append(" AND UPPER(s.direccionBodega) like :direccionBodega ");
         }
-        if (bodega.getClaseBodega() != null) {
-            query.append(" AND s.claseBodega = :claseBodega ");
+        if (bodega.getClaseBodegaInt() != null) {
+            query.append(" AND s.claseBodega.idCatalogo = :claseBodega ");
         }
-        if (bodega.getTipoBodega() != null) {
-            query.append(" AND s.tipoBodega = :tipoBodega ");
+        if (bodega.getTipoBodegaInt() != null) {
+            query.append(" AND s.tipoBodega.idCatalogo = :tipoBodega ");
         }
         if (bodega.getIdBodega() != null) {
             query.append(" AND s.idBodega = :idBodega ");
@@ -77,12 +77,12 @@ public class BodegaFacade extends AbstractFacade<Bodega> {
 
         }
 
-        if (bodega.getClaseBodega() != null) {
-            q.setParameter("claseBodega", bodega.getClaseBodega());
+        if (bodega.getClaseBodegaInt() != null) {
+            q.setParameter("claseBodega", bodega.getClaseBodegaInt());
 
         }
-        if (bodega.getTipoBodega() != null) {
-            q.setParameter("tipoBodega", bodega.getTipoBodega());
+        if (bodega.getTipoBodegaInt() != null) {
+            q.setParameter("tipoBodega", bodega.getTipoBodegaInt());
         }
         if (bodega.getIdBodega() != null) {
             q.setParameter("idBodega", bodega.getIdBodega());
@@ -118,6 +118,27 @@ public class BodegaFacade extends AbstractFacade<Bodega> {
         q.setParameter("nombreBodega", "%" + bodega.getNombreBodega().toUpperCase() + "%");
 
         return q.getResultList();
+    }
+
+    /**
+     * Devuelve la bodega por su id
+     *
+     * @param idBodega
+     * @return
+     */
+    public Bodega findbyId(Integer idBodega) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM Bodega s where ");
+
+        query.append(" s.idBodega=:idBodega ");
+
+        javax.persistence.Query q = em.createQuery(query.toString());
+
+        q.setParameter("idBodega", idBodega);
+
+        return (Bodega) q.getSingleResult();
     }
 
     /**

@@ -46,7 +46,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nmartinez
  */
-@Named(value =  "adquisicionController")
+@Named(value = "adquisicionController")
 @ViewScoped
 public class AdquisicionController implements Serializable {
 
@@ -54,6 +54,12 @@ public class AdquisicionController implements Serializable {
     private DetalleAdquisicion currentDetalle;
     @EJB
     private org.Adquisicion.Facade.AdquisicionFacade ejbFacade;
+    @EJB
+    private org.Adquisicion.Facade.BodegaFacade ejbBodegaFacade;
+    @EJB
+    private org.Adquisicion.Facade.CatalogoFacade ejbCatalogoFacade;
+    @EJB
+    private org.Adquisicion.Facade.ProductoFacade ejbProductoFacade;
 
     private List<Adquisicion> allAdquisicionItems = null;
     private List<Adquisicion> sonFilteredPerfiles;
@@ -62,7 +68,6 @@ public class AdquisicionController implements Serializable {
 
     @Inject
     private LoginController loginController;
-
 
     @Resource
     private UserTransaction utx;
@@ -89,6 +94,7 @@ public class AdquisicionController implements Serializable {
 
     public Adquisicion getSelected() {
         if (current == null) {
+            current = new Adquisicion();
         }
         return current;
     }
@@ -123,6 +129,7 @@ public class AdquisicionController implements Serializable {
 
     public void changeProducto() {
         if (currentDetalle != null) {
+            currentDetalle.setIdBien(ejbProductoFacade.findbyId(currentDetalle.getIdProductoint()));
             currentDetalle.setValorDetalleAdquisicion(currentDetalle.getIdBien().getValorProducto());
             currentDetalle.setValorLibrosDetalleAdquisicion(currentDetalle.getIdBien().getValorProducto());
         }
@@ -133,7 +140,6 @@ public class AdquisicionController implements Serializable {
             currentDetalle.setIdBien(null);
         }
     }
-
 
     private AdquisicionFacade getFacade() {
         return ejbFacade;
@@ -159,7 +165,6 @@ public class AdquisicionController implements Serializable {
     public void imprimeDetalleBarras(ActionEvent event) throws DocumentException {
         try {
 
-         
             if (currentDetalle.getIdBien() != null) {
                 currentDetalle.setNombreBien(currentDetalle.getIdBien().getNombreProducto());
             }
@@ -272,6 +277,8 @@ public class AdquisicionController implements Serializable {
             utx.begin();
 
             //this.current.setEstadoAdquisicion(true);
+            current.setIdBodega(ejbBodegaFacade.findbyId(current.getIdBodegaInt()));
+
             getFacade().create(current);
             getAllAdquisicionItems().add(current);
 
@@ -321,6 +328,9 @@ public class AdquisicionController implements Serializable {
             currentDetalle.setIdAdquisicion(getSelected());
             Random rnd = new Random();
             currentDetalle.setIdDetalleAdquisicion(rnd.nextInt());
+            currentDetalle.setEstadoBien(ejbCatalogoFacade.findbyId(currentDetalle.getEstadoBienInt()));
+            currentDetalle.setTipoBien(ejbCatalogoFacade.findbyId(currentDetalle.getTipoBienInt()));
+            currentDetalle.setIdBien(ejbProductoFacade.findbyId(currentDetalle.getIdProductoint()));
             currentDetalle.setEstadoDetalle(true);
             currentDetalle.setCantidadBodegaDetalleAdquisicion(currentDetalle.getCantidadDetalleAdquisicion());
             getSelected().getDetalleAdquisicionList().add(currentDetalle);
@@ -334,6 +344,10 @@ public class AdquisicionController implements Serializable {
     }
 
     public void updateDetalle() {
+        currentDetalle.setEstadoBien(ejbCatalogoFacade.findbyId(currentDetalle.getEstadoBienInt()));
+        currentDetalle.setTipoBien(ejbCatalogoFacade.findbyId(currentDetalle.getTipoBienInt()));
+        currentDetalle.setIdBien(ejbProductoFacade.findbyId(currentDetalle.getIdProductoint()));
+
         for (DetalleAdquisicion item : getSelected().getDetalleAdquisicionList()) {
             if (item.getIdDetalleAdquisicion().equals(currentDetalle.getIdDetalleAdquisicion())) {
                 if (getSelected().getDetalleAdquisicionList().remove(item)) {
@@ -369,11 +383,16 @@ public class AdquisicionController implements Serializable {
 
         setEditando(true);
         current = ejbFacade.findbyId(current.getIdAdquisicion()).get(0);
+        current.setIdBodegaInt(current.getIdBodega().getIdBodega());
+
     }
 
     public void prepareEditDetalle(ActionEvent event) {
 
         setEditando(true);
+        currentDetalle.setEstadoBienInt(currentDetalle.getEstadoBien().getIdCatalogo());
+        currentDetalle.setTipoBienInt(currentDetalle.getTipoBien().getIdCatalogo());
+        currentDetalle.setIdProductoint(currentDetalle.getIdBien().getIdProducto());
 
     }
 
@@ -425,7 +444,6 @@ public class AdquisicionController implements Serializable {
 
             utx.commit();
 
-        
             JsfUtil.addSuccessMessage("Registro actualizado exitosamente");
             log.info("Usuario:" + getLoginController().getUser().getUsernameUsuario() + " producto actualizado exitosamente");
             current = null;
@@ -610,6 +628,5 @@ public class AdquisicionController implements Serializable {
     public void setCurrentDetalle(DetalleAdquisicion currentDetalle) {
         this.currentDetalle = currentDetalle;
     }
-
 
 }

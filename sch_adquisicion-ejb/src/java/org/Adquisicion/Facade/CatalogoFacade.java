@@ -17,6 +17,7 @@ import org.Adquisicion.Entities.Catalogo;
  */
 @Stateless
 public class CatalogoFacade extends AbstractFacade<Catalogo> {
+
     @PersistenceContext(unitName = "sch_adquisicion")
     private EntityManager em;
 
@@ -28,8 +29,28 @@ public class CatalogoFacade extends AbstractFacade<Catalogo> {
     public CatalogoFacade() {
         super(Catalogo.class);
     }
-    
-    
+
+    /**
+     * Devuelve el catalogo por su id
+     *
+     * @param idCatalogo
+     * @return
+     */
+    public Catalogo findbyId(Integer idCatalogo) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM Catalogo s where ");
+
+        query.append(" s.idCatalogo=:idCatalogo ");
+
+        javax.persistence.Query q = em.createQuery(query.toString());
+
+        q.setParameter("idCatalogo", idCatalogo);
+
+        return (Catalogo) q.getSingleResult();
+    }
+
     /**
      * Devuelve la lista de catálogos por nemonico grupo catálogo
      *
@@ -42,5 +63,4 @@ public class CatalogoFacade extends AbstractFacade<Catalogo> {
         return (List<Catalogo>) q.getResultList();
     }
 
-    
 }

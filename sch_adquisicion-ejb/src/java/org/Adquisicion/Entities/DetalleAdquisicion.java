@@ -30,17 +30,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "detalle_adquisicion", schema = "sch_adquisicion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetalleAdquisicion.findAll", query = "SELECT d FROM DetalleAdquisicion d"),
-    @NamedQuery(name = "DetalleAdquisicion.findByIdDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.idDetalleAdquisicion = :idDetalleAdquisicion"),
-    @NamedQuery(name = "DetalleAdquisicion.findByCantidadDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.cantidadDetalleAdquisicion = :cantidadDetalleAdquisicion"),
-    @NamedQuery(name = "DetalleAdquisicion.findByValorDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.valorDetalleAdquisicion = :valorDetalleAdquisicion"),
-    @NamedQuery(name = "DetalleAdquisicion.findByValorLibrosDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.valorLibrosDetalleAdquisicion = :valorLibrosDetalleAdquisicion"),
-    @NamedQuery(name = "DetalleAdquisicion.findByCodigoBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.codigoBien = :codigoBien"),
-    @NamedQuery(name = "DetalleAdquisicion.findByCodigoAnteriorBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.codigoAnteriorBien = :codigoAnteriorBien"),
-    @NamedQuery(name = "DetalleAdquisicion.findByEstadoDetalle", query = "SELECT d FROM DetalleAdquisicion d WHERE d.estadoDetalle = :estadoDetalle"),
-    @NamedQuery(name = "DetalleAdquisicion.findByColorBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.colorBien = :colorBien"),
-    @NamedQuery(name = "DetalleAdquisicion.findByNumeroSerieBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.numeroSerieBien = :numeroSerieBien"),
-    @NamedQuery(name = "DetalleAdquisicion.findByObservaciones", query = "SELECT d FROM DetalleAdquisicion d WHERE d.observaciones = :observaciones"),
+    @NamedQuery(name = "DetalleAdquisicion.findAll", query = "SELECT d FROM DetalleAdquisicion d")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByIdDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.idDetalleAdquisicion = :idDetalleAdquisicion")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByCantidadDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.cantidadDetalleAdquisicion = :cantidadDetalleAdquisicion")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByValorDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.valorDetalleAdquisicion = :valorDetalleAdquisicion")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByValorLibrosDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.valorLibrosDetalleAdquisicion = :valorLibrosDetalleAdquisicion")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByCodigoBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.codigoBien = :codigoBien")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByCodigoAnteriorBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.codigoAnteriorBien = :codigoAnteriorBien")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByEstadoDetalle", query = "SELECT d FROM DetalleAdquisicion d WHERE d.estadoDetalle = :estadoDetalle")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByColorBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.colorBien = :colorBien")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByNumeroSerieBien", query = "SELECT d FROM DetalleAdquisicion d WHERE d.numeroSerieBien = :numeroSerieBien")
+    ,
+    @NamedQuery(name = "DetalleAdquisicion.findByObservaciones", query = "SELECT d FROM DetalleAdquisicion d WHERE d.observaciones = :observaciones")
+    ,
     @NamedQuery(name = "DetalleAdquisicion.findByCantidadBodegaDetalleAdquisicion", query = "SELECT d FROM DetalleAdquisicion d WHERE d.cantidadBodegaDetalleAdquisicion = :cantidadBodegaDetalleAdquisicion")})
 public class DetalleAdquisicion implements Serializable {
 
@@ -71,6 +82,8 @@ public class DetalleAdquisicion implements Serializable {
     @Size(max = 200)
     @Column(name = "numero_serie_bien")
     private String numeroSerieBien;
+    @Column(name = "tipo_cantidad")
+    private String tipoCantidad;
     @Size(max = 2147483647)
     @Column(name = "observaciones")
     private String observaciones;
@@ -100,6 +113,12 @@ public class DetalleAdquisicion implements Serializable {
     private BigInteger codigoBarra;
     @Transient
     private String clasebien;
+    @Transient
+    private Integer idProductoint;
+    @Transient
+    private Integer tipoBienInt;
+    @Transient
+    private Integer estadoBienInt;
 
     public DetalleAdquisicion() {
     }
@@ -196,7 +215,6 @@ public class DetalleAdquisicion implements Serializable {
         this.cantidadBodegaDetalleAdquisicion = cantidadBodegaDetalleAdquisicion;
     }
 
-
     public Producto getIdBien() {
         return idBien;
     }
@@ -220,7 +238,6 @@ public class DetalleAdquisicion implements Serializable {
     public void setEstadoBien(Catalogo estadoBien) {
         this.estadoBien = estadoBien;
     }
-
 
     @Override
     public int hashCode() {
@@ -347,6 +364,62 @@ public class DetalleAdquisicion implements Serializable {
      */
     public void setIdAdquisicion(Adquisicion idAdquisicion) {
         this.idAdquisicion = idAdquisicion;
+    }
+
+    /**
+     * @return the idProductoint
+     */
+    public Integer getIdProductoint() {
+        return idProductoint;
+    }
+
+    /**
+     * @param idProductoint the idProductoint to set
+     */
+    public void setIdProductoint(Integer idProductoint) {
+        this.idProductoint = idProductoint;
+    }
+
+    /**
+     * @return the tipoBienInt
+     */
+    public Integer getTipoBienInt() {
+        return tipoBienInt;
+    }
+
+    /**
+     * @param tipoBienInt the tipoBienInt to set
+     */
+    public void setTipoBienInt(Integer tipoBienInt) {
+        this.tipoBienInt = tipoBienInt;
+    }
+
+    /**
+     * @return the estadoBienInt
+     */
+    public Integer getEstadoBienInt() {
+        return estadoBienInt;
+    }
+
+    /**
+     * @param estadoBienInt the estadoBienInt to set
+     */
+    public void setEstadoBienInt(Integer estadoBienInt) {
+        this.estadoBienInt = estadoBienInt;
+    }
+
+    /**
+     * @return the tipoCantidad
+     */
+    public String getTipoCantidad() {
+        return tipoCantidad;
+    }
+
+    /**
+     * @param tipoCantidad the tipoCantidad to set
+     */
+    public void setTipoCantidad(String tipoCantidad) {
+        this.tipoCantidad = tipoCantidad;
     }
 
 }

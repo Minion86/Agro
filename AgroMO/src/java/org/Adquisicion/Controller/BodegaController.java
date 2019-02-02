@@ -27,13 +27,15 @@ import org.apache.log4j.Logger;
  *
  * @author nmartinez
  */
-@Named(value =  "bodegaController")
+@Named(value = "bodegaController")
 @ViewScoped
 public class BodegaController implements Serializable {
 
     private Bodega current;
     @EJB
     private org.Adquisicion.Facade.BodegaFacade ejbFacade;
+    @EJB
+    private org.Adquisicion.Facade.CatalogoFacade ejbCatalogoFacade;
     @EJB
     private org.Adquisicion.Facade.DetalleAdquisicionFacade ejbDetalleAdquisicionFacade;
     private List<Bodega> allBodegaItems = null;
@@ -69,6 +71,7 @@ public class BodegaController implements Serializable {
 
     public Bodega getSelected() {
         if (current == null) {
+            current=new Bodega();
         }
         return current;
     }
@@ -158,7 +161,8 @@ public class BodegaController implements Serializable {
     public void create(ActionEvent event) throws SystemException {
         try {
             utx.begin();
-
+            current.setClaseBodega(ejbCatalogoFacade.findbyId(current.getClaseBodegaInt()));
+            current.setTipoBodega(ejbCatalogoFacade.findbyId(current.getTipoBodegaInt()));
             this.current.setEstadoBodega(true);
             getFacade().create(current);
             getAllBodegaItems().add(current);
@@ -192,6 +196,8 @@ public class BodegaController implements Serializable {
 
         setEditando(true);
         if (current != null) {
+            current.setClaseBodegaInt(current.getClaseBodega().getIdCatalogo());
+            current.setTipoBodegaInt(current.getTipoBodega().getIdCatalogo());
             current.setIdUbicacionPadre(current.getIdUbicacion().getPadreId());
             current.setListaDetalleAdquisicion(ejbDetalleAdquisicionFacade.findPorBodega(current));
         }
@@ -200,6 +206,8 @@ public class BodegaController implements Serializable {
     public void update(ActionEvent event) throws SystemException {
         try {
             utx.begin();
+            current.setClaseBodega(ejbCatalogoFacade.findbyId(current.getClaseBodegaInt()));
+            current.setTipoBodega(ejbCatalogoFacade.findbyId(current.getTipoBodegaInt()));
 
             getFacade().edit(current);
 

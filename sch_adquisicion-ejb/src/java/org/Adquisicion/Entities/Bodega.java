@@ -30,12 +30,18 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "bodega", schema = "sch_adquisicion")
 @NamedQueries({
-    @NamedQuery(name = "Bodega.findAll", query = "SELECT b FROM Bodega b"),
-    @NamedQuery(name = "Bodega.findByIdBodega", query = "SELECT b FROM Bodega b WHERE b.idBodega = :idBodega"),
-    @NamedQuery(name = "Bodega.findByNombreBodega", query = "SELECT b FROM Bodega b WHERE b.nombreBodega = :nombreBodega"),
-    @NamedQuery(name = "Bodega.findByDireccionBodega", query = "SELECT b FROM Bodega b WHERE b.direccionBodega = :direccionBodega"),
-    @NamedQuery(name = "Bodega.findBySectorBodega", query = "SELECT b FROM Bodega b WHERE b.sectorBodega = :sectorBodega"),
-    @NamedQuery(name = "Bodega.findByObservacionesBodega", query = "SELECT b FROM Bodega b WHERE b.observacionesBodega = :observacionesBodega"),
+    @NamedQuery(name = "Bodega.findAll", query = "SELECT b FROM Bodega b")
+    ,
+    @NamedQuery(name = "Bodega.findByIdBodega", query = "SELECT b FROM Bodega b WHERE b.idBodega = :idBodega")
+    ,
+    @NamedQuery(name = "Bodega.findByNombreBodega", query = "SELECT b FROM Bodega b WHERE b.nombreBodega = :nombreBodega")
+    ,
+    @NamedQuery(name = "Bodega.findByDireccionBodega", query = "SELECT b FROM Bodega b WHERE b.direccionBodega = :direccionBodega")
+    ,
+    @NamedQuery(name = "Bodega.findBySectorBodega", query = "SELECT b FROM Bodega b WHERE b.sectorBodega = :sectorBodega")
+    ,
+    @NamedQuery(name = "Bodega.findByObservacionesBodega", query = "SELECT b FROM Bodega b WHERE b.observacionesBodega = :observacionesBodega")
+    ,
     @NamedQuery(name = "Bodega.findByCodigoBodega", query = "SELECT b FROM Bodega b WHERE b.codigoBodega = :codigoBodega")})
 public class Bodega implements Serializable {
 
@@ -82,8 +88,12 @@ public class Bodega implements Serializable {
     @Column(name = "estado_bodega")
     private Boolean estadoBodega;
     @Transient
+    private Integer claseBodegaInt;
+    @Transient
+    private Integer tipoBodegaInt;
+    @Transient
     private List<DetalleAdquisicion> listaDetalleAdquisicion;
-    
+
     public Bodega() {
     }
 
@@ -186,7 +196,6 @@ public class Bodega implements Serializable {
         this.claseBodega = claseBodega;
     }
 
-
     public Ubicacion getIdUbicacion() {
         return idUbicacion;
     }
@@ -217,7 +226,7 @@ public class Bodega implements Serializable {
 
     @Override
     public String toString() {
-        return getCodigoBodega()+"-"+getNombreBodega();
+        return getCodigoBodega() + "-" + getNombreBodega();
     }
 
     /**
@@ -260,6 +269,34 @@ public class Bodega implements Serializable {
      */
     public void setListaDetalleAdquisicion(List<DetalleAdquisicion> listaDetalleAdquisicion) {
         this.listaDetalleAdquisicion = listaDetalleAdquisicion;
+    }
+
+    /**
+     * @return the claseBodegaInt
+     */
+    public Integer getClaseBodegaInt() {
+        return claseBodegaInt;
+    }
+
+    /**
+     * @param claseBodegaInt the claseBodegaInt to set
+     */
+    public void setClaseBodegaInt(Integer claseBodegaInt) {
+        this.claseBodegaInt = claseBodegaInt;
+    }
+
+    /**
+     * @return the tipoBodegaInt
+     */
+    public Integer getTipoBodegaInt() {
+        return tipoBodegaInt;
+    }
+
+    /**
+     * @param tipoBodegaInt the tipoBodegaInt to set
+     */
+    public void setTipoBodegaInt(Integer tipoBodegaInt) {
+        this.tipoBodegaInt = tipoBodegaInt;
     }
 
 }

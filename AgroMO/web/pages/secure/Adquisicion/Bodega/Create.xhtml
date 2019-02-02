@@ -59,9 +59,9 @@
                                 <h:outputLabel value="Tipo de Bodega:" for="tipobodega" />
                             </p:column>
                             <p:column colspan="1"  >
-                                <p:selectOneMenu id="tipobodega" value="#{bodegaController.selected.tipoBodega}" converter="ListaCatalogoControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                <p:selectOneMenu id="tipobodega" value="#{bodegaController.selected.tipoBodegaInt}"  required="true" requiredMessage="Valor Requerido">
 
-                                    <f:selectItems itemValue="#{tipobodega}" var="tipobodega" value="#{listaCatalogoController.getbyGrupoCatalogoNemonico('TIP_BOD')}"   />
+                                    <f:selectItems  value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoTipoBodega('TIP_BOD')}"   />
                                 </p:selectOneMenu>
                                 <p:message for="tipobodega"/>
                             </p:column>
@@ -70,9 +70,9 @@
                                 <h:outputLabel value="Clase de Bodega:" for="clasebodega" />
                             </p:column>
                             <p:column colspan="1"  >
-                                <p:selectOneMenu id="clasebodega" value="#{bodegaController.selected.claseBodega}" converter="ListaCatalogoControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                <p:selectOneMenu id="clasebodega" value="#{bodegaController.selected.claseBodegaInt}"  required="true" requiredMessage="Valor Requerido">
 
-                                    <f:selectItems itemValue="#{clasebodega}" var="clasebodega"  value="#{listaCatalogoController.getbyGrupoCatalogoNemonico('CLA_BOD')}" />
+                                    <f:selectItems   value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoClaseBodega('CLA_BOD')}" />
                                 </p:selectOneMenu>
                                 <p:message for="clasebodega"/>
                             </p:column>

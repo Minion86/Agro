@@ -31,6 +31,27 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     }
 
     /**
+     * Devuelve el producto por su id
+     *
+     * @param idProducto
+     * @return
+     */
+    public Producto findbyId(Integer idProducto) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM Producto s where ");
+
+        query.append(" s.idProducto=:idProducto ");
+
+        javax.persistence.Query q = em.createQuery(query.toString());
+
+        q.setParameter("idProducto", idProducto);
+
+        return (Producto) q.getSingleResult();
+    }
+
+    /**
      * Devuelve el listado de bienes de acuerdo a la busqueda avanzada
      *
      * @param bien
@@ -88,11 +109,10 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         if (!"".equals(bien.getDescripcionProducto())) {
             q.setParameter("descripcionProducto", "%" + bien.getDescripcionProducto().toUpperCase() + "%");
         }
-        
+
         return q.getResultList();
     }
-    
-    
+
     /**
      * Devuelve la lista de Productos
      *

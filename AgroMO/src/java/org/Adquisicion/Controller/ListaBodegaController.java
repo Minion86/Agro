@@ -30,6 +30,8 @@ public class ListaBodegaController implements Serializable {
         if (catalogoItems == null) {
             List<Bodega> lista = ejbBodegaFacade.findTodos();
             catalogoItems = new ArrayList<>();
+            catalogoItems.add(new SelectItem(null, "Por favor escoja un valor"));
+
             for (Bodega c : lista) {
                 catalogoItems.add(new SelectItem(c.getIdBodega(), c.getNombreBodega()));
             }
