@@ -115,8 +115,8 @@ public class DetalleAdquisicionFacade extends AbstractFacade<DetalleAdquisicion>
         javax.persistence.Query q = em.createQuery("SELECT u FROM DetalleAdquisicion u where u.estadoDetalle=true and u.cantidadBodegaDetalleAdquisicion>0");
         return (List<DetalleAdquisicion>) q.getResultList();
     }
-    
-        /**
+
+    /**
      * Devuelve la lista de Productos
      *
      * @return
@@ -148,6 +148,23 @@ public class DetalleAdquisicionFacade extends AbstractFacade<DetalleAdquisicion>
         javax.persistence.Query q = em.createQuery("SELECT u FROM DetalleAdquisicion u where u.estadoDetalle=true and u.codigoBarra=:codigoBarra");
         q.setParameter("codigoBarra", codigoBarra);
         return (List<DetalleAdquisicion>) q.getResultList();
+    }
+
+    /**
+     * Devuelve la el detalle de adquisición por su id
+     *
+     * @param idDetalleAdquisicion
+     * @return
+     */
+    public DetalleAdquisicion findbyId(Integer idDetalleAdquisicion) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM DetalleAdquisicion s where ");
+        query.append(" s.idDetalleAdquisicion=:idDetalleAdquisicion ");
+        javax.persistence.Query q = em.createQuery(query.toString());
+        q.setParameter("idDetalleAdquisicion", idDetalleAdquisicion);
+        return (DetalleAdquisicion) q.getSingleResult();
     }
 
 }

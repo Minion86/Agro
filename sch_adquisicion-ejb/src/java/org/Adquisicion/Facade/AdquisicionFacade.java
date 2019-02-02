@@ -54,8 +54,8 @@ public class AdquisicionFacade extends AbstractFacade<Adquisicion> {
         if (!"".equals(adquisicion.getApellidosResponsableAdquisicion())) {
             query.append(" AND UPPER(s.apellidosResponsableAdquisicion) like :apellidosResponsableAdquisicion ");
         }
-        if (adquisicion.getIdBodega() != null) {
-            query.append(" AND s.idBodega = :idBodega ");
+        if (adquisicion.getIdBodegaInt() != null) {
+            query.append(" AND s.idBodega.idBodega = :idBodega ");
         }
         if (adquisicion.getFechaAdquisicionDesde() != null) {
             query.append(" AND s.fechaAdquisicion >= :fechaAdquisicionDesde ");
@@ -78,8 +78,8 @@ public class AdquisicionFacade extends AbstractFacade<Adquisicion> {
         if (!"".equals(adquisicion.getApellidosResponsableAdquisicion())) {
             q.setParameter("apellidosResponsableAdquisicion", "%" + adquisicion.getApellidosResponsableAdquisicion().toUpperCase() + "%");
         }
-        if (adquisicion.getIdBodega() != null) {
-            q.setParameter("idBodega", adquisicion.getIdBodega());
+        if (adquisicion.getIdBodegaInt() != null) {
+            q.setParameter("idBodega", adquisicion.getIdBodegaInt());
         }
         if (adquisicion.getFechaAdquisicionDesde() != null) {
             q.setParameter("fechaAdquisicionDesde", adquisicion.getFechaAdquisicionDesde());

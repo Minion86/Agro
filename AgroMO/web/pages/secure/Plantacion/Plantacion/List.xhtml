@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition template="/template/Template1_Menu.xhtml">
+
+
+        <ui:define name="title">
+            <p:graphicImage value="/images/cabecera_popup.jpg"  width="70%" height="10%" />
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="plantacionListForm">
+                <p:menubar >
+
+
+                    <f:facet name="options" >
+                        <p:commandButton rendered="#{plantacionController.permisoBuscar}"  update=":FormSearch:ListaSearch" actionListener="#{plantacionController.prepareSearch}"
+                                         value="Búsqueda Avanzada"      oncomplete="PF('PlantacionSearchDialog').show(); "  icon="ui-icon ui-icon-search" title="Búsqueda Avanzada" >
+                        </p:commandButton>
+                    </f:facet>
+                </p:menubar>
+                <p:panel header="Lista de Plantaciones">
+                    <p:dataTable id="datalist" value="#{plantacionController.allPlantacionItems}" var="item"
+                                 selectionMode="single" selection="#{plantacionController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idPlantacion}"
+                                 rows="10"
+                                 widgetVar="datalistVar"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
+
+                        <f:facet name="header">
+                            <h:commandLink rendered="#{plantacionController.permisoImprimir}">
+                                <p:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                <p:dataExporter type="xls" target="datalist" fileName="ReporteLista" />
+                            </h:commandLink>
+
+
+                        </f:facet>
+
+                        <p:column width="10%">
+                            <f:facet name="header" >
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombrePlantacion}"/>
+                        </p:column>
+                        <p:column width="10%">
+                            <f:facet name="header">
+                                <h:outputText value="Fecha"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaPlantacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column width="10%">
+                            <f:facet name="header">
+                                <h:outputText value="Bodega"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idBodega.codigoBodega}-#{item.idBodega.nombreBodega}"/>
+                        </p:column>
+
+                        <p:column width="30%">
+                            <f:facet name="header">
+                                <h:outputText value="Productos"/>
+                            </f:facet>
+                            <p:dataList value="#{item.detallePlantacionList}" var="detalle" type="ordered">
+                                <p:outputLabel rendered="#{not empty detalle.idDetalleAdquisicion.idBien.nombreProducto}" value="Cantidad: #{detalle.cantidadPlantacionDetalle} #{detalle.tipoCantidadPlantacionDetalle}--  Producto: #{detalle.idDetalleAdquisicion.idBien.nombreProducto}"/>
+                            </p:dataList>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{plantacionController.prepareCreate}"  oncomplete="PF('PlantacionCreateDialog').show()" rendered="#{plantacionController.permisoInsertar}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{plantacionController.prepareEdit}"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoActualizar}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{plantacionController.destroy}" update=":growl,datalist" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoEliminar}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <h:form id="FormSearch" rendered="#{plantacionController.permisoBuscar}">
+
+                <p:dialog closable="false" header="Búsqueda Avanzada" widgetVar="PlantacionSearchDialog" resizable="false" id="PlantacionearchDlg"
+                          width="780"  height="440">
+                    <br/>
+                    <center>
+                        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                            <f:facet name="start">
+                                <p:graphicImage value="/images/ajaxloadingbar.gif" />
+                            </f:facet>
+
+                            <f:facet name="complete">
+                                <h:outputText value="" />
+                            </f:facet>
+                        </p:ajaxStatus>
+
+                        <p:panelGrid id="ListaSearch"  >
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Nombre Plantación:" for="nombre" />
+                                </p:column>
+                                <p:column colspan="3"  >
+                                    <p:inputText maxlength="100" id="nombre" value="#{plantacionController.selected.nombrePlantacion}"/>
+                                    <p:message for="nombre" display="icon"/>
+                                </p:column>
+
+
+                            </p:row>
+
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:selectOneMenu id="ubicacionbodega" value="#{bodegaController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
+                                        <p:ajax update="ubicacionbodega2"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="ubicacionbodega"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:selectOneMenu id="ubicacionbodega2" value="#{bodegaController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(bodegaController.selected.idUbicacionPadre)}"   />
+                                    </p:selectOneMenu>
+                                    <p:message for="ubicacionbodega2"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>       
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Fecha Compra Desde:" for="fechadesde" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:calendar id="fechadesde" value="#{plantacionController.selected.fechaPlantacionDesde}" />
+                                    <p:message for="fechadesde" display="icon"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Fecha Compra Hasta:" for="fechahasta" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:calendar id="fechahasta" value="#{plantacionController.selected.fechaPlantacionHasta}" />
+                                    <p:message for="fechahasta" display="icon"/>
+                                </p:column>
+                            </p:row>
+
+
+                            <f:facet name="footer">
+                                <p:row>
+                                    <p:column colspan="4"  >
+                                        <p:outputPanel  layout="block" style="text-align:right">
+
+                                            <p:commandButton value="Buscar"  update=":growl,:plantacionListForm:datalist"
+                                                             oncomplete="handleListaPlantacionSearchCloseRequest(xhr, status, args)" actionListener="#{plantacionController.search}"
+                                                             icon="ui-icon ui-icon-check"/>
+
+                                            <p:commandButton value="Cancelar" onclick="PF('PlantacionSearchDialog').hide()" type="button"
+                                                             icon="ui-icon ui-icon-close"/>
+
+                                        </p:outputPanel>
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+                        </p:panelGrid>
+                        <br/>
+
+                    </center>
+                </p:dialog>
+
+            </h:form>
+
+
+            <script type="text/javascript">
+
+
+                function handleListaPlantacionSearchCloseRequest(xhr, status, args) {
+                    if (args.validationFailed) {
+                        jQuery('#PlantacionearchDlg').effect("shake", {times: 3}, 100);
+                        alert('Error');
+                    } else {
+                        PF('PlantacionSearchDialog').hide();
+                        PF('datalistVar').clearFilters();
+                    }
+
+                }
+
+
+
+
+
+            </script>
+        </ui:define>
+    </ui:composition>
+
+</html>

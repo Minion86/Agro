@@ -29,13 +29,17 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author fmullo
  */
 @Entity
-@Table(name = "ubicacion",schema = "sch_adquisicion")
+@Table(name = "ubicacion", schema = "sch_adquisicion")
 @NamedQueries({
-    @NamedQuery(name = "Ubicacion.findAll", query = "SELECT u FROM Ubicacion u"),
-    @NamedQuery(name = "Ubicacion.findByIdUbicacion", query = "SELECT u FROM Ubicacion u WHERE u.idUbicacion = :idUbicacion"),
-    @NamedQuery(name = "Ubicacion.findByNombreUbicacion", query = "SELECT u FROM Ubicacion u WHERE u.nombreUbicacion = :nombreUbicacion"),
+    @NamedQuery(name = "Ubicacion.findAll", query = "SELECT u FROM Ubicacion u")
+    ,
+    @NamedQuery(name = "Ubicacion.findByIdUbicacion", query = "SELECT u FROM Ubicacion u WHERE u.idUbicacion = :idUbicacion")
+    ,
+    @NamedQuery(name = "Ubicacion.findByNombreUbicacion", query = "SELECT u FROM Ubicacion u WHERE u.nombreUbicacion = :nombreUbicacion")
+    ,
     @NamedQuery(name = "Ubicacion.findByNivelUbicacion", query = "SELECT u FROM Ubicacion u WHERE u.nivelUbicacion = :nivelUbicacion")})
 public class Ubicacion implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +62,10 @@ public class Ubicacion implements Serializable {
     private Ubicacion padreId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUbicacion")
     private List<Bodega> bodegaList;
+    @Column(name = "geolocalizacion_latitud")
+    private String geolocalizacionLatitud;
+    @Column(name = "geolocalizacion_longitud")
+    private String geolocalizacionLongitud;
 
     public Ubicacion() {
     }
@@ -146,5 +154,33 @@ public class Ubicacion implements Serializable {
     public String toString() {
         return getNombreUbicacion();
     }
-    
+
+    /**
+     * @return the geolocalizacionLatitud
+     */
+    public String getGeolocalizacionLatitud() {
+        return geolocalizacionLatitud;
+    }
+
+    /**
+     * @param geolocalizacionLatitud the geolocalizacionLatitud to set
+     */
+    public void setGeolocalizacionLatitud(String geolocalizacionLatitud) {
+        this.geolocalizacionLatitud = geolocalizacionLatitud;
+    }
+
+    /**
+     * @return the geolocalizacionLongitud
+     */
+    public String getGeolocalizacionLongitud() {
+        return geolocalizacionLongitud;
+    }
+
+    /**
+     * @param geolocalizacionLongitud the geolocalizacionLongitud to set
+     */
+    public void setGeolocalizacionLongitud(String geolocalizacionLongitud) {
+        this.geolocalizacionLongitud = geolocalizacionLongitud;
+    }
+
 }
