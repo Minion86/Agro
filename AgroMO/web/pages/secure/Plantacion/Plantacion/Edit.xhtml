@@ -17,72 +17,48 @@
                         <p:row>
 
                             <p:column colspan="1"  >
-                                <h:outputLabel value="Bodega:" for="bodega" />
+                                <h:outputLabel value="Nombre Plantación:" for="factura" />
                             </p:column>
                             <p:column colspan="3"  >
-
-                                <p:selectOneMenu   id="bodega" value="#{plantacionController.selected.idBodegaInt}">
-                                    <f:selectItems value="#{listaBodegaController.getbyAll()}"   />
-                                </p:selectOneMenu>
-                                <p:message for="bodega"/>
-                            </p:column>
-
-                        </p:row>
-                        <p:row>
-
-                            <p:column colspan="1"  >
-                                <h:outputLabel value="Número de factura:" for="factura" />
-                            </p:column>
-                            <p:column colspan="1"  >
-                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="factura" value="#{plantacionController.selected.numeroFacturaBien}"/>
-                                <p:message for="factura" display="icon"/>
-                            </p:column>
-                            <p:column colspan="1"  >
-                                <h:outputLabel value="Cédula responsable:" for="cedula" />
-                            </p:column>
-                            <p:column colspan="1"  >
-                                <p:inputText maxlength="20" id="cedula" value="#{plantacionController.selected.cedulaResponsablePlantacion}">
-                                    <f:validator for="cedula" validatorId="numerosValidacion"/>
-                                    <f:validator for="cedula" validatorId="rucValidacion"/>
-                                </p:inputText>
-                                <p:message for="cedula" display="icon"/>
-                            </p:column>
-
-                        </p:row>
-
-
-                        <p:row>
-                            <p:column colspan="1"  >
-                                <h:outputLabel value="Nombre responsable:" for="nombre" />
-                            </p:column>
-                            <p:column colspan="1"  >
-                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="nombre" value="#{plantacionController.selected.nombresResponsablePlantacion}"/>
+                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="200" id="nombre" value="#{plantacionController.selected.nombrePlantacion}"/>
                                 <p:message for="nombre" display="icon"/>
                             </p:column>
+
+
+                        </p:row>
+                        <p:row>
                             <p:column colspan="1"  >
-                                <h:outputLabel value="Apellido responsable:" for="apellido" />
+                                <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
                             </p:column>
                             <p:column colspan="1"  >
-                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="apellido" value="#{plantacionController.selected.apellidosResponsablePlantacion}"/>
-                                <p:message for="apellido" display="icon"/>
+                                <p:selectOneMenu id="ubicacionbodega" value="#{plantacionController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                    <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
+                                    <p:ajax update="ubicacionbodega2"/>
+                                </p:selectOneMenu>
+                                <p:message for="ubicacionbodega"/>
+                            </p:column>
+
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
+                            </p:column>
+                            <p:column colspan="1"  >
+                                <p:selectOneMenu id="ubicacionbodega2" value="#{plantacionController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                    <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(plantacionController.selected.idUbicacionPadre)}"   />
+                                </p:selectOneMenu>
+                                <p:message for="ubicacionbodega2"/>
                             </p:column>
 
                         </p:row>
 
+
                         <p:row>     
+
                             <p:column colspan="1"  >
-                                <h:outputLabel value="Email responsable:" for="email" />
+                                <h:outputLabel value="Fecha Plantación:" for="fecha" />
                             </p:column>
-                            <p:column colspan="1"  >
-                                <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="email" value="#{plantacionController.selected.emailResponsablePlantacion}">
-                                    <f:validator validatorId="org.Seguridades.validators.EmailValidator"/>
-                                </p:inputText>
-                                <p:message for="email" display="icon"/>
-                            </p:column>
-                            <p:column colspan="1"  >
-                                <h:outputLabel value="Fecha Adquisición:" for="fecha" />
-                            </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="3"  >
                                 <p:calendar id="fecha" value="#{plantacionController.selected.fechaPlantacion}" />
                                 <p:message for="fecha" display="icon"/>
                             </p:column>
@@ -93,67 +69,48 @@
                                 <h:outputLabel value="Lista de Productos" />
                             </p:column>
                             <p:column colspan="3"  >
-                                <p:dataTable id="datalistProductos" value="#{plantacionController.selected.detallePlantacionList}" var="item"
+                                <p:dataTable id="datalistProductos" value="#{plantacionController.selected.plantacionDetalleList}" var="item"
                                              selectionMode="single" selection="#{plantacionController.currentDetalle}"
                                              paginator="true"
-                                             rowKey="#{item.idDetallePlantacion}"
+                                             rowKey="#{item.idPlantacionDetalle}"
                                              rows="10"
                                              widgetVar="datalistVar"
                                              rowsPerPageTemplate="10,20,30,40,50"
                                              >
 
-                                    <p:ajax event="rowSelect"   update="imprimeDetalleButton createDetalleButton editDetalleButton deleteDetalleButton"/>
-                                    <p:ajax event="rowUnselect" update="imprimeDetalleButton createDetalleButton editDetalleButton deleteDetalleButton"/>
+                                    <p:ajax event="rowSelect"   update="createDetalleButton editDetalleButton deleteDetalleButton"/>
+                                    <p:ajax event="rowUnselect" update="createDetalleButton editDetalleButton deleteDetalleButton"/>
 
                                     <p:column width="10%">
                                         <f:facet name="header" >
+                                            <h:outputText value="Tipo de Suelo"/>
+                                        </f:facet>
+                                        <h:outputText rendered="#{not empty item.idTipoSuelo}" value="#{item.idTipoSuelo.nombreTipoSuelo}"/>
+                                    </p:column>
+                                    <p:column width="5%">
+                                        <f:facet name="header" >
                                             <h:outputText value="Producto"/>
                                         </f:facet>
-                                        <h:outputText rendered="#{not empty item.idBien}" value="#{item.idBien.nombreProducto}"/>
-
-                                    </p:column>
-                                    <p:column width="5%">
-                                        <f:facet name="header" >
-                                            <h:outputText value="Tipo"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.tipoBien.nombreCatalogo}"/>
-                                    </p:column>
-
-                                    <p:column width="5%">
-                                        <f:facet name="header" >
-                                            <h:outputText value="Valor"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.valorDetallePlantacion}"/>
-                                    </p:column>
-                                    <p:column width="5%">
-                                        <f:facet name="header" >
-                                            <h:outputText value="Valor en Libros"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.valorLibrosDetallePlantacion}"/>
+                                        <h:outputText value="#{item.idDetalleAdquisicion.idBien.nombreProducto}"/>
                                     </p:column>
                                     <p:column width="5%">
                                         <f:facet name="header" >
                                             <h:outputText value="Cantidad"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.cantidadDetallePlantacion}"/>
-                                        <h:outputText value="#{item.tipoCantidad}"/>
+                                        <h:outputText value="#{item.cantidadPlantacionDetalle}"/>
+                                        <h:outputText value="#{item.tipoCantidadPlantacionDetalle}"/>
+
                                     </p:column>
 
-                                    <p:column width="10%">
-                                        <f:facet name="header" >
-                                            <h:outputText value="Estado"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.estadoBien.nombreCatalogo}"/>
-                                    </p:column>
                                     <f:facet name="footer">
-                                        <p:commandButton id="imprimeDetalleButton" immediate="true" icon="ui-icon-print"   value="Imprimir Código de Barras" ajax="false" actionListener="#{plantacionController.imprimeDetalleBarras}" rendered="#{plantacionController.permisoImprimir}" disabled="#{empty plantacionController.currentDetalle}"/>
-                                        <p:commandButton id="createDetalleButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{plantacionController.prepareCreateDetalle}" update=":PlantacionCreateDetalleForm" process=":PlantacionCreateDetalleForm,createDetalleButton" oncomplete="handleSubmitOpen(args, 'PlantacionCreateDetalleDialog');" rendered="#{plantacionController.permisoInsertar}"/>
+                                        <p:commandButton id="createDetalleButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{plantacionController.prepareCreateDetalle}" update=":PlantacionCreateDetalleForm" process=":PlantacionCreateDetalleForm,createDetalleButton" oncomplete="handleSubmitOpen(args, 'PlantacionCreateDetalleDialog');"  rendered="#{plantacionController.permisoInsertar}"/>
                                         <p:commandButton id="editDetalleButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{plantacionController.prepareEditDetalle}" update=":PlantacionEditDetalleForm" process=":PlantacionEditDetalleForm,editDetalleButton" oncomplete="PF('PlantacionEditDetalleDialog').show()" disabled="#{empty plantacionController.currentDetalle}" rendered="#{plantacionController.permisoActualizar}"/>
-                                        <p:commandButton id="deleteDetalleButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{plantacionController.destroyDetalle}" update=":growl,datalistProductos" process="datalistProductos" disabled="#{empty plantacionController.currentDetalle}" rendered="#{plantacionController.permisoEliminar}"/>
+                                        <p:commandButton id="deleteDetalleButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{plantacionController.destroyDetalle}" process="datalistProductos" update=":growl,datalistProductos" disabled="#{empty plantacionController.currentDetalle}" rendered="#{plantacionController.permisoEliminar}"/>
                                     </f:facet>
                                 </p:dataTable>
                             </p:column>
                         </p:row>
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{plantacionController.update}" value="#{bundle.Save}" update="display,:plantacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PlantacionEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('PlantacionEditDialog').hide()"  immediate="true" actionListener="#{plantacionController.cancelar}" update=":plantacionListForm:datalist"/>

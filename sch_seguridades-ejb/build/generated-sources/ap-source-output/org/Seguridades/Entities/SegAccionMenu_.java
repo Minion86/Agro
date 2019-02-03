@@ -8,7 +8,7 @@ import org.Seguridades.Entities.SegAccionMenuPerfil;
 import org.Seguridades.Entities.SegAcciones;
 import org.Seguridades.Entities.SegMenu;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-02-02T17:53:21")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-02-02T19:43:25")
 @StaticMetamodel(SegAccionMenu.class)
 public class SegAccionMenu_ { 
 

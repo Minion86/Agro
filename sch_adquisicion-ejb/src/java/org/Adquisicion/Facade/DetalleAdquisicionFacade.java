@@ -115,6 +115,8 @@ public class DetalleAdquisicionFacade extends AbstractFacade<DetalleAdquisicion>
         javax.persistence.Query q = em.createQuery("SELECT u FROM DetalleAdquisicion u where u.estadoDetalle=true and u.cantidadBodegaDetalleAdquisicion>0");
         return (List<DetalleAdquisicion>) q.getResultList();
     }
+    
+    
 
     /**
      * Devuelve la lista de Productos

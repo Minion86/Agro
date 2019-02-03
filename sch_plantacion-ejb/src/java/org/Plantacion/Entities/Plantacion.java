@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.Adquisicion.Entities.Ubicacion;
 
 /**
  *
@@ -41,7 +42,7 @@ public class Plantacion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_ubicacion")
-    private Integer idUbicacion;
+    private Integer idUbicacionInt;
     @Column(name = "fecha_plantacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPlantacion;
@@ -53,6 +54,10 @@ public class Plantacion implements Serializable {
     private Date fechaPlantacionDesde;
     @Transient
     private Date fechaPlantacionHasta;
+    @Transient
+    private Ubicacion idUbicacion;
+    @Transient
+    private Ubicacion idUbicacionPadre;
 
     public Plantacion() {
     }
@@ -61,9 +66,9 @@ public class Plantacion implements Serializable {
         this.idPlantacion = idPlantacion;
     }
 
-    public Plantacion(Long idPlantacion, Integer idUbicacion) {
+    public Plantacion(Long idPlantacion, Integer idUbicacionInt) {
         this.idPlantacion = idPlantacion;
-        this.idUbicacion = idUbicacion;
+        this.idUbicacionInt = idUbicacionInt;
     }
 
     public Long getIdPlantacion() {
@@ -72,14 +77,6 @@ public class Plantacion implements Serializable {
 
     public void setIdPlantacion(Long idPlantacion) {
         this.idPlantacion = idPlantacion;
-    }
-
-    public Integer getIdUbicacion() {
-        return idUbicacion;
-    }
-
-    public void setIdUbicacion(Integer idUbicacion) {
-        this.idUbicacion = idUbicacion;
     }
 
     public Date getFechaPlantacion() {
@@ -169,6 +166,48 @@ public class Plantacion implements Serializable {
      */
     public void setPlantacionDetalleList(List<PlantacionDetalle> plantacionDetalleList) {
         this.plantacionDetalleList = plantacionDetalleList;
+    }
+
+    /**
+     * @return the idUbicacionPadre
+     */
+    public Ubicacion getIdUbicacionPadre() {
+        return idUbicacionPadre;
+    }
+
+    /**
+     * @param idUbicacionPadre the idUbicacionPadre to set
+     */
+    public void setIdUbicacionPadre(Ubicacion idUbicacionPadre) {
+        this.idUbicacionPadre = idUbicacionPadre;
+    }
+
+    /**
+     * @return the idUbicacionInt
+     */
+    public Integer getIdUbicacionInt() {
+        return idUbicacionInt;
+    }
+
+    /**
+     * @param idUbicacionInt the idUbicacionInt to set
+     */
+    public void setIdUbicacionInt(Integer idUbicacionInt) {
+        this.idUbicacionInt = idUbicacionInt;
+    }
+
+    /**
+     * @return the idUbicacion
+     */
+    public Ubicacion getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    /**
+     * @param idUbicacion the idUbicacion to set
+     */
+    public void setIdUbicacion(Ubicacion idUbicacion) {
+        this.idUbicacion = idUbicacion;
     }
 
 }

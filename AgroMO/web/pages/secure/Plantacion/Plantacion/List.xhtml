@@ -61,24 +61,18 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
-                        <p:column width="10%">
-                            <f:facet name="header">
-                                <h:outputText value="Bodega"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idBodega.codigoBodega}-#{item.idBodega.nombreBodega}"/>
-                        </p:column>
-
+             
                         <p:column width="30%">
                             <f:facet name="header">
                                 <h:outputText value="Productos"/>
                             </f:facet>
-                            <p:dataList value="#{item.detallePlantacionList}" var="detalle" type="ordered">
+                            <p:dataList value="#{item.plantacionDetalleList}" var="detalle" type="ordered">
                                 <p:outputLabel rendered="#{not empty detalle.idDetalleAdquisicion.idBien.nombreProducto}" value="Cantidad: #{detalle.cantidadPlantacionDetalle} #{detalle.tipoCantidadPlantacionDetalle}--  Producto: #{detalle.idDetalleAdquisicion.idBien.nombreProducto}"/>
                             </p:dataList>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{plantacionController.prepareCreate}"  oncomplete="PF('PlantacionCreateDialog').show()" rendered="#{plantacionController.permisoInsertar}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{plantacionController.prepareEdit}"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoActualizar}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{plantacionController.prepareCreate}" update=":PlantacionCreateForm"  oncomplete="PF('PlantacionCreateDialog').show()" rendered="#{plantacionController.permisoInsertar}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{plantacionController.prepareEdit}" update=":PlantacionEditForm"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoActualizar}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{plantacionController.destroy}" update=":growl,datalist" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoEliminar}"/>
                         </f:facet>
                     </p:dataTable>
@@ -123,7 +117,7 @@
                                     <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
                                 </p:column>
                                 <p:column colspan="1"  >
-                                    <p:selectOneMenu id="ubicacionbodega" value="#{bodegaController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter">
+                                    <p:selectOneMenu id="ubicacionbodega" value="#{plantacionController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter">
                                         <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
                                         <p:ajax update="ubicacionbodega2"/>
@@ -135,7 +129,7 @@
                                     <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
                                 </p:column>
                                 <p:column colspan="1"  >
-                                    <p:selectOneMenu id="ubicacionbodega2" value="#{bodegaController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter">
+                                    <p:selectOneMenu id="ubicacionbodega2" value="#{plantacionController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter">
                                         <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
                                         <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(bodegaController.selected.idUbicacionPadre)}"   />
                                     </p:selectOneMenu>
@@ -188,6 +182,10 @@
 
             </h:form>
 
+            <ui:include src="Create.xhtml" rendered="#{plantacionController.permisoInsertar}"/>
+            <ui:include src="Edit.xhtml" rendered="#{plantacionController.permisoActualizar}"/>
+            <ui:include src="CreateDetalle.xhtml" rendered="#{plantacionController.permisoInsertar}"/>
+            <ui:include src="EditDetalle.xhtml" rendered="#{plantacionController.permisoActualizar}"/>
 
             <script type="text/javascript">
 

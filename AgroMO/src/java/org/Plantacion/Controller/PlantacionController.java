@@ -41,6 +41,8 @@ public class PlantacionController implements Serializable {
     private org.Adquisicion.Facade.DetalleAdquisicionFacade ejbDetalleAdquisicionFacade;
     @EJB
     private org.Adquisicion.Facade.UbicacionFacade ejbUbicacionFacade;
+      @EJB
+    private org.Plantacion.Facade.TipoSueloFacade ejbTipoSueloFacade;
 
     private List<Plantacion> allPlantacionItems = null;
     private List<Plantacion> sonFilteredPerfiles;
@@ -109,9 +111,10 @@ public class PlantacionController implements Serializable {
     }
 
     public void changeProducto() {
-        if (currentDetalle != null) {
+        if (currentDetalle != null && currentDetalle.getIdDetalleAdquisicionInt() != null) {
+            currentDetalle.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(currentDetalle.getIdDetalleAdquisicionInt()));
             currentDetalle.setMaximo(currentDetalle.getIdDetalleAdquisicion().getCantidadBodegaDetalleAdquisicion());
-
+            currentDetalle.setTipoCantidadPlantacionDetalle(currentDetalle.getIdDetalleAdquisicion().getTipoCantidad());
         }
     }
 
@@ -200,8 +203,7 @@ public class PlantacionController implements Serializable {
         try {
             utx.begin();
 
-            //this.current.setEstadoPlantacion(true);
-            //current.setIdBodega(ejbBodegaFacade.findbyId(current.getIdBodegaInt()));
+            current.setIdUbicacionInt(current.getIdUbicacion().getIdUbicacion());
             getFacade().create(current);
             getAllPlantacionItems().add(current);
 
@@ -225,6 +227,7 @@ public class PlantacionController implements Serializable {
     public void createDetalle(ActionEvent event) throws SystemException {
         try {
             currentDetalle.setIdPlantacion(getSelected());
+            currentDetalle.setIdTipoSuelo(ejbTipoSueloFacade.findbyId(currentDetalle.getIdTipoSueloInt()));
             Random rnd = new Random();
             currentDetalle.setIdPlantacionDetalle(rnd.nextLong());
             getSelected().getPlantacionDetalleList().add(currentDetalle);

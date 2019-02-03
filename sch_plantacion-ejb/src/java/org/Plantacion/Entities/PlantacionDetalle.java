@@ -58,6 +58,8 @@ public class PlantacionDetalle implements Serializable {
     private TipoSuelo idTipoSuelo;
     @Transient
     private Double maximo;
+    @Transient
+    private Integer idTipoSueloInt;
 
     public PlantacionDetalle() {
     }
@@ -185,6 +187,20 @@ public class PlantacionDetalle implements Serializable {
      */
     public void setIdDetalleAdquisicionInt(Integer idDetalleAdquisicionInt) {
         this.idDetalleAdquisicionInt = idDetalleAdquisicionInt;
+    }
+
+    /**
+     * @return the idTipoSueloInt
+     */
+    public Integer getIdTipoSueloInt() {
+        return idTipoSueloInt;
+    }
+
+    /**
+     * @param idTipoSueloInt the idTipoSueloInt to set
+     */
+    public void setIdTipoSueloInt(Integer idTipoSueloInt) {
+        this.idTipoSueloInt = idTipoSueloInt;
     }
 
 }
