@@ -41,7 +41,7 @@ public class PlantacionController implements Serializable {
     private org.Adquisicion.Facade.DetalleAdquisicionFacade ejbDetalleAdquisicionFacade;
     @EJB
     private org.Adquisicion.Facade.UbicacionFacade ejbUbicacionFacade;
-      @EJB
+    @EJB
     private org.Plantacion.Facade.TipoSueloFacade ejbTipoSueloFacade;
 
     private List<Plantacion> allPlantacionItems = null;
@@ -226,7 +226,7 @@ public class PlantacionController implements Serializable {
 
     public void createDetalle(ActionEvent event) throws SystemException {
         try {
-            currentDetalle.setIdPlantacion(getSelected());
+            currentDetalle.setPlantacion(getSelected());
             currentDetalle.setIdTipoSuelo(ejbTipoSueloFacade.findbyId(currentDetalle.getIdTipoSueloInt()));
             Random rnd = new Random();
             currentDetalle.setIdPlantacionDetalle(rnd.nextLong());
@@ -265,6 +265,12 @@ public class PlantacionController implements Serializable {
     public void search(ActionEvent event) {
         try {
             allPlantacionItems = getFacade().findbyBusquedaAvanzada(current);
+            for (Plantacion item : allPlantacionItems) {
+                item.setIdUbicacion(ejbUbicacionFacade.findbyId(item.getIdUbicacionInt()));
+                for (PlantacionDetalle itemDetalle : item.getPlantacionDetalleList()) {
+                    itemDetalle.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(itemDetalle.getIdDetalleAdquisicionInt()));
+                }
+            }
             current = null;
             currentDetalle = null;
         } catch (Exception e) {
@@ -277,12 +283,18 @@ public class PlantacionController implements Serializable {
 
         setEditando(true);
         current = ejbFacade.findbyId(current.getIdPlantacion());
+        current.setIdUbicacion(ejbUbicacionFacade.findbyId(current.getIdUbicacionInt()));
+        current.setIdUbicacionPadre(current.getIdUbicacion().getPadreId());
+        for (PlantacionDetalle itemDetalle : current.getPlantacionDetalleList()) {
+            itemDetalle.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(itemDetalle.getIdDetalleAdquisicionInt()));
+        }
 
     }
 
     public void prepareEditDetalle(ActionEvent event) {
 
         setEditando(true);
+        currentDetalle.setIdTipoSueloInt(currentDetalle.getIdTipoSuelo().getIdTipoSuelo());
 
     }
 

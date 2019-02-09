@@ -6,6 +6,7 @@
 package org.Plantacion.Entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +16,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.Adquisicion.Entities.DetalleAdquisicion;
 
 /**
@@ -37,9 +41,6 @@ public class PlantacionDetalle implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_plantacion_detalle")
     private Long idPlantacionDetalle;
-    @JoinColumn(name = "id_plantacion", referencedColumnName = "id_plantacion")
-    @ManyToOne
-    private Plantacion idPlantacion;
     @Transient
     private DetalleAdquisicion idDetalleAdquisicion;
     @Column(name = "id_detalle_adquisicion")
@@ -51,15 +52,17 @@ public class PlantacionDetalle implements Serializable {
     @Column(name = "tipo_cantidad_plantacion_detalle")
     private String tipoCantidadPlantacionDetalle;
     @JoinColumn(name = "id_plantacion_detalle", referencedColumnName = "id_plantacion", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Plantacion plantacion;
     @JoinColumn(name = "id_tipo_suelo", referencedColumnName = "id_tipo_suelo")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoSuelo idTipoSuelo;
     @Transient
     private Double maximo;
     @Transient
     private Integer idTipoSueloInt;
+    @OneToMany(mappedBy = "idPlantacionDetalle", fetch = FetchType.LAZY)
+    private List<ControlPlantacion> controlPlantacionList;
 
     public PlantacionDetalle() {
     }
@@ -148,20 +151,6 @@ public class PlantacionDetalle implements Serializable {
     }
 
     /**
-     * @return the idPlantacion
-     */
-    public Plantacion getIdPlantacion() {
-        return idPlantacion;
-    }
-
-    /**
-     * @param idPlantacion the idPlantacion to set
-     */
-    public void setIdPlantacion(Plantacion idPlantacion) {
-        this.idPlantacion = idPlantacion;
-    }
-
-    /**
      * @return the idDetalleAdquisicion
      */
     public DetalleAdquisicion getIdDetalleAdquisicion() {
@@ -201,6 +190,15 @@ public class PlantacionDetalle implements Serializable {
      */
     public void setIdTipoSueloInt(Integer idTipoSueloInt) {
         this.idTipoSueloInt = idTipoSueloInt;
+    }
+
+    @XmlTransient
+    public List<ControlPlantacion> getControlPlantacionList() {
+        return controlPlantacionList;
+    }
+
+    public void setControlPlantacionList(List<ControlPlantacion> controlPlantacionList) {
+        this.controlPlantacionList = controlPlantacionList;
     }
 
 }

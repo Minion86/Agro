@@ -54,4 +54,21 @@ public class UbicacionFacade extends AbstractFacade<Ubicacion> {
         return (List<Ubicacion>) q.getResultList();
     }
 
+    /**
+     * Devuelve la ubicación por su id
+     *
+     * @param idUbicacion
+     * @return
+     */
+    public Ubicacion findbyId(Integer idUbicacion) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM Ubicacion s where ");
+        query.append(" s.idUbicacion=:idUbicacion ");
+        javax.persistence.Query q = em.createQuery(query.toString());
+        q.setParameter("idUbicacion", idUbicacion);
+        return (Ubicacion) q.getSingleResult();
+    }
+
 }

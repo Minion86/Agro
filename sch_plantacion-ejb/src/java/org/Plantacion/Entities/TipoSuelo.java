@@ -47,7 +47,7 @@ public class TipoSuelo implements Serializable {
     private String descripcionTipoSuelo;
     @Column(name = "estado_tipo_suelo")
     private Boolean estadoTipoSuelo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoSuelo", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoSuelo", fetch = FetchType.LAZY)
     private List<PlantacionDetalle> plantacionDetalleList;
 
     public TipoSuelo() {

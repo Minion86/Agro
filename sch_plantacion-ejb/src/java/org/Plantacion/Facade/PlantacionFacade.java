@@ -41,7 +41,7 @@ public class PlantacionFacade extends AbstractFacade<Plantacion> {
         StringBuilder query = new StringBuilder();
 
         query.append("SELECT s FROM Plantacion s ");
-        query.append(" WHERE 1=1 ");
+        query.append(" WHERE s.estadoPlantacion=true and s.estadoCosecha=false ");
 
         if (!"".equals(plantacion.getNombrePlantacion())) {
             query.append(" AND UPPER(s.nombrePlantacion) like :nombrePlantacion ");

@@ -12,10 +12,12 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,10 +41,6 @@ public class Plantacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_plantacion")
     private Long idPlantacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_ubicacion")
-    private Integer idUbicacionInt;
     @Column(name = "fecha_plantacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPlantacion;
@@ -58,6 +56,19 @@ public class Plantacion implements Serializable {
     private Ubicacion idUbicacion;
     @Transient
     private Ubicacion idUbicacionPadre;
+    @Column(name = "estado_cosecha")
+    private Boolean estadoCosecha;
+    @Column(name = "fecha_cosecha")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCosecha;
+    @Column(name = "estado_plantacion")
+    private Boolean estadoPlantacion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id_ubicacion")
+    private Integer idUbicacionInt;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "plantacion", fetch = FetchType.LAZY)
+    private PlantacionDetalle plantacionDetalle;
 
     public Plantacion() {
     }
@@ -208,6 +219,57 @@ public class Plantacion implements Serializable {
      */
     public void setIdUbicacion(Ubicacion idUbicacion) {
         this.idUbicacion = idUbicacion;
+    }
+
+    /**
+     * @return the estadoCosecha
+     */
+    public Boolean getEstadoCosecha() {
+        return estadoCosecha;
+    }
+
+    /**
+     * @param estadoCosecha the estadoCosecha to set
+     */
+    public void setEstadoCosecha(Boolean estadoCosecha) {
+        this.estadoCosecha = estadoCosecha;
+    }
+
+    /**
+     * @return the fechaCosecha
+     */
+    public Date getFechaCosecha() {
+        return fechaCosecha;
+    }
+
+    /**
+     * @param fechaCosecha the fechaCosecha to set
+     */
+    public void setFechaCosecha(Date fechaCosecha) {
+        this.fechaCosecha = fechaCosecha;
+    }
+
+    /**
+     * @return the estadoPlantacion
+     */
+    public Boolean getEstadoPlantacion() {
+        return estadoPlantacion;
+    }
+
+    /**
+     * @param estadoPlantacion the estadoPlantacion to set
+     */
+    public void setEstadoPlantacion(Boolean estadoPlantacion) {
+        this.estadoPlantacion = estadoPlantacion;
+    }
+
+
+    public PlantacionDetalle getPlantacionDetalle() {
+        return plantacionDetalle;
+    }
+
+    public void setPlantacionDetalle(PlantacionDetalle plantacionDetalle) {
+        this.plantacionDetalle = plantacionDetalle;
     }
 
 }
