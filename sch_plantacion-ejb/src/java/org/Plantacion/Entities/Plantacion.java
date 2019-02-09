@@ -44,7 +44,7 @@ public class Plantacion implements Serializable {
     @Column(name = "fecha_plantacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPlantacion;
-    @OneToMany(mappedBy = "idPlantacion", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "plantacion", cascade = CascadeType.ALL)
     private List<PlantacionDetalle> plantacionDetalleList;
     @Column(name = "nombre_plantacion")
     private String nombrePlantacion;
@@ -67,8 +67,6 @@ public class Plantacion implements Serializable {
     @NotNull
     @Column(name = "id_ubicacion")
     private Integer idUbicacionInt;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "plantacion", fetch = FetchType.LAZY)
-    private PlantacionDetalle plantacionDetalle;
 
     public Plantacion() {
     }
@@ -264,12 +262,5 @@ public class Plantacion implements Serializable {
     }
 
 
-    public PlantacionDetalle getPlantacionDetalle() {
-        return plantacionDetalle;
-    }
-
-    public void setPlantacionDetalle(PlantacionDetalle plantacionDetalle) {
-        this.plantacionDetalle = plantacionDetalle;
-    }
 
 }
