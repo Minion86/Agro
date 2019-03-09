@@ -61,7 +61,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
-             
+
                         <p:column width="30%">
                             <f:facet name="header">
                                 <h:outputText value="Productos"/>
@@ -109,7 +109,17 @@
 
 
                             </p:row>
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Producto:" for="producto" />
+                                </p:column>
+                                <p:column colspan="3"  >
+                                    <p:inputText maxlength="100" id="producto" value="#{controlController.selected.producto}"/>
+                                    <p:message for="producto" display="icon"/>
+                                </p:column>
 
+
+                            </p:row>
 
 
                             <p:row>
@@ -182,7 +192,7 @@
 
             </h:form>
 
-          
+
             <script type="text/javascript">
 
 

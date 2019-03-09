@@ -23,12 +23,8 @@
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Producto/Create.xhtml</file>
         </group>
         <group name="siith">
-            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/web/pages/secure/Plantacion/Plantacion/CreateDetalle.xhtml</file>
-            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/web/pages/secure/Adquisicion/Adquisicion/List.xhtml</file>
-            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/src/java/org/Plantacion/Controller/PlantacionController.java</file>
-            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/web/pages/secure/Plantacion/Plantacion/List.xhtml</file>
-            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/web/pages/secure/Plantacion/Plantacion/Edit.xhtml</file>
-            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/web/pages/secure/Plantacion/Plantacion/Create.xhtml</file>
+            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/src/java/org/Plantacion/Controller/ControlController.java</file>
+            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/web/pages/secure/Plantacion/Control/List.xhtml</file>
         </group>
     </open-files>
 </project-private>

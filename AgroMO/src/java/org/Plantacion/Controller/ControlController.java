@@ -264,12 +264,26 @@ public class ControlController implements Serializable {
 
     public void search(ActionEvent event) {
         try {
-            allPlantacionItems = getFacade().findbyBusquedaAvanzada(current);
-            for (Plantacion item : allPlantacionItems) {
+            allPlantacionItems = new ArrayList();
+            List<Plantacion> listaPlantacionTemp = getFacade().findbyBusquedaAvanzada(current);
+            for (Plantacion item : listaPlantacionTemp) {
+                Boolean encontroProducto = false;
+                if (current.getProducto() == null || current.getProducto().equals("")) {
+                    allPlantacionItems.add(item);
+                }
                 item.setIdUbicacion(ejbUbicacionFacade.findbyId(item.getIdUbicacionInt()));
                 for (PlantacionDetalle itemDetalle : item.getPlantacionDetalleList()) {
                     itemDetalle.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(itemDetalle.getIdDetalleAdquisicionInt()));
+                    if (current.getProducto() != null && !current.getProducto().equals("")) {
+                        if (itemDetalle.getIdDetalleAdquisicion().getIdBien().getNombreProducto().toUpperCase().contains(current.getProducto().toUpperCase())) {
+                            encontroProducto = true;
+                        }
+                    }
                 }
+                if (current.getProducto() != null && !current.getProducto().equals("") && encontroProducto) {
+                    allPlantacionItems.add(item);
+                }
+
             }
             current = null;
             currentDetalle = null;
