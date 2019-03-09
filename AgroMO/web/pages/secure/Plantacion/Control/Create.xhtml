@@ -15,59 +15,66 @@
                     <p:panelGrid rendered="#{controlController.currentControl != null}" >
                         <p:row>
                             <p:column colspan="1"  >
-                                <h:outputLabel value="Producto:" for="tipodeproducto" />
-
-                            </p:column>
-
-                            <p:column colspan="3"   >
-                                <p:outputPanel id="panelProductosLista">
-                                    <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="producto" value="#{controlController.currentControl.idDetalleAdquisicionInt}">
-                                        <f:selectItems value="#{listaDetalleAdquisicionController.getbyAll()}"   />
-                                        <p:ajax listener="#{controlController.changeProducto}" process="panelTipoCantidad,panelProductosLista" update="panelCantidad,panelTipoCantidad"/>
-                                    </p:selectOneMenu>
-
-                                </p:outputPanel>
-                            </p:column>
-
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="1"  >
-                                <h:outputLabel value="Tipo de Suelo:" for="tipodesuelo" />
-
-                            </p:column>
-
-                            <p:column colspan="3"   >
-                                <p:outputPanel id="panelTipoDeSueloLista">
-                                    <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="tipodesuelo" value="#{controlController.currentControl.idTipoSueloInt}">
-                                        <f:selectItems value="#{listaTipoSueloController.getbyAll()}"   />
-                                    </p:selectOneMenu>
-
-                                </p:outputPanel>
-                            </p:column>
-
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="1"  >
-                                <h:outputLabel value="Cantidad:" for="cantidad" />
+                                <h:outputLabel value="Observaciones:" for="descripcion" />
                             </p:column>
                             <p:column colspan="3"  >
-                                <p:panelGrid columns="1" id="panelCantidad">
-                                    <p:inputNumber required="true" requiredMessage="Valor Requerido"  minValue="0" id="cantidad" value="#{controlController.currentControl.cantidadControlPlantacionDetalle}" maxValue="#{controlController.currentControl.maximo}"/> 
-                                    <h:outputText value="máx #{controlController.currentControl.maximo}"/>
-                                    <p:message for="cantidad" display="icon"/>
+                                <p:inputTextarea maxlength="4000" id="descripcion" counterTemplate="{0} caracteres restantes." counter="displaydescripcion" value="#{controlController.currentControl.descripcionControl}"/>
+                                <h:outputText id="displaydescripcion" />
+                                <p:message for="descripcion" display="icon"/>
+                            </p:column>
+
+
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Afección:" for="afeccion" />
+                            </p:column>
+                            <p:column colspan="3"  >
+                                <p:panelGrid columns="1" id="panelAfeccion">
+                                    <p:selectBooleanCheckbox required="true" requiredMessage="Valor Requerido"   id="afeccion" value="#{controlController.currentControl.afeccion}"> 
+                                        <p:ajax update="rowAfeccionDescripcion" process="afeccion"/>
+                                    </p:selectBooleanCheckbox>
+                                    <p:message for="afeccion" display="icon"/>
                                 </p:panelGrid>
                             </p:column>
 
                         </p:row>
-                        <p:row>
+                        <p:row id="rowAfeccionDescripcion" rendered="#{controlController.currentControl.afeccion==true}">
                             <p:column colspan="1"  >
-                                <h:outputLabel value="Tipo Cantidad:" />
+                                <h:outputLabel value="Descripción Afección:" for="descripcionAfeccion" />
                             </p:column>
                             <p:column colspan="3"  >
-                                <p:panelGrid columns="1" id="panelTipoCantidad">
-                                    <h:outputText value="#{controlController.currentControl.tipoCantidadControlPlantacionDetalle}"/>
+                                <p:inputTextarea maxlength="4000" id="descripcionAfeccion" counterTemplate="{0} caracteres restantes." counter="displaydescripcionafeccion" value="#{controlController.currentControl.descripcionAfeccion}"/>
+                                <h:outputText id="displaydescripcionafeccion" />
+                                <p:message for="descripcionAfeccion" display="icon"/>
+                            </p:column>
+
+
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Tratamiento:" for="tratamiento" />
+                            </p:column>
+                            <p:column colspan="3"  >
+                                <p:panelGrid columns="1" id="panelTratamiento">
+                                    <p:selectBooleanCheckbox required="true" requiredMessage="Valor Requerido"   id="tratamiento" value="#{controlController.currentControl.tratamiento}">
+                                        <p:ajax update="rowTratamientoDescripcion" process="tratamiento"/>
+                                    </p:selectBooleanCheckbox>
+                                    <p:message for="tratamiento" display="icon"/>
                                 </p:panelGrid>
                             </p:column>
+
+                        </p:row>
+                        <p:row id="rowTratamientoDescripcion" rendered="#{controlController.currentControl.tratamiento==true}">
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Descripción Afección:" for="descripciontratamiento" />
+                            </p:column>
+                            <p:column colspan="3"  >
+                                <p:inputTextarea maxlength="4000" id="descripciontratamiento" counterTemplate="{0} caracteres restantes." counter="displaydescripciontratamiento" value="#{controlController.currentControl.descripciontratamiento}"/>
+                                <h:outputText id="displaydescripciontratamiento" />
+                                <p:message for="descripciontratamiento" display="icon"/>
+                            </p:column>
+
 
                         </p:row>
                     </p:panelGrid>

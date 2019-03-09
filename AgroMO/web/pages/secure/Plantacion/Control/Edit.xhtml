@@ -104,7 +104,7 @@
                                     </p:column>
 
                                     <f:facet name="footer">
-                                        <p:commandButton id="editDetalleButton"   icon="ui-icon-pencil" value="Registro de Control" actionListener="#{controlController.prepareCreateDetalle}" update=":ControlPlantacionCreateDetalleForm" process=":ControlPlantacionCreateDetalleForm,editDetalleButton" oncomplete="PF('PlantacionCreateDetalleDialog').show()" disabled="#{empty controlController.currentDetalle}" rendered="#{controlController.permisoActualizar}"/>
+                                        <p:commandButton id="editDetalleButton"   icon="ui-icon-pencil" value="Registro de Control" actionListener="#{controlController.prepareCreateDetalle}" update=":ControlPlantacionCreateDetalleForm" process=":ControlPlantacionCreateDetalleForm,editDetalleButton" oncomplete="PF('ControlPlantacionCreateDetalleDialog').show()" disabled="#{empty controlController.currentDetalle}" rendered="#{controlController.permisoActualizar}"/>
                                      
                                     </f:facet>
                                 </p:dataTable>

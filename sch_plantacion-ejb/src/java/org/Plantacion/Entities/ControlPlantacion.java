@@ -55,6 +55,12 @@ public class ControlPlantacion implements Serializable {
     @JoinColumn(name = "id_plantacion_detalle", referencedColumnName = "id_plantacion_detalle")
     @ManyToOne(fetch = FetchType.LAZY)
     private PlantacionDetalle idPlantacionDetalle;
+    @Size(max = 2147483647)
+    @Column(name = "descripcion_afeccion")
+    private String descripcionAfeccion;
+    @Size(max = 2147483647)
+    @Column(name = "descripcion_tratamiento")
+    private String descripcionTratamiento;
 
     public ControlPlantacion() {
     }
@@ -143,5 +149,33 @@ public class ControlPlantacion implements Serializable {
     public String toString() {
         return "org.Plantacion.Entities.ControlPlantacion[ idControlPlantacion=" + idControlPlantacion + " ]";
     }
-    
+
+    /**
+     * @return the descripcionAfeccion
+     */
+    public String getDescripcionAfeccion() {
+        return descripcionAfeccion;
+    }
+
+    /**
+     * @param descripcionAfeccion the descripcionAfeccion to set
+     */
+    public void setDescripcionAfeccion(String descripcionAfeccion) {
+        this.descripcionAfeccion = descripcionAfeccion;
+    }
+
+    /**
+     * @return the descripcionTratamiento
+     */
+    public String getDescripcionTratamiento() {
+        return descripcionTratamiento;
+    }
+
+    /**
+     * @param descripcionTratamiento the descripcionTratamiento to set
+     */
+    public void setDescripcionTratamiento(String descripcionTratamiento) {
+        this.descripcionTratamiento = descripcionTratamiento;
+    }
+
 }
