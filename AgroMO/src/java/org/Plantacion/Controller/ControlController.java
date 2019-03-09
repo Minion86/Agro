@@ -24,6 +24,7 @@ import org.Seguridades.Entities.SegAccionMenuPerfil;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
+import org.Plantacion.Entities.ControlPlantacion;
 
 /**
  *
@@ -35,6 +36,7 @@ public class ControlController implements Serializable {
 
     private Plantacion current;
     private PlantacionDetalle currentDetalle;
+    private ControlPlantacion currentControl;
     @EJB
     private org.Plantacion.Facade.PlantacionFacade ejbFacade;
     @EJB
@@ -131,12 +133,11 @@ public class ControlController implements Serializable {
     public void prepareCreate(ActionEvent event) {
         current = new Plantacion();
         current.setPlantacionDetalleList(new ArrayList<PlantacionDetalle>());
-
+       
     }
 
     public void prepareCreateDetalle(ActionEvent event) {
-        currentDetalle = new PlantacionDetalle();
-
+         setCurrentControl(new ControlPlantacion());
     }
 
     public void destroy(ActionEvent event) throws SystemException {
@@ -512,6 +513,20 @@ public class ControlController implements Serializable {
      */
     public void setCurrentDetalle(PlantacionDetalle currentDetalle) {
         this.currentDetalle = currentDetalle;
+    }
+
+    /**
+     * @return the currentControl
+     */
+    public ControlPlantacion getCurrentControl() {
+        return currentControl;
+    }
+
+    /**
+     * @param currentControl the currentControl to set
+     */
+    public void setCurrentControl(ControlPlantacion currentControl) {
+        this.currentControl = currentControl;
     }
 
 }

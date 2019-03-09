@@ -35,8 +35,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update=" editButton "/>
+                        <p:ajax event="rowUnselect" update=" editButton "/>
 
                         <f:facet name="header">
                             <h:commandLink rendered="#{controlController.permisoImprimir}">
@@ -71,9 +71,7 @@
                             </p:dataList>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{controlController.prepareCreate}"  oncomplete="PF('PlantacionCreateDialog').show()" rendered="#{controlController.permisoInsertar}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{controlController.prepareEdit}"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoActualizar}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{controlController.destroy}" update=":growl,datalist" disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoEliminar}"/>
+                            <p:commandButton id="editButton" update="ControlPlantacionEditForm" process="ControlPlantacionEditForm,editButton"   icon="ui-icon-pencil" value="Control Plantación" actionListener="#{controlController.prepareEdit}"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoActualizar}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
@@ -192,6 +190,9 @@
 
             </h:form>
 
+             <ui:include src="Create.xhtml" rendered="#{controlController.permisoInsertar}"/>
+            <ui:include src="Edit.xhtml" rendered="#{controlController.permisoActualizar}"/>
+          
 
             <script type="text/javascript">
 

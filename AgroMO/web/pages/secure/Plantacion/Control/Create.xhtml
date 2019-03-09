@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition>
+        <h:form id="ControlPlantacionCreateDetalleForm">
+            <p:dialog closable="false" id="ControlPlantacionCreateDetalleDlg" height="400"  widgetVar="ControlPlantacionCreateDetalleDialog"  resizable="false"  header="Nuevo Registro de Control">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid rendered="#{controlController.currentControl != null}" >
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Producto:" for="tipodeproducto" />
+
+                            </p:column>
+
+                            <p:column colspan="3"   >
+                                <p:outputPanel id="panelProductosLista">
+                                    <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="producto" value="#{controlController.currentControl.idDetalleAdquisicionInt}">
+                                        <f:selectItems value="#{listaDetalleAdquisicionController.getbyAll()}"   />
+                                        <p:ajax listener="#{controlController.changeProducto}" process="panelTipoCantidad,panelProductosLista" update="panelCantidad,panelTipoCantidad"/>
+                                    </p:selectOneMenu>
+
+                                </p:outputPanel>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Tipo de Suelo:" for="tipodesuelo" />
+
+                            </p:column>
+
+                            <p:column colspan="3"   >
+                                <p:outputPanel id="panelTipoDeSueloLista">
+                                    <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="tipodesuelo" value="#{controlController.currentControl.idTipoSueloInt}">
+                                        <f:selectItems value="#{listaTipoSueloController.getbyAll()}"   />
+                                    </p:selectOneMenu>
+
+                                </p:outputPanel>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Cantidad:" for="cantidad" />
+                            </p:column>
+                            <p:column colspan="3"  >
+                                <p:panelGrid columns="1" id="panelCantidad">
+                                    <p:inputNumber required="true" requiredMessage="Valor Requerido"  minValue="0" id="cantidad" value="#{controlController.currentControl.cantidadControlPlantacionDetalle}" maxValue="#{controlController.currentControl.maximo}"/> 
+                                    <h:outputText value="máx #{controlController.currentControl.maximo}"/>
+                                    <p:message for="cantidad" display="icon"/>
+                                </p:panelGrid>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Tipo Cantidad:" />
+                            </p:column>
+                            <p:column colspan="3"  >
+                                <p:panelGrid columns="1" id="panelTipoCantidad">
+                                    <h:outputText value="#{controlController.currentControl.tipoCantidadControlPlantacionDetalle}"/>
+                                </p:panelGrid>
+                            </p:column>
+
+                        </p:row>
+                    </p:panelGrid>
+                    <p:commandButton rendered="#{controlController.currentControl.idControlPlantacion == null}"  actionListener="#{controlController.createDetalle}" value="#{bundle.Save}" update="display,:ControlPlantacionEditForm:datalistProductos,:growl" oncomplete="handleSubmit(args, 'ControlPlantacionCreateDetalleDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('ControlPlantacionCreateDetalleDialog').hide()"  immediate="true" actionListener="#{controlController.cancelarDetalle}" update=":ControlPlantacionEditForm:datalistProductos"/>
+                </h:panelGroup>
+
+            </p:dialog>
+        </h:form>
+
+    </ui:composition>
+</html>
