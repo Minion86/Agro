@@ -16,8 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,6 +59,11 @@ public class ControlPlantacion implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descripcion_tratamiento")
     private String descripcionTratamiento;
+    @Column(name = "perdida")
+    private Boolean perdida;
+    @Size(max = 2147483647)
+    @Column(name = "descripcion_perdida")
+    private String descripcionPerdida;
 
     public ControlPlantacion() {
     }
@@ -176,6 +179,34 @@ public class ControlPlantacion implements Serializable {
      */
     public void setDescripcionTratamiento(String descripcionTratamiento) {
         this.descripcionTratamiento = descripcionTratamiento;
+    }
+
+    /**
+     * @return the perdida
+     */
+    public Boolean getPerdida() {
+        return perdida;
+    }
+
+    /**
+     * @param perdida the perdida to set
+     */
+    public void setPerdida(Boolean perdida) {
+        this.perdida = perdida;
+    }
+
+    /**
+     * @return the descripcionPerdida
+     */
+    public String getDescripcionPerdida() {
+        return descripcionPerdida;
+    }
+
+    /**
+     * @param descripcionPerdida the descripcionPerdida to set
+     */
+    public void setDescripcionPerdida(String descripcionPerdida) {
+        this.descripcionPerdida = descripcionPerdida;
     }
 
 }

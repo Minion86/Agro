@@ -38,7 +38,7 @@ public class DetalleAdquisicionFacade extends AbstractFacade<DetalleAdquisicion>
      * @param idDetalleAdquisicion
      * @return
      */
-    public List<DetalleAdquisicion> findPorId(Integer idDetalleAdquisicion) {
+    public List<DetalleAdquisicion> findPorId(Long idDetalleAdquisicion) {
         javax.persistence.Query q = em.createQuery("SELECT u FROM DetalleAdquisicion u where u.estadoDetalle=true and u.idDetalleAdquisicion=:idDetalleAdquisicion");
         q.setParameter("idDetalleAdquisicion", idDetalleAdquisicion);
         return (List<DetalleAdquisicion>) q.getResultList();

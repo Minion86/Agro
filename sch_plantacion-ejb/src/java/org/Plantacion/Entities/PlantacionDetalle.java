@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -63,6 +62,8 @@ public class PlantacionDetalle implements Serializable {
     private Integer idTipoSueloInt;
     @OneToMany(mappedBy = "idPlantacionDetalle", fetch = FetchType.LAZY)
     private List<ControlPlantacion> controlPlantacionList;
+    @Column(name = "estado")
+    private Integer estado;
 
     public PlantacionDetalle() {
     }
@@ -199,6 +200,20 @@ public class PlantacionDetalle implements Serializable {
 
     public void setControlPlantacionList(List<ControlPlantacion> controlPlantacionList) {
         this.controlPlantacionList = controlPlantacionList;
+    }
+
+    /**
+     * @return the estado
+     */
+    public Integer getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
 }

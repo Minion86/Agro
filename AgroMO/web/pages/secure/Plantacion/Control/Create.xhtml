@@ -8,9 +8,9 @@
       xmlns:pe="http://primefaces.org/ui/extensions">
 
     <ui:composition>
-        <h:form id="ControlPlantacionCreateDetalleForm">
-            <p:dialog closable="false" id="ControlPlantacionCreateDetalleDlg" height="400"  widgetVar="ControlPlantacionCreateDetalleDialog"  resizable="false"  header="Nuevo Registro de Control">
 
+        <p:dialog closable="false" id="ControlPlantacionCreateDetalleDlg" height="400"  widgetVar="ControlPlantacionCreateDetalleDialog"  resizable="false"  header="Nuevo Registro de Control">
+            <h:form id="ControlPlantacionCreateDetalleForm">
                 <h:panelGroup id="display">
                     <p:panelGrid rendered="#{controlController.currentControl != null}" >
                         <p:row>
@@ -31,8 +31,8 @@
                             </p:column>
                             <p:column colspan="3"  >
                                 <p:panelGrid columns="1" id="panelAfeccion">
-                                    <p:selectBooleanCheckbox required="true" requiredMessage="Valor Requerido"   id="afeccion" value="#{controlController.currentControl.afeccion}"> 
-                                        <p:ajax update="rowAfeccionDescripcion" process="afeccion"/>
+                                    <p:selectBooleanCheckbox   id="afeccion" value="#{controlController.currentControl.afeccion}"> 
+                                        <p:ajax listener="#{controlController.checkAfeccion}" update=":ControlPlantacionCreateDetalleForm:display" process="afeccion"/>
                                     </p:selectBooleanCheckbox>
                                     <p:message for="afeccion" display="icon"/>
                                 </p:panelGrid>
@@ -41,10 +41,10 @@
                         </p:row>
                         <p:row id="rowAfeccionDescripcion" rendered="#{controlController.currentControl.afeccion==true}">
                             <p:column colspan="1"  >
-                                <h:outputLabel value="Descripción Afección:" for="descripcionAfeccion" />
+                                <h:outputLabel value="Descripción Afección:" for="descripcionAfeccion"  rendered="#{controlController.currentControl.afeccion==true}"/>
                             </p:column>
                             <p:column colspan="3"  >
-                                <p:inputTextarea maxlength="4000" id="descripcionAfeccion" counterTemplate="{0} caracteres restantes." counter="displaydescripcionafeccion" value="#{controlController.currentControl.descripcionAfeccion}"/>
+                                <p:inputTextarea maxlength="4000" id="descripcionAfeccion" counterTemplate="{0} caracteres restantes." counter="displaydescripcionafeccion" value="#{controlController.currentControl.descripcionAfeccion}"  rendered="#{controlController.currentControl.afeccion==true}"/>
                                 <h:outputText id="displaydescripcionafeccion" />
                                 <p:message for="descripcionAfeccion" display="icon"/>
                             </p:column>
@@ -57,8 +57,8 @@
                             </p:column>
                             <p:column colspan="3"  >
                                 <p:panelGrid columns="1" id="panelTratamiento">
-                                    <p:selectBooleanCheckbox required="true" requiredMessage="Valor Requerido"   id="tratamiento" value="#{controlController.currentControl.tratamiento}">
-                                        <p:ajax update="rowTratamientoDescripcion" process="tratamiento"/>
+                                    <p:selectBooleanCheckbox id="tratamiento" value="#{controlController.currentControl.tratamiento}">
+                                        <p:ajax listener="#{controlController.checkTratamiento}" update=":ControlPlantacionCreateDetalleForm:display" process="panelTratamiento"/>
                                     </p:selectBooleanCheckbox>
                                     <p:message for="tratamiento" display="icon"/>
                                 </p:panelGrid>
@@ -67,23 +67,49 @@
                         </p:row>
                         <p:row id="rowTratamientoDescripcion" rendered="#{controlController.currentControl.tratamiento==true}">
                             <p:column colspan="1"  >
-                                <h:outputLabel value="Descripción Afección:" for="descripciontratamiento" />
+                                <h:outputLabel value="Descripción Tratamiento:" for="descripciontratamiento"  rendered="#{controlController.currentControl.tratamiento==true}"/>
                             </p:column>
                             <p:column colspan="3"  >
-                                <p:inputTextarea maxlength="4000" id="descripciontratamiento" counterTemplate="{0} caracteres restantes." counter="displaydescripciontratamiento" value="#{controlController.currentControl.descripciontratamiento}"/>
+                                <p:inputTextarea maxlength="4000" id="descripciontratamiento" counterTemplate="{0} caracteres restantes." counter="displaydescripciontratamiento" value="#{controlController.currentControl.descripcionTratamiento}"  rendered="#{controlController.currentControl.tratamiento==true}"/>
                                 <h:outputText id="displaydescripciontratamiento" />
                                 <p:message for="descripciontratamiento" display="icon"/>
                             </p:column>
 
 
                         </p:row>
-                    </p:panelGrid>
-                    <p:commandButton rendered="#{controlController.currentControl.idControlPlantacion == null}"  actionListener="#{controlController.createDetalle}" value="#{bundle.Save}" update="display,:ControlPlantacionEditForm:datalistProductos,:growl" oncomplete="handleSubmit(args, 'ControlPlantacionCreateDetalleDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('ControlPlantacionCreateDetalleDialog').hide()"  immediate="true" actionListener="#{controlController.cancelarDetalle}" update=":ControlPlantacionEditForm:datalistProductos"/>
-                </h:panelGroup>
+                        <p:row>
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Pérdida:" for="perdida" />
+                            </p:column>
+                            <p:column colspan="3"  >
+                                <p:panelGrid columns="1" id="panelPerdida">
+                                    <p:selectBooleanCheckbox id="perdida" value="#{controlController.currentControl.perdida}">
+                                        <p:ajax listener="#{controlController.checkperdida}" update=":ControlPlantacionCreateDetalleForm:display" process="panelPerdida"/>
+                                    </p:selectBooleanCheckbox>
+                                    <p:message for="perdida" display="icon"/>
+                                </p:panelGrid>
+                            </p:column>
 
-            </p:dialog>
-        </h:form>
+                        </p:row>
+                        <p:row id="rowPerdidaDescripcion" rendered="#{controlController.currentControl.perdida==true}">
+                            <p:column colspan="1"  >
+                                <h:outputLabel value="Descripción Pérdida:" for="descripcionperdida"  rendered="#{controlController.currentControl.perdida==true}"/>
+                            </p:column>
+                            <p:column colspan="3"  >
+                                <p:inputTextarea maxlength="4000" id="descripcionperdida" counterTemplate="{0} caracteres restantes." counter="displaydescripcionperdida" value="#{controlController.currentControl.descripcionPerdida}"  rendered="#{controlController.currentControl.perdida==true}"/>
+                                <h:outputText id="displaydescripcionperdida" />
+                                <p:message for="descripcionperdida" display="icon"/>
+                            </p:column>
+
+
+                        </p:row>
+                    </p:panelGrid>
+                    <p:commandButton rendered="#{controlController.currentControl.idControlPlantacion == null}"  actionListener="#{controlController.createControlDetalle}" value="#{bundle.Save}" update="display,:ControlPlantacionEditForm:datalistProductos,:growl" oncomplete="handleSubmit(args, 'ControlPlantacionCreateDetalleDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('ControlPlantacionCreateDetalleDialog').hide()"  immediate="true" actionListener="#{controlController.cancelarControlDetalle}" update=":ControlPlantacionEditForm:datalistProductos"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
 
     </ui:composition>
 </html>

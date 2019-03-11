@@ -43,6 +43,8 @@ public class PlantacionController implements Serializable {
     private org.Adquisicion.Facade.UbicacionFacade ejbUbicacionFacade;
     @EJB
     private org.Plantacion.Facade.TipoSueloFacade ejbTipoSueloFacade;
+    @EJB
+    private org.Plantacion.Facade.PlantacionDetalleFacade ejbPlantacionDetalleFacade;
 
     private List<Plantacion> allPlantacionItems = null;
     private List<Plantacion> sonFilteredPerfiles;
@@ -230,6 +232,7 @@ public class PlantacionController implements Serializable {
             currentDetalle.setIdTipoSuelo(ejbTipoSueloFacade.findbyId(currentDetalle.getIdTipoSueloInt()));
             Random rnd = new Random();
             currentDetalle.setIdPlantacionDetalle(rnd.nextLong());
+            currentDetalle.setEstado(1);
             getSelected().getPlantacionDetalleList().add(currentDetalle);
         } catch (Exception e) {
 
@@ -267,6 +270,7 @@ public class PlantacionController implements Serializable {
             allPlantacionItems = getFacade().findbyBusquedaAvanzada(current);
             for (Plantacion item : allPlantacionItems) {
                 item.setIdUbicacion(ejbUbicacionFacade.findbyId(item.getIdUbicacionInt()));
+                item.setPlantacionDetalleList(ejbPlantacionDetalleFacade.findbyPlantacionId(current.getIdPlantacion()));
                 for (PlantacionDetalle itemDetalle : item.getPlantacionDetalleList()) {
                     itemDetalle.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(itemDetalle.getIdDetalleAdquisicionInt()));
                 }

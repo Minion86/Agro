@@ -7,6 +7,7 @@ import org.Seguridades.Controller.util.JsfUtil;
 import org.Plantacion.Facade.PlantacionFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.PostConstruct;
@@ -45,6 +46,10 @@ public class ControlController implements Serializable {
     private org.Adquisicion.Facade.UbicacionFacade ejbUbicacionFacade;
     @EJB
     private org.Plantacion.Facade.TipoSueloFacade ejbTipoSueloFacade;
+    @EJB
+    private org.Plantacion.Facade.ControlPlantacionFacade ejbControlPlantacionFacade;
+    @EJB
+    private org.Plantacion.Facade.PlantacionDetalleFacade ejbPlantacionDetalleFacade;
 
     private List<Plantacion> allPlantacionItems = null;
     private List<Plantacion> sonFilteredPerfiles;
@@ -133,11 +138,11 @@ public class ControlController implements Serializable {
     public void prepareCreate(ActionEvent event) {
         current = new Plantacion();
         current.setPlantacionDetalleList(new ArrayList<PlantacionDetalle>());
-       
+
     }
 
     public void prepareCreateDetalle(ActionEvent event) {
-         setCurrentControl(new ControlPlantacion());
+        setCurrentControl(new ControlPlantacion());
     }
 
     public void destroy(ActionEvent event) throws SystemException {
@@ -195,6 +200,18 @@ public class ControlController implements Serializable {
 
     }
 
+    public void checkAfeccion() {
+
+    }
+
+    public void checkTratamiento() {
+
+    }
+
+    public void checkPerdida() {
+
+    }
+
     public void prepareSearch(ActionEvent event) {
         current = new Plantacion();
 
@@ -241,6 +258,32 @@ public class ControlController implements Serializable {
         }
     }
 
+    public void createControlDetalle(ActionEvent event) throws SystemException {
+        try {
+            utx.begin();
+            currentControl.setIdPlantacionDetalle(currentDetalle);
+            currentControl.setFechaControlPlantacion(new Date());
+            ejbControlPlantacionFacade.create(currentControl);
+
+            if (currentControl.getPerdida() == true) {
+                currentDetalle = ejbPlantacionDetalleFacade.findbyId(currentDetalle.getIdPlantacionDetalle());
+                currentDetalle.setEstado(2);
+                ejbPlantacionDetalleFacade.edit(currentDetalle);
+            }
+            utx.commit();
+            JsfUtil.addSuccessMessage("Registro creado exitosamente");
+            log.info("Usuario:" + getLoginController().getUser().getUsernameUsuario() + " producto actualizado exitosamente");
+            currentControl = null;
+            currentDetalle = null;
+        } catch (Exception e) {
+            utx.rollback();
+            currentDetalle = null;
+            log.error("Usuario:" + getLoginController().getUser().getUsernameUsuario() + " error en crear producto", e);
+            JsfUtil.addErrorMessage(getLoginController().getUser().getUsernameUsuario() + " error en crear producto");
+
+        }
+    }
+
     public void updateDetalle() {
 
         for (PlantacionDetalle item : getSelected().getPlantacionDetalleList()) {
@@ -273,6 +316,7 @@ public class ControlController implements Serializable {
                     allPlantacionItems.add(item);
                 }
                 item.setIdUbicacion(ejbUbicacionFacade.findbyId(item.getIdUbicacionInt()));
+                item.setPlantacionDetalleList(ejbPlantacionDetalleFacade.findbyPlantacionId(current.getIdPlantacion()));
                 for (PlantacionDetalle itemDetalle : item.getPlantacionDetalleList()) {
                     itemDetalle.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(itemDetalle.getIdDetalleAdquisicionInt()));
                     if (current.getProducto() != null && !current.getProducto().equals("")) {
@@ -351,6 +395,11 @@ public class ControlController implements Serializable {
 
     public void cancelarDetalle(ActionEvent event) {
         currentDetalle = null;
+    }
+
+    public void cancelarControlDetalle(ActionEvent event) {
+        currentDetalle = null;
+        currentControl = null;
     }
 
     public Plantacion getPlantacion(java.lang.Integer id) {

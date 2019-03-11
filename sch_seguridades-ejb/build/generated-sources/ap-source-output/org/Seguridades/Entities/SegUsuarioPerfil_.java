@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import org.Seguridades.Entities.SegPerfil;
 import org.Seguridades.Entities.SegUsuario;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-03-09T18:14:55")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-03-11T11:43:25")
 @StaticMetamodel(SegUsuarioPerfil.class)
 public class SegUsuarioPerfil_ { 
 
