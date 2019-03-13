@@ -50,4 +50,24 @@ public class ControlPlantacionFacade extends AbstractFacade<ControlPlantacion> {
         return (ControlPlantacion) q.getSingleResult();
     }
 
+    /**
+     * Devuelve el listado de registro de control plantación de acuerdo a su id
+     * de plantación
+     *
+     * @param idPlantacionDetalle
+     * @return
+     */
+    public List<ControlPlantacion> findbyIdPlantacionDetalle(Long idPlantacionDetalle) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM ControlPlantacion s ");
+        query.append(" WHERE s.idPlantacionDetalle.idPlantacionDetalle=:idPlantacionDetalle");
+
+        javax.persistence.Query q = em.createQuery(query.toString());
+        q.setParameter("idPlantacionDetalle", idPlantacionDetalle);
+
+        return (List<ControlPlantacion>) q.getResultList();
+    }
+
 }

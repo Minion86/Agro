@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition>
+
+        <p:dialog id="ControlPlantacionViewDetalleDlg" height="600"  widgetVar="ControlPlantacionViewDetalleDialog" closable="true" header="Lista de Controles">
+            <h:form id="ControlPlantacionViewDetalleForm">
+                <h:panelGroup id="display">
+                    <p:dataTable id="datalistControl" value="#{controlController.allControlPlantacionItems}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.idControlPlantacion}"
+                                 rows="10"
+                                 widgetVar="datalistVar"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+                        <p:column width="10%">
+                            <f:facet name="header" >
+                                <h:outputText value="Fecha Control"/>
+                            </f:facet>
+                            <h:outputText  value="#{item.fechaControlPlantacion}"/>
+                        </p:column>
+                        <p:column width="40%">
+                            <f:facet name="header" >
+                                <h:outputText value="Descripción"/>
+                            </f:facet>
+                            <h:outputText  value="#{item.descripcionControl}"/>
+                        </p:column>
+                        <p:column width="15%">
+                            <f:facet name="header" >
+                                <h:outputText value="Afección"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionAfeccion}"/>
+                        </p:column>
+                        <p:column width="15%">
+                            <f:facet name="header" >
+                                <h:outputText value="Tratamiento"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionTratamiento}"/>
+                        </p:column>
+                        <p:column width="15%">
+                            <f:facet name="header" >
+                                <h:outputText value="Pérdida"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionPerdida}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+
+    </ui:composition>
+</html>

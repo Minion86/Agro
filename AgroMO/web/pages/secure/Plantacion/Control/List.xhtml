@@ -35,8 +35,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update=" editButton "/>
-                        <p:ajax event="rowUnselect" update=" editButton "/>
+                        <p:ajax event="rowSelect"   update=" editButton viewButton "/>
+                        <p:ajax event="rowUnselect" update=" editButton viewButton "/>
 
                         <f:facet name="header">
                             <h:commandLink rendered="#{controlController.permisoImprimir}">
@@ -72,6 +72,8 @@
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="editButton" update="ControlPlantacionEditForm" process="ControlPlantacionEditForm,editButton"   icon="ui-icon-pencil" value="Control Plantación" actionListener="#{controlController.prepareEdit}"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoActualizar}"/>
+                            <p:commandButton id="viewButton" update="ControlPlantacionViewForm" process="ControlPlantacionViewForm,viewButton"   icon="fa fa-tree" value="Lista Controles" actionListener="#{controlController.prepareView}"  oncomplete="PF('PlantacionViewDialog').show()" disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoActualizar}"/>
+
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
@@ -190,9 +192,11 @@
 
             </h:form>
 
-             <ui:include src="Create.xhtml" rendered="#{controlController.permisoInsertar}"/>
+            <ui:include src="Create.xhtml" rendered="#{controlController.permisoInsertar}"/>
             <ui:include src="Edit.xhtml" rendered="#{controlController.permisoActualizar}"/>
-          
+            <ui:include src="View.xhtml" rendered="#{controlController.permisoActualizar}"/>
+ <ui:include src="ViewDetalle.xhtml" rendered="#{controlController.permisoActualizar}"/>
+
 
             <script type="text/javascript">
 
