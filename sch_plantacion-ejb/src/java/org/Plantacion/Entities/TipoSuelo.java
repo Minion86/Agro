@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author fmullo
+ * @author nmartinez
  */
 @Entity
 @Table(name = "tipo_suelo", schema = "sch_plantacion")

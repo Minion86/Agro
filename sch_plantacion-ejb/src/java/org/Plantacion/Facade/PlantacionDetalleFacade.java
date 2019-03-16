@@ -13,7 +13,7 @@ import org.Plantacion.Entities.PlantacionDetalle;
 
 /**
  *
- * @author fmullo
+ * @author nmartinez
  */
 @Stateless
 public class PlantacionDetalleFacade extends AbstractFacade<PlantacionDetalle> {

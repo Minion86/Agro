@@ -11,7 +11,7 @@ import org.Seguridades.Entities.SegMenu;
 
 /**
  *
- * @author fmullo
+ * @author nmartinez
  */
 public class SegMenuDTO {
 

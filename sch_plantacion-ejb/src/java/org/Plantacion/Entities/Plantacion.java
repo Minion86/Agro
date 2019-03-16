@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ import org.Adquisicion.Entities.Ubicacion;
 
 /**
  *
- * @author fmullo
+ * @author nmartinez
  */
 @Entity
 @Table(name = "plantacion", schema = "sch_plantacion")
@@ -67,6 +68,8 @@ public class Plantacion implements Serializable {
     private Integer idUbicacionInt;
     @Transient
     private String producto;
+     @OneToMany(mappedBy = "idPlantacion", fetch = FetchType.LAZY)
+    private List<WeatherMap> weatherMapList;
 
     public Plantacion() {
     }
@@ -273,6 +276,20 @@ public class Plantacion implements Serializable {
      */
     public void setProducto(String producto) {
         this.producto = producto;
+    }
+
+    /**
+     * @return the weatherMapList
+     */
+    public List<WeatherMap> getWeatherMapList() {
+        return weatherMapList;
+    }
+
+    /**
+     * @param weatherMapList the weatherMapList to set
+     */
+    public void setWeatherMapList(List<WeatherMap> weatherMapList) {
+        this.weatherMapList = weatherMapList;
     }
 
 }

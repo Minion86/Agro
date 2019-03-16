@@ -14,7 +14,7 @@ import org.Plantacion.Entities.Plantacion;
 
 /**
  *
- * @author fmullo
+ * @author nmartinez
  */
 @Stateless
 public class ControlPlantacionFacade extends AbstractFacade<ControlPlantacion> {

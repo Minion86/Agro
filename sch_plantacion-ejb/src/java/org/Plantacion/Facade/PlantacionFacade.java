@@ -5,15 +5,17 @@
  */
 package org.Plantacion.Facade;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 import org.Plantacion.Entities.Plantacion;
 
 /**
  *
- * @author fmullo
+ * @author nmartinez
  */
 @Stateless
 public class PlantacionFacade extends AbstractFacade<Plantacion> {
@@ -92,6 +94,25 @@ public class PlantacionFacade extends AbstractFacade<Plantacion> {
         q.setParameter("idPlantacion", idPlantacion);
 
         return (Plantacion) q.getSingleResult();
+    }
+
+    /**
+     * Devuelve el registro de plantación de acuerdo a su id
+     *
+     * @param hoy
+     * @return
+     */
+    public List<Plantacion> findActivos(Date hoy) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM Plantacion s ");
+        query.append(" WHERE s.estadoPlantacion=true and s.idPlantacion not in ");
+        query.append(" (SELECT w.idPlantacion.idPlantacion from WeatherMap w where CAST(w.fechaRegistro AS date)=CAST(:hoy AS date))");
+        javax.persistence.Query q = em.createQuery(query.toString());
+        q.setMaxResults(59);
+        q.setParameter("hoy", hoy, TemporalType.DATE);
+        return (List<Plantacion>) q.getResultList();
     }
 
 }

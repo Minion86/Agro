@@ -27,7 +27,7 @@ import org.Adquisicion.Entities.DetalleAdquisicion;
 
 /**
  *
- * @author fmullo
+ * @author nmartinez
  */
 @Entity
 @Table(name = "plantacion_detalle", schema = "sch_plantacion")

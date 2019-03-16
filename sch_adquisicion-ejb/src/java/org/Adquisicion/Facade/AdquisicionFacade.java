@@ -13,7 +13,7 @@ import org.Adquisicion.Entities.Adquisicion;
 
 /**
  *
- * @author fmullo
+ * @author nmartinez
  */
 @Stateless
 public class AdquisicionFacade extends AbstractFacade<Adquisicion> {
