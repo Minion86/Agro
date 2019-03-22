@@ -35,8 +35,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update=" editButton viewButton "/>
-                        <p:ajax event="rowUnselect" update=" editButton viewButton "/>
+                        <p:ajax event="rowSelect"   update=" editButton viewButton crossButton"/>
+                        <p:ajax event="rowUnselect" update=" editButton viewButton crossButton"/>
 
                         <f:facet name="header">
                             <h:commandLink rendered="#{controlController.permisoImprimir}">
@@ -72,7 +72,8 @@
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="editButton" update="ControlPlantacionEditForm" process="ControlPlantacionEditForm,editButton"   icon="ui-icon-pencil" value="Control Plantación" actionListener="#{controlController.prepareEdit}"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoActualizar}"/>
-                            <p:commandButton id="viewButton" update="ControlPlantacionViewForm" process="ControlPlantacionViewForm,viewButton"   icon="fa fa-tree" value="Lista Controles" actionListener="#{controlController.prepareView}"  oncomplete="PF('PlantacionViewDialog').show()" disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoActualizar}"/>
+                            <p:commandButton id="viewButton" update="ControlPlantacionViewForm" process="ControlPlantacionViewForm,viewButton"   icon="ui-icon-calendar" value="Lista Controles" actionListener="#{controlController.prepareView}"  oncomplete="PF('PlantacionViewDialog').show()" disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoActualizar}"/>
+                            <p:commandButton id="crossButton"  ajax="false"  icon="ui-icon-print" value="Reporte Cruzado" actionListener="#{controlController.prepareReport}"  disabled="#{controlController.selected.idPlantacion==null}" rendered="#{controlController.permisoActualizar}"/>
 
                         </f:facet>
                     </p:dataTable>

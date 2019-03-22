@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetallePlantacion" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DAAgroMO"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEFF0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#D8D8D8"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_TH" mode="Opaque" backcolor="#F5F5DC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_CH" mode="Opaque" backcolor="#FFFFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="DsControl" uuid="122b674f-3844-4c30-8d77-cc8c19e05231">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DAAgroMO"/>
+		<parameter name="id_plantacion_detalle" class="java.lang.Long"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT id_control_plantacion, id_plantacion_detalle, descripcion_control, afeccion, tratamiento, humedad_suelo, fecha_control_plantacion, descripcion_tratamiento, descripcion_afeccion, perdida, descripcion_perdida
+	FROM sch_plantacion.control_plantacion where id_plantacion_detalle= $P{id_plantacion_detalle};]]>
+		</queryString>
+		<field name="id_control_plantacion" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.label" value="id_control_plantacion"/>
+		</field>
+		<field name="id_plantacion_detalle" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.label" value="id_plantacion_detalle"/>
+		</field>
+		<field name="descripcion_control" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="descripcion_control"/>
+		</field>
+		<field name="afeccion" class="java.lang.Boolean">
+			<property name="com.jaspersoft.studio.field.label" value="afeccion"/>
+		</field>
+		<field name="tratamiento" class="java.lang.Boolean">
+			<property name="com.jaspersoft.studio.field.label" value="tratamiento"/>
+		</field>
+		<field name="humedad_suelo" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="humedad_suelo"/>
+		</field>
+		<field name="fecha_control_plantacion" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.label" value="fecha_control_plantacion"/>
+		</field>
+		<field name="descripcion_tratamiento" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="descripcion_tratamiento"/>
+		</field>
+		<field name="descripcion_afeccion" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="descripcion_afeccion"/>
+		</field>
+		<field name="perdida" class="java.lang.Boolean">
+			<property name="com.jaspersoft.studio.field.label" value="perdida"/>
+		</field>
+		<field name="descripcion_perdida" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="descripcion_perdida"/>
+		</field>
+		<group name="fecha_control_plantacion">
+			<groupExpression><![CDATA[$F{fecha_control_plantacion}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="DsWeatherMap" uuid="94facd74-5acb-4d6d-b909-2e0bb67039a7">
+		<property name="com.jaspersoft.studio.data.sql.tables">
+			<![CDATA[c2NoX3BsYW50YWNpb24ud2VhdGhlcl9tYXAgLDE1LDE1LDNlYmZjZmIyLTk5ZDEtNDhiNy04NDVi
+LWZkZTgxN2NlNGFiODs=
+]]>
+		</property>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DAAgroMO"/>
+		<parameter name="id_plantacion" class="java.lang.Long"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT sch_plantacion.weather_map.id,
+	sch_plantacion.weather_map.lon,
+	sch_plantacion.weather_map.lat,
+	sch_plantacion.weather_map.temp,
+	sch_plantacion.weather_map.pressure,
+	sch_plantacion.weather_map.humidity,
+	sch_plantacion.weather_map.temp_min,
+	sch_plantacion.weather_map.temp_max,
+	sch_plantacion.weather_map.id_plantacion,
+	sch_plantacion.weather_map.fecha_registro
+FROM sch_plantacion.weather_map  where id_plantacion= $P{id_plantacion};]]>
+		</queryString>
+		<field name="id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.label" value="id"/>
+		</field>
+		<field name="lon" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="lon"/>
+		</field>
+		<field name="lat" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="lat"/>
+		</field>
+		<field name="temp" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="temp"/>
+		</field>
+		<field name="pressure" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="pressure"/>
+		</field>
+		<field name="humidity" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="humidity"/>
+		</field>
+		<field name="temp_min" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="temp_min"/>
+		</field>
+		<field name="temp_max" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="temp_max"/>
+		</field>
+		<field name="id_plantacion" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.label" value="id_plantacion"/>
+		</field>
+		<field name="fecha_registro" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.label" value="fecha_registro"/>
+		</field>
+	</subDataset>
+	<parameter name="id_plantacion" class="java.lang.Long"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pd.id_plantacion_detalle, pd.id_plantacion, 
+pd.id_tipo_suelo, pd.id_detalle_adquisicion, 
+pd.cantidad_plantacion_detalle, 
+pd.tipo_cantidad_plantacion_detalle, 
+pd.estado,
+p.nombre_plantacion,
+pro.nombre_producto
+	FROM sch_plantacion.plantacion_detalle pd join 
+	sch_plantacion.plantacion p on pd.id_plantacion=p.id_plantacion
+	join 
+	sch_adquisicion.detalle_adquisicion da on pd.id_detalle_adquisicion=da.id_detalle_adquisicion
+	join 
+	sch_adquisicion.producto pro on da.id_bien=pro.id_producto
+	where 
+	
+	pd.estado=1]]>
+	</queryString>
+	<field name="nombre_producto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre_producto"/>
+	</field>
+	<field name="cantidad_plantacion_detalle" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="cantidad_plantacion_detalle"/>
+	</field>
+	<field name="tipo_cantidad_plantacion_detalle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_cantidad_plantacion_detalle"/>
+	</field>
+	<field name="id_plantacion_detalle" class="java.lang.Long"/>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="0" y="0" width="185" height="20" forecolor="#000000" uuid="ea146c24-f5ff-4e9f-ae10-5edc7b4262a5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f49fbc0a-3007-4d4f-848a-c4b15e203cf1"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="185" y="0" width="185" height="20" forecolor="#000000" uuid="c0484135-38b9-48a4-9c12-098ce40b3881">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0577324c-a8b2-45f0-b670-c807ca975fe4"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad plantada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="370" y="0" width="185" height="20" forecolor="#000000" uuid="b9acb3a9-9791-42de-a57c-78f9363601d7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a651b89d-0de7-4fef-bb76-1607d4f302f4"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="363">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="0" y="0" width="185" height="20" uuid="e2fa2e30-900b-4e10-8c94-91507aaf5192">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f49fbc0a-3007-4d4f-848a-c4b15e203cf1"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_producto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="185" y="0" width="185" height="20" uuid="71246907-3a17-48e8-9a12-8b0b2c999cc0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0577324c-a8b2-45f0-b670-c807ca975fe4"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad_plantacion_detalle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="370" y="0" width="185" height="20" uuid="5f405a24-8722-42a0-8e4c-cb8e94141f1c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a651b89d-0de7-4fef-bb76-1607d4f302f4"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_cantidad_plantacion_detalle}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="50" width="555" height="90" uuid="a06988de-b8b2-44c3-b58a-4d1ec4364002">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table 1_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DsControl" uuid="6d893ec8-0bcf-4376-8fc6-7ae65ace1f6d">
+						<datasetParameter name="id_plantacion_detalle">
+							<datasetParameterExpression><![CDATA[$F{id_plantacion_detalle}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="60" uuid="9337546a-0aad-4356-ab51-003e9431393b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="30" uuid="7e25000a-cab7-4a42-8556-8547043732e6"/>
+								<text><![CDATA[Fecha]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="15855cf0-3ca0-4b5d-9bcd-93f91fbc0fbe"/>
+								<textFieldExpression><![CDATA[$F{fecha_control_plantacion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="78" uuid="247fb0a2-6597-4bf7-b985-7ed7c3c73159">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="78" height="30" uuid="f55feefb-cda0-4d70-b10c-e40ca6ff4e70"/>
+								<text><![CDATA[Descripción]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="78" height="30" uuid="cdf74593-0ac9-48cd-83cd-407bebea756a"/>
+								<textFieldExpression><![CDATA[$F{descripcion_control}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="52" uuid="93e973b5-586f-4722-8b81-f4041ac3eec6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="52" height="30" uuid="76f1d1fc-d63a-4f4d-b696-441e6907d9cd"/>
+								<text><![CDATA[Afección]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="52" height="30" uuid="f260585c-77a6-40bf-89bc-43d7afdfff49"/>
+								<textFieldExpression><![CDATA[($F{afeccion}==true?"Sí":"No")]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="76" uuid="fa049d70-308a-4a69-ae11-df2ed49e6033">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="76" height="30" uuid="f2b1ca7a-32d2-4e54-9d69-eb282a0173fd"/>
+								<text><![CDATA[Descripción Afección]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="76" height="30" uuid="ee093c6b-13e2-4300-8074-d562a2bc9303"/>
+								<textFieldExpression><![CDATA[$F{descripcion_afeccion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="66" uuid="3b04e04e-bb3f-46e8-b90f-578937422204">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="66" height="30" uuid="0f9a53e1-c957-4f94-91cb-d6edd5c87632"/>
+								<text><![CDATA[Tratamiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="66" height="30" uuid="e4ee2d04-788b-4591-9052-660069d46873"/>
+								<textFieldExpression><![CDATA[($F{tratamiento}==true?"Sí":"No")]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="74" uuid="3ae69a0e-e978-45ec-aaaa-c4159c6fe504">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="74" height="30" uuid="6d600412-80fd-4f1c-81b1-2db8011cb2e2"/>
+								<text><![CDATA[Descripción Tratamiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="74" height="30" uuid="a4a9c6ab-70ba-4e87-be83-eaf0d91edb8f"/>
+								<textFieldExpression><![CDATA[$F{descripcion_tratamiento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="44" uuid="fcfced29-0d4d-449a-828a-c888b2baa7c4">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="44" height="30" uuid="ed387faf-6666-4163-a851-f750dcb3cd85"/>
+								<text><![CDATA[Pérdida]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="44" height="30" uuid="4a1ca5e6-cdd8-411e-84ef-00c907ab7615"/>
+								<textFieldExpression><![CDATA[($F{perdida}==true?"Sí":"No")]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="56" uuid="7f6efd6c-fd95-48b2-b793-9420c7504aa6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="56" height="30" uuid="362addc0-302e-49ab-945d-527000b0199c"/>
+								<text><![CDATA[Razón Pérdida]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="56" height="30" uuid="0ac3273c-93bf-4712-819e-796d513d22e5"/>
+								<textFieldExpression><![CDATA[$F{descripcion_perdida}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="52" uuid="d3968ddd-bd91-4b2f-a3cb-036a33d0393d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:tableHeader style="Table 1_TH" height="30"/>
+						<jr:columnHeader style="Table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="52" height="30" uuid="d6177547-89b6-4022-b145-f96f9289ca02"/>
+								<text><![CDATA[Humedad]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="52" height="30" uuid="343d5428-31ab-4ebb-aa46-b71e82dcd445"/>
+								<textFieldExpression><![CDATA[$F{humedad_suelo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement x="0" y="170" width="555" height="90" uuid="f1fe5c9a-3e8a-4015-a944-2f262551456b">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 2_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 2_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table 2_TD"/>
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DsWeatherMap" uuid="eab01e20-db71-418c-9e17-81fe532099ab">
+						<datasetParameter name="id_plantacion">
+							<datasetParameterExpression><![CDATA[$P{id_plantacion}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="140" uuid="68ffb310-c7a7-4775-b47f-544794a7076d">
+						<jr:tableHeader style="Table 2_TH" height="30"/>
+						<jr:columnHeader style="Table 2_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="140" height="30" uuid="e11fc599-67d8-4698-ab6a-3928ae176542"/>
+								<text><![CDATA[Fecha]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 2_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="140" height="30" uuid="de922e6a-181f-423a-8d12-1b89e6bd3883"/>
+								<textFieldExpression><![CDATA[$F{fecha_registro}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="160" uuid="75fe450a-af8d-49ab-8ad1-c9505c29e06a">
+						<jr:tableHeader style="Table 2_TH" height="30"/>
+						<jr:columnHeader style="Table 2_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="160" height="30" uuid="d067627a-42ab-482f-b8eb-4ffdb9d16d1c"/>
+								<text><![CDATA[Tempetatura Centígrados]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 2_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="160" height="30" uuid="2a2ff499-2161-4d6b-8028-dd46ac99e8ab"/>
+								<textFieldExpression><![CDATA[$F{temp}-273]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="150" uuid="0f2958ff-a0c2-4156-bbb7-6c72f3d78ca9">
+						<jr:tableHeader style="Table 2_TH" height="30"/>
+						<jr:columnHeader style="Table 2_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="150" height="30" uuid="341920b8-0fe7-4647-a4f7-19b2bda28423"/>
+								<text><![CDATA[Presión Pascales]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 2_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="150" height="30" uuid="b16e0708-8faf-4f0e-99c1-bcd0cf549bf1"/>
+								<textFieldExpression><![CDATA[$F{pressure}+" hPa"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="0e84f376-6f39-471c-9828-7c6ef0772c40">
+						<jr:tableHeader style="Table 2_TH" height="30"/>
+						<jr:columnHeader style="Table 2_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="110" height="30" uuid="6de95665-3e45-463e-aa1b-c630ff37f6c9"/>
+								<text><![CDATA[Humedad %]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 2_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="110" height="30" uuid="db0e5990-0c99-4272-809a-fa99d75b59bc"/>
+								<textFieldExpression><![CDATA[$F{humidity}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

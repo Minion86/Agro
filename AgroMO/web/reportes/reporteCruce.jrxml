@@ -1,315 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="extractoContrato" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5e5661c8-fc13-4668-9e74-5487b0e25a71">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteCruce" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5e5661c8-fc13-4668-9e74-5487b0e25a71">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="252"/>
-	<parameter name="ID_CONTRATO" class="java.lang.Integer"/>
-	<parameter name="CONTRACTUAL" class="java.lang.String">
-		<defaultValueExpression><![CDATA["Las partes se ratifican y aceptan el contenido de las cláusulas contractuales."]]></defaultValueExpression>
-	</parameter>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DAAgroMO"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="dsAgroMO" uuid="81a26c16-8799-44e2-abfd-a4010ccd6f08">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DAAgroMO"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="id_plantacion" class="java.lang.Long"/>
+	<parameter name="pathDetalle" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-     c_contrato."c_contrato_id" AS c_contrato_id,
-     c_contrato."c_empleado_id" AS c_empleado_id,
-     c_contrato."c_institucion_id" AS c_institucion_id,
-     c_contrato."c_tipo_contrato_id" AS c_tipo_contrato_id,
-     c_contrato."fecha_inicio" AS fecha_inicio,
-     c_contrato."fecha_fin" AS fecha_fin,
-     c_grupo_ocupacional."nombre" AS c_grupo_ocupacional_nombre,
-     c_contrato."cargo" AS cargo,
-     c_contrato."remuneracion" AS remuneracion,
-     c_contrato."periodo_prueba" AS periodo_prueba,
-     c_contrato."jornada_nocturna" AS jornada_nocturna,
-     c_contrato."funciones_confianza" AS funciones_confianza,
-     c_contrato."joranda_mensual" AS joranda_mensual,
-     c_contrato."jornada_especial" AS jornada_especial,
-     c_contrato."codigo" AS c_contrato_codigo,
-     c_empleado."nombre" AS c_empleado_nombre,
-     "contratos".c_edad_empleado(c_contrato."c_empleado_id") as edad_empleado,
-     c_empleado."fecha_nacimiento" AS c_empleado_fecha_nacimiento,
-     c_empleado."identificacion" AS c_empleado_identificacion,
-     c_empleado."extranjero" AS c_empleado_extranjero,
-     c_empleado."genero" AS c_empleado_genero,
-     c_empleado."discapcidad" AS c_empleado_discapcidad,
-     c_empleado."tipo_discapacidad" AS c_empleado_tipo_discapcidad,
-    case
-        when c_empleado."tipo_discapacidad" ='A' THEN 'Auditiva'
-        when c_empleado."tipo_discapacidad" ='F' THEN 'Física'
-        when c_empleado."tipo_discapacidad" ='L' THEN 'Lenguaje'
-        when upper(c_empleado."tipo_discapacidad") ='P' THEN 'Psicológica'
-        when c_empleado."tipo_discapacidad" ='V' THEN 'Visual'
-        when c_empleado."tipo_discapacidad" ='I' THEN 'Intelectual'
-        else 'Ninguna'
-    end as tipo_discapcidad,
-     c_empleado."ex_migrante" AS c_empleado_ex_migrante,
-     c_tipo_contrato."nombre" AS c_tipo_contrato_nombre,
-     c_institucion."razon_social" AS c_institucion_razon_social,
-     c_institucion."identificacion" AS c_institucion_identificacion,
-     "contratos".c_representante_lega(c_contrato."c_institucion_id") as representante_nombre,
-      c_contrato."es_empleo_joven" AS es_empleo_joven
-FROM
-     "contratos"."c_empleado" c_empleado INNER JOIN "contratos"."c_contrato" c_contrato ON c_empleado."c_empleado_id" = c_contrato."c_empleado_id"
-     INNER JOIN "contratos"."c_tipo_contrato" c_tipo_contrato ON c_contrato."c_tipo_contrato_id" = c_tipo_contrato."c_tipo_contrato_id"
-     INNER JOIN "contratos"."c_institucion" c_institucion ON c_contrato."c_institucion_id" = c_institucion."c_institucion_id"
-     INNER JOIN "contratos"."c_grupo_ocupacional" c_grupo_ocupacional ON c_contrato."c_grupo_ocupacional_id" = c_grupo_ocupacional."c_grupo_ocupacional_id"
-where c_contrato.c_contrato_id=$P{ID_CONTRATO}]]>
+		<![CDATA[SELECT p.id_plantacion, u.nombre_ubicacion, p.fecha_plantacion, 
+p.nombre_plantacion, p.estado_cosecha, p.fecha_cosecha, 
+p.estado_plantacion
+	FROM sch_plantacion.plantacion p join sch_adquisicion.ubicacion u
+	on p.id_ubicacion=u.id_ubicacion where p.id_plantacion= $P{id_plantacion} ]]>
 	</queryString>
-	<field name="c_contrato_id" class="java.lang.Long"/>
-	<field name="c_empleado_id" class="java.lang.Integer"/>
-	<field name="c_institucion_id" class="java.lang.Integer"/>
-	<field name="c_tipo_contrato_id" class="java.lang.Integer"/>
-	<field name="fecha_inicio" class="java.sql.Date"/>
-	<field name="fecha_fin" class="java.sql.Date"/>
-	<field name="c_grupo_ocupacional_nombre" class="java.lang.String"/>
-	<field name="cargo" class="java.lang.String"/>
-	<field name="remuneracion" class="java.math.BigDecimal"/>
-	<field name="periodo_prueba" class="java.lang.Boolean"/>
-	<field name="jornada_nocturna" class="java.lang.Boolean"/>
-	<field name="funciones_confianza" class="java.lang.Boolean">
-		<fieldDescription><![CDATA[True.- Aplica funciones de confianza. False.- No aplica funciones de confianza.]]></fieldDescription>
+	<field name="id_plantacion" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id_plantacion"/>
 	</field>
-	<field name="joranda_mensual" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[Horas de trabajo mensual.]]></fieldDescription>
+	<field name="nombre_ubicacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre_ubicacion"/>
 	</field>
-	<field name="jornada_especial" class="java.lang.Boolean"/>
-	<field name="c_contrato_codigo" class="java.lang.String"/>
-	<field name="c_empleado_nombre" class="java.lang.String"/>
-	<field name="edad_empleado" class="java.lang.String">
-		<fieldDescription><![CDATA[Guarda la edad de la persona que es contratada.]]></fieldDescription>
+	<field name="fecha_plantacion" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_plantacion"/>
 	</field>
-	<field name="c_empleado_fecha_nacimiento" class="java.sql.Date"/>
-	<field name="c_empleado_identificacion" class="java.lang.String"/>
-	<field name="c_empleado_extranjero" class="java.lang.Boolean"/>
-	<field name="c_empleado_genero" class="java.lang.String"/>
-	<field name="c_empleado_discapcidad" class="java.lang.Boolean"/>
-	<field name="c_empleado_tipo_discapcidad" class="java.lang.String"/>
-	<field name="tipo_discapcidad" class="java.lang.String"/>
-	<field name="c_empleado_ex_migrante" class="java.lang.Boolean"/>
-	<field name="c_tipo_contrato_nombre" class="java.lang.String"/>
-	<field name="c_institucion_razon_social" class="java.lang.String"/>
-	<field name="c_institucion_identificacion" class="java.lang.String"/>
-	<field name="representante_nombre" class="java.lang.String"/>
-	<field name="es_empleo_joven" class="java.lang.Boolean"/>
-	<background>
-		<band height="802">
-			<staticText>
-				<reportElement x="0" y="95" width="555" height="16" uuid="cb5ce567-846a-46f0-b034-9936732e14e4"/>
-				<textElement>
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[INFORMACIÓN DEL EMPLEADOR]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="113" width="155" height="20" uuid="d0d88432-1b99-4e8a-90be-b3cc1c355417"/>
-				<text><![CDATA[CI / RUC:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="113" width="205" height="20" uuid="4c42e375-6ae1-4334-bd99-d01430e97d52"/>
-				<textFieldExpression><![CDATA[$F{c_institucion_identificacion}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="133" width="400" height="20" uuid="28210d3f-c8d5-49c8-b4f8-acca1e5eb353"/>
-				<textFieldExpression><![CDATA[$F{c_institucion_razon_social}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="133" width="155" height="20" uuid="bd6a60f9-c31d-47fd-abe0-ee54392e91d2"/>
-				<text><![CDATA[Razón Social:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="153" width="155" height="20" uuid="f9cc61eb-e18c-41ea-a048-87d7687df478"/>
-				<text><![CDATA[Representante Legal:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="153" width="400" height="20" uuid="0bf3c70c-ee7c-410c-aae1-abfc01e8782a"/>
-				<textFieldExpression><![CDATA[$F{representante_nombre}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="191" width="555" height="16" uuid="034c5993-3786-4ba5-95ff-8b544052910b"/>
-				<textElement>
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[INFORMACIÓN DEL TRABAJADOR]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="210" width="155" height="20" uuid="69830e86-07f2-4a44-8211-2095307ddb63"/>
-				<text><![CDATA[CI / Pasaporte:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="210" width="205" height="20" uuid="46f7d804-9d5e-42af-9e5d-f1d2a541d082"/>
-				<textFieldExpression><![CDATA[$F{c_empleado_identificacion}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="230" width="155" height="20" uuid="fa9e8d70-bf33-472d-bde2-a2a7650a55f8"/>
-				<text><![CDATA[Nombre del Trabajador:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="230" width="400" height="20" uuid="04ee14bb-304f-4239-a507-eb2b349a7160"/>
-				<textFieldExpression><![CDATA[$F{c_empleado_nombre}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="250" width="155" height="20" uuid="a7a06487-a8ed-46ea-855c-9a9e05f6490e"/>
-				<text><![CDATA[Edad:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="250" width="205" height="20" uuid="5f2e23b0-0c37-4a59-b64f-f0e94bc2bb4e"/>
-				<textFieldExpression><![CDATA[$F{edad_empleado}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="270" width="155" height="20" uuid="27f51f87-d43f-4020-8cea-9ac047e894ac"/>
-				<text><![CDATA[Discapacidad:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="155" y="270" width="205" height="20" uuid="fabbc7cf-94ef-46d5-833a-97ea76fa1519"/>
-				<textFieldExpression><![CDATA[$F{tipo_discapcidad}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="290" width="155" height="20" uuid="7af21f75-a351-4080-a616-2b28943781a9"/>
-				<text><![CDATA[Migrante Retornado:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="155" y="290" width="205" height="20" uuid="69a61328-8710-43b0-9926-77bbccda2847"/>
-				<textFieldExpression><![CDATA[( $F{c_empleado_ex_migrante} ? "Si" : "No" )]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="327" width="555" height="16" uuid="5dc0d1f2-358a-41d7-ac28-3a9e5742a668"/>
-				<textElement>
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[INFORMACIÓN DEL CONTRATO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="346" width="155" height="20" uuid="43e1839d-a833-42bc-9ffe-8f879a163c00"/>
-				<text><![CDATA[Tipo de Contrato:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="346" width="400" height="20" uuid="2b169636-3f6a-40f7-a36d-4a20f435a314"/>
-				<textFieldExpression><![CDATA[$F{c_tipo_contrato_nombre}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="366" width="155" height="20" uuid="71640108-576f-425c-a0b6-6a76ff767f3e"/>
-				<text><![CDATA[Fecha de inicio de labores:]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="155" y="366" width="205" height="20" uuid="4e3a6e95-3710-4444-8bb8-2266bb48b2e0"/>
-				<textFieldExpression><![CDATA[$F{fecha_inicio}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="386" width="155" height="20" uuid="08aedaae-1ab8-4406-8592-669281638297"/>
-				<text><![CDATA[Fecha terminación de contrato:]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="155" y="386" width="205" height="20" uuid="5bee2c6b-2640-4fb1-b18c-cbdda6ce9f22"/>
-				<textFieldExpression><![CDATA[$F{fecha_fin}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="406" width="155" height="20" uuid="4f2c0d9a-54f2-453c-9cc9-2691a6c95b09"/>
-				<text><![CDATA[Período de prueba:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="155" y="406" width="205" height="20" uuid="18d25bbe-8424-4c46-bb36-cf1f485ac890"/>
-				<textFieldExpression><![CDATA[( $F{periodo_prueba} ? "Si" : "No" )]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="426" width="155" height="20" uuid="577cf6c2-876d-4cdb-87a4-46a31b58f32f"/>
-				<text><![CDATA[Remuneración:]]></text>
-			</staticText>
-			<textField pattern="$ #,##0.00" isBlankWhenNull="true">
-				<reportElement x="155" y="426" width="205" height="20" uuid="8f2b8d91-64e9-41e4-b4d4-939159fda84e"/>
-				<textFieldExpression><![CDATA[$F{remuneracion}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="446" width="155" height="20" uuid="d9251802-9f07-43a7-ad35-a5da6aa17252"/>
-				<text><![CDATA[Cargo del trabajador:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="446" width="400" height="20" uuid="6a81efce-fa70-49d0-a63c-decf2a5e0806"/>
-				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="466" width="155" height="20" uuid="b8c46f1a-f0d2-4106-8c07-5e47493f923e"/>
-				<text><![CDATA[Grupo ocupacional:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="466" width="400" height="20" uuid="76c0f155-fca2-48be-a25e-953c30b1050b"/>
-				<textFieldExpression><![CDATA[$F{c_grupo_ocupacional_nombre}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="486" width="155" height="20" uuid="49d1daa3-c7cd-42ea-a919-4d29428ea81d"/>
-				<text><![CDATA[Jornada de trabajo (horas):]]></text>
-			</staticText>
-			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
-				<reportElement x="155" y="486" width="205" height="20" uuid="d3b2d01e-0d2e-44a4-8509-af9d13cc1a29"/>
-				<textFieldExpression><![CDATA[$F{joranda_mensual}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="506" width="155" height="20" uuid="800cfcd0-6189-4751-b79c-1d0880513821"/>
-				<text><![CDATA[Jornada nocturna:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="155" y="506" width="205" height="20" uuid="a460c6b1-2700-493b-8ce8-58d574d772f3"/>
-				<textFieldExpression><![CDATA[( $F{jornada_nocturna} ? "Si" : "No" )]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="526" width="155" height="20" uuid="732418f7-bda1-431f-9f45-bd1010571d87"/>
-				<text><![CDATA[Jornada especial:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="155" y="526" width="205" height="20" uuid="1937e8a6-2fe0-47e6-90b3-c7b3a97d4d7c"/>
-				<textFieldExpression><![CDATA[( $F{jornada_especial} ? "Si" : "No" )]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="546" width="155" height="20" uuid="3543b790-5695-4fee-825b-68cb0f258ca0"/>
-				<text><![CDATA[Funciones de confianza:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="155" y="546" width="205" height="20" uuid="3426c845-935f-41d6-b1a3-3ff52d5cc62b"/>
-				<textFieldExpression><![CDATA[( $F{funciones_confianza} ? "Si" : "No" )]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="0" y="111" width="555" height="1" uuid="34701ba8-8fb3-431b-913a-c7321d1f4b38"/>
-			</line>
-			<line>
-				<reportElement x="0" y="206" width="555" height="1" uuid="feb78424-32d3-4156-afc7-49e98907ee7e"/>
-			</line>
-			<line>
-				<reportElement x="0" y="343" width="555" height="1" uuid="dcada7aa-6792-443d-a7df-c75508798dd2"/>
-			</line>
-			<staticText>
-				<reportElement x="0" y="566" width="155" height="20" uuid="b485e730-c525-4b2f-9d3f-9e24b4e1f35b"/>
-				<text><![CDATA[Aplica empleo joven:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="155" y="566" width="205" height="20" uuid="102f81fe-eb0b-4a2b-bcec-856d87cb3fba"/>
-				<textFieldExpression><![CDATA[( $F{es_empleo_joven} ? "Si" : "No" )]]></textFieldExpression>
-			</textField>
-		</band>
-	</background>
+	<field name="nombre_plantacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre_plantacion"/>
+	</field>
+	<field name="estado_cosecha" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="estado_cosecha"/>
+	</field>
+	<field name="fecha_cosecha" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_cosecha"/>
+	</field>
+	<field name="estado_plantacion" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="estado_plantacion"/>
+	</field>
 	<title>
 		<band height="64" splitType="Stretch">
-			<componentElement>
-				<reportElement x="411" y="0" width="144" height="29" isRemoveLineWhenBlank="true" uuid="917fb80a-739e-41ee-ad8e-f791ddbab391"/>
-				<jr:Code39 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
-					<jr:codeExpression><![CDATA[$F{c_contrato_codigo}]]></jr:codeExpression>
-				</jr:Code39>
-			</componentElement>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="40" width="555" height="20" uuid="c50f5392-1e30-4431-a3d2-6eee58cf2f44"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{c_tipo_contrato_nombre}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[UPPER($F{nombre_plantacion} )]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="18" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="555" height="15" uuid="9f14e983-7722-43eb-8e6c-205a581a34ce"/>
-				<textFieldExpression><![CDATA[$P{CONTRACTUAL}]]></textFieldExpression>
-			</textField>
+	<detail>
+		<band height="75">
+			<subreport>
+				<reportElement x="0" y="0" width="560" height="70" uuid="6a9c4f43-0a60-4b79-b027-5d0247363ac4"/>
+				<subreportParameter name="id_plantacion">
+					<subreportParameterExpression><![CDATA[$P{id_plantacion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{pathDetalle}]]></subreportExpression>
+			</subreport>
 		</band>
-	</pageHeader>
+	</detail>
 	<lastPageFooter>
 		<band height="17">
 			<textField pattern="dd/MM/yyyy h.mm a">
@@ -317,14 +73,13 @@ where c_contrato.c_contrato_id=$P{ID_CONTRATO}]]>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="455" height="15" uuid="d3d89986-e6c4-491d-8f20-edb5a3e71548"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["MINISTERIO DEL TRABAJO - "+$F{c_institucion_razon_social}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_ubicacion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
