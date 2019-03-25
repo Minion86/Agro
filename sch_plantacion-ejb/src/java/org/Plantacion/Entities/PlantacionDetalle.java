@@ -6,6 +6,7 @@
 package org.Plantacion.Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.Adquisicion.Entities.DetalleAdquisicion;
+import org.Adquisicion.Entities.Ubicacion;
 
 /**
  *
@@ -64,6 +66,18 @@ public class PlantacionDetalle implements Serializable {
     private List<ControlPlantacion> controlPlantacionList;
     @Column(name = "estado")
     private Integer estado;
+    @Transient
+    private String nombrePlantacion;
+    @Transient
+    private Date fechaPlantacionDesde;
+    @Transient
+    private Date fechaPlantacionHasta;
+    @Transient
+    private Ubicacion idUbicacion;
+    @Transient
+    private Ubicacion idUbicacionPadre;
+    @Transient
+    private String producto;
 
     public PlantacionDetalle() {
     }
@@ -214,6 +228,90 @@ public class PlantacionDetalle implements Serializable {
      */
     public void setEstado(Integer estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the nombrePlantacion
+     */
+    public String getNombrePlantacion() {
+        return nombrePlantacion;
+    }
+
+    /**
+     * @param nombrePlantacion the nombrePlantacion to set
+     */
+    public void setNombrePlantacion(String nombrePlantacion) {
+        this.nombrePlantacion = nombrePlantacion;
+    }
+
+    /**
+     * @return the fechaPlantacionDesde
+     */
+    public Date getFechaPlantacionDesde() {
+        return fechaPlantacionDesde;
+    }
+
+    /**
+     * @param fechaPlantacionDesde the fechaPlantacionDesde to set
+     */
+    public void setFechaPlantacionDesde(Date fechaPlantacionDesde) {
+        this.fechaPlantacionDesde = fechaPlantacionDesde;
+    }
+
+    /**
+     * @return the fechaPlantacionHasta
+     */
+    public Date getFechaPlantacionHasta() {
+        return fechaPlantacionHasta;
+    }
+
+    /**
+     * @param fechaPlantacionHasta the fechaPlantacionHasta to set
+     */
+    public void setFechaPlantacionHasta(Date fechaPlantacionHasta) {
+        this.fechaPlantacionHasta = fechaPlantacionHasta;
+    }
+
+    /**
+     * @return the idUbicacion
+     */
+    public Ubicacion getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    /**
+     * @param idUbicacion the idUbicacion to set
+     */
+    public void setIdUbicacion(Ubicacion idUbicacion) {
+        this.idUbicacion = idUbicacion;
+    }
+
+    /**
+     * @return the idUbicacionPadre
+     */
+    public Ubicacion getIdUbicacionPadre() {
+        return idUbicacionPadre;
+    }
+
+    /**
+     * @param idUbicacionPadre the idUbicacionPadre to set
+     */
+    public void setIdUbicacionPadre(Ubicacion idUbicacionPadre) {
+        this.idUbicacionPadre = idUbicacionPadre;
+    }
+
+    /**
+     * @return the producto
+     */
+    public String getProducto() {
+        return producto;
+    }
+
+    /**
+     * @param producto the producto to set
+     */
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 
 }

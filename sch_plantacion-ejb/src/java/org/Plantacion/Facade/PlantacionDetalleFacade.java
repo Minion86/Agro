@@ -68,5 +68,52 @@ public class PlantacionDetalleFacade extends AbstractFacade<PlantacionDetalle> {
 
         return (List<PlantacionDetalle>) q.getResultList();
     }
+    
+    
+    /**
+     * Devuelve el listado de plantaciones de acuerdo a la busqueda avanzada
+     *
+     * @param plantacion
+     * @return
+     */
+    public List<PlantacionDetalle> findbyBusquedaAvanzada(PlantacionDetalle plantacion) {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append("SELECT s FROM PlantacionDetalle s ");
+        query.append(" WHERE s.plantacion.estadoPlantacion=true and s.plantacion.estadoCosecha=false ");
+
+        if (!"".equals(plantacion.getNombrePlantacion())) {
+            query.append(" AND UPPER(s.plantacion.nombrePlantacion) like :nombrePlantacion ");
+        }
+
+        if (plantacion.getIdUbicacion() != null) {
+            query.append(" AND s.plantacion.idUbicacion = :idUbicacion ");
+        }
+        if (plantacion.getFechaPlantacionDesde() != null) {
+            query.append(" AND s.plantacion.fechaPlantacion >= :fechaPlantacionDesde ");
+        }
+        if (plantacion.getFechaPlantacionHasta() != null) {
+            query.append(" AND s.plantacion.fechaPlantacion <= :fechaPlantacionHasta ");
+        }
+
+        javax.persistence.Query q = em.createQuery(query.toString());
+
+        if (!"".equals(plantacion.getNombrePlantacion())) {
+            q.setParameter("nombrePlantacion", "%" + plantacion.getNombrePlantacion().toUpperCase() + "%");
+        }
+
+        if (plantacion.getIdUbicacion() != null) {
+            q.setParameter("idUbicacion", plantacion.getIdUbicacion());
+        }
+        if (plantacion.getFechaPlantacionDesde() != null) {
+            q.setParameter("fechaPlantacionDesde", plantacion.getFechaPlantacionDesde());
+        }
+        if (plantacion.getFechaPlantacionHasta() != null) {
+            q.setParameter("fechaPlantacionHasta", plantacion.getFechaPlantacionHasta());
+        }
+        return q.getResultList();
+    }
+
 
 }
