@@ -11,7 +11,7 @@
             <p:dialog id="SegUsuarioCreateDlg" height="400"  widgetVar="SegUsuarioCreateDialog"  resizable="false"  header="Nuevo Registro">
 
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="3" rendered="#{segUsuarioController.selected != null}">
+                    <p:panelGrid columnClasses="form-label,form-input,form-input" columns="3" rendered="#{segUsuarioController.selected != null}">
                         <h:outputLabel value="*Cédula:"/>
                         <p:inputText maxlength="20" id="txtCedula" value="#{segUsuarioController.selected.identificacionUsuario}" required="true" requiredMessage="Valor Requerido" >
                             <f:validator for="txtCedula" validatorId="numerosValidacion"/>

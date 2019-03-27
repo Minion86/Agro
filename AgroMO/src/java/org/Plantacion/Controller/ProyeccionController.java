@@ -6,11 +6,10 @@ import org.Plantacion.Entities.Plantacion;
 import org.Seguridades.Controller.util.JsfUtil;
 import org.Plantacion.Facade.PlantacionFacade;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -19,16 +18,22 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.Plantacion.Entities.PlantacionDetalle;
 import org.Seguridades.Entities.SegAccionMenuPerfil;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
+import org.Plantacion.Dto.AnalisisClimaControl;
 import org.Plantacion.Entities.ControlPlantacion;
-import org.Plantacion.util.FacesUtil;
+import org.Plantacion.Entities.WeatherMap;
+import org.Plantacion.Facade.WeatherMapFacade;
 import org.Plantacion.util.JasperReportUtil;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -53,9 +58,13 @@ public class ProyeccionController implements Serializable {
     private org.Plantacion.Facade.ControlPlantacionFacade ejbControlPlantacionFacade;
     @EJB
     private org.Plantacion.Facade.PlantacionDetalleFacade ejbPlantacionDetalleFacade;
+    @EJB
+    private WeatherMapFacade ejbWeatherMapFacade;
 
     private List<PlantacionDetalle> allPlantacionItems = null;
     private List<Plantacion> sonFilteredPerfiles;
+    
+    private String analisis;
 
     static Logger log = Logger.getLogger(ProyeccionController.class.getName());
 
@@ -76,6 +85,11 @@ public class ProyeccionController implements Serializable {
     private boolean permisoImprimir = false;
     private boolean permisoListarPagina = false;
     private boolean permisoBuscar = false;
+
+    private LineChartModel temperaturaModel = new LineChartModel();
+    private LineChartModel humedadModel = new LineChartModel();
+
+    private List<AnalisisClimaControl> analisisClimaControlList;
 
     public ProyeccionController() {
 
@@ -124,12 +138,6 @@ public class ProyeccionController implements Serializable {
         return ejbFacade;
     }
 
-    public String prepareView() {
-        //current = (Plantacion) getItems().getRowData();
-        //selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
     public void prepareSearch(ActionEvent event) {
         current = new PlantacionDetalle();
 
@@ -145,7 +153,7 @@ public class ProyeccionController implements Serializable {
                     allPlantacionItems.add(item);
                 }
                 item.setIdUbicacion(ejbUbicacionFacade.findbyId(item.getPlantacion().getIdUbicacionInt()));
-                current.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(current.getIdDetalleAdquisicionInt()));
+                item.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(item.getIdDetalleAdquisicionInt()));
                 if (current.getProducto() != null && !current.getProducto().equals("")) {
                     if (current.getIdDetalleAdquisicion().getIdBien().getNombreProducto().toUpperCase().contains(current.getProducto().toUpperCase())) {
                         encontroProducto = true;
@@ -167,7 +175,89 @@ public class ProyeccionController implements Serializable {
     public void prepareView(ActionEvent event) {
 
         setEditando(true);
+        Calendar hoy = Calendar.getInstance();
         current = ejbPlantacionDetalleFacade.findbyId(current.getIdPlantacionDetalle());
+        current.setIdUbicacion(ejbUbicacionFacade.findbyId(current.getPlantacion().getIdUbicacionInt()));
+        current.setIdUbicacionPadre(current.getIdUbicacion().getPadreId());
+        current.setIdDetalleAdquisicion(ejbDetalleAdquisicionFacade.findbyId(current.getIdDetalleAdquisicionInt()));
+        setHumedadModel(new LineChartModel());
+        setTemperaturaModel(new LineChartModel());
+        List<WeatherMap> weatherMapList = new ArrayList<WeatherMap>();
+        weatherMapList = ejbWeatherMapFacade.findbyIdPlantacion(current.getPlantacion().getIdPlantacion());
+        SimpleDateFormat formatoFechaDB = new SimpleDateFormat("yyyy-MM-dd");
+        Double totalTemperatura = 0.0;
+        Double totalHumedad = 0.0;
+        LineChartSeries temp = new LineChartSeries();
+        LineChartSeries hum = new LineChartSeries();
+        for (WeatherMap item : weatherMapList) {
+
+            temp.setFill(true);
+            temp.setLabel("Temperatura");
+            temp.set(formatoFechaDB.format(item.getFechaRegistro()), item.getTemp() - 273);
+
+            hum.setFill(true);
+            hum.setLabel("Humedad %");
+            hum.set(formatoFechaDB.format(item.getFechaRegistro()), item.getHumidity());
+
+            totalTemperatura += item.getTemp();
+            totalHumedad += item.getHumidity();
+
+        }
+        temperaturaModel.addSeries(temp);
+        humedadModel.addSeries(hum);
+
+        temperaturaModel.setTitle("Niveles de temperatura en grados centígrados");
+        temperaturaModel.setLegendPosition("ne");
+        temperaturaModel.setStacked(true);
+        temperaturaModel.setShowPointLabels(true);
+
+        humedadModel.setTitle("Niveles de humedad en porcentaje");
+        humedadModel.setLegendPosition("ne");
+        humedadModel.setStacked(true);
+        humedadModel.setShowPointLabels(true);
+
+        Axis xAxisTemp = new CategoryAxis("Fecha");
+        Axis xAxisHum = new CategoryAxis("Fecha");
+        temperaturaModel.getAxes().put(AxisType.X, xAxisTemp);
+        humedadModel.getAxes().put(AxisType.X, xAxisHum);
+
+        Axis yAxisTemp = temperaturaModel.getAxis(AxisType.Y);
+        Axis yAxisHum = humedadModel.getAxis(AxisType.Y);
+        yAxisTemp.setLabel("Grados");
+        yAxisTemp.setMin(0);
+        yAxisTemp.setMax(100);
+
+        yAxisHum.setLabel("%");
+        yAxisHum.setMin(0);
+        yAxisHum.setMax(100);
+
+        List<ControlPlantacion> controlPlantacionList = new ArrayList<>();
+        setAnalisisClimaControlList(new ArrayList<>());
+        controlPlantacionList = ejbControlPlantacionFacade.findbyIdPlantacionDetalle(current.getIdPlantacionDetalle());
+
+        for (ControlPlantacion item : controlPlantacionList) {
+            List<WeatherMap> climaCruceList = ejbWeatherMapFacade.findbyIdPlantacionFecha(current.getPlantacion().getIdPlantacion(), hoy.getTime());
+            Double totalTemperaturaCruce = 0.0;
+            Double totalHumedadCruce = 0.0;
+            for (WeatherMap item2 : climaCruceList) {
+                totalTemperaturaCruce += item2.getTemp();
+                totalHumedadCruce += item2.getHumidity();
+            }
+            AnalisisClimaControl analisisClimaControlItem = new AnalisisClimaControl();
+            analisisClimaControlItem.setTotalTemperatura(totalTemperaturaCruce - 273);
+            analisisClimaControlItem.setTotalHumedad(totalHumedadCruce);
+            analisisClimaControlItem.setMediaTemperatura((totalTemperatura / climaCruceList.size()) - 273);
+            analisisClimaControlItem.setMediaHumedad(totalHumedadCruce / climaCruceList.size());
+            analisisClimaControlItem.setAfeccion(item.getAfeccion());
+            analisisClimaControlItem.setTratamiento(item.getTratamiento());
+            if (item.getAfeccion() == true) {
+                analisisClimaControlItem.setCondicionesCorrectas(true);
+            } else {
+                analisisClimaControlItem.setCondicionesCorrectas(false);
+                analisis+="\nLa plantación presenta problemas con una media de humedad de " +analisisClimaControlItem.getMediaHumedad() +" y con una media de Tempreatura de "+analisisClimaControlItem.getMediaTemperatura()+" grados centígrados";
+            }
+            getAnalisisClimaControlList().add(analisisClimaControlItem);
+        }
 
     }
 
@@ -317,6 +407,62 @@ public class ProyeccionController implements Serializable {
      */
     public void setPermisoBuscar(boolean permisoBuscar) {
         this.permisoBuscar = permisoBuscar;
+    }
+
+    /**
+     * @return the temperaturaModel
+     */
+    public LineChartModel getTemperaturaModel() {
+        return temperaturaModel;
+    }
+
+    /**
+     * @param temperaturaModel the temperaturaModel to set
+     */
+    public void setTemperaturaModel(LineChartModel temperaturaModel) {
+        this.temperaturaModel = temperaturaModel;
+    }
+
+    /**
+     * @return the humedadModel
+     */
+    public LineChartModel getHumedadModel() {
+        return humedadModel;
+    }
+
+    /**
+     * @param humedadModel the humedadModel to set
+     */
+    public void setHumedadModel(LineChartModel humedadModel) {
+        this.humedadModel = humedadModel;
+    }
+
+    /**
+     * @return the analisisClimaControlList
+     */
+    public List<AnalisisClimaControl> getAnalisisClimaControlList() {
+        return analisisClimaControlList;
+    }
+
+    /**
+     * @param analisisClimaControlList the analisisClimaControlList to set
+     */
+    public void setAnalisisClimaControlList(List<AnalisisClimaControl> analisisClimaControlList) {
+        this.analisisClimaControlList = analisisClimaControlList;
+    }
+
+    /**
+     * @return the analisis
+     */
+    public String getAnalisis() {
+        return analisis;
+    }
+
+    /**
+     * @param analisis the analisis to set
+     */
+    public void setAnalisis(String analisis) {
+        this.analisis = analisis;
     }
 
 }

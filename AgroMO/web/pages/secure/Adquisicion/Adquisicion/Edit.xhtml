@@ -16,10 +16,10 @@
 
                         <p:row>
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Bodega:" for="bodega" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column colspan="3"   styleClass="form-input" >
 
                                 <p:selectOneMenu   id="bodega" value="#{adquisicionController.selected.idBodegaInt}">
                                     <f:selectItems value="#{listaBodegaController.getbyAll()}"   />
@@ -30,17 +30,17 @@
                         </p:row>
                         <p:row>
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Número de factura:" for="factura" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="factura" value="#{adquisicionController.selected.numeroFacturaBien}"/>
                                 <p:message for="factura" display="icon"/>
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Cédula responsable:" for="cedula" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputText maxlength="20" id="cedula" value="#{adquisicionController.selected.cedulaResponsableAdquisicion}">
                                     <f:validator for="cedula" validatorId="numerosValidacion"/>
                                     <f:validator for="cedula" validatorId="rucValidacion"/>
@@ -52,17 +52,17 @@
 
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Nombre responsable:" for="nombre" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="nombre" value="#{adquisicionController.selected.nombresResponsableAdquisicion}"/>
                                 <p:message for="nombre" display="icon"/>
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Apellido responsable:" for="apellido" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="apellido" value="#{adquisicionController.selected.apellidosResponsableAdquisicion}"/>
                                 <p:message for="apellido" display="icon"/>
                             </p:column>
@@ -70,29 +70,29 @@
                         </p:row>
 
                         <p:row>     
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Email responsable:" for="email" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"  colspan="1"  >
                                 <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="email" value="#{adquisicionController.selected.emailResponsableAdquisicion}">
                                     <f:validator validatorId="org.Seguridades.validators.EmailValidator"/>
                                 </p:inputText>
                                 <p:message for="email" display="icon"/>
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Fecha Adquisición:" for="fecha" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"  colspan="1"  >
                                 <p:calendar id="fecha" value="#{adquisicionController.selected.fechaAdquisicion}" />
                                 <p:message for="fecha" display="icon"/>
                             </p:column>
 
                         </p:row>
                         <p:row>     
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Lista de Productos" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"  colspan="3"  >
                                 <p:dataTable id="datalistProductos" value="#{adquisicionController.selected.detalleAdquisicionList}" var="item"
                                              selectionMode="single" selection="#{adquisicionController.currentDetalle}"
                                              paginator="true"

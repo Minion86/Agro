@@ -16,10 +16,10 @@
 
                         <p:row>
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Nombre Plantación:" for="factura" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:inputText disabled="true" required="true" requiredMessage="Valor Requerido" maxlength="200" id="nombre" value="#{controlController.selected.nombrePlantacion}"/>
                                 <p:message for="nombre" display="icon"/>
                             </p:column>
@@ -27,10 +27,10 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"   colspan="1"  >
                                 <p:selectOneMenu disabled="true"  id="ubicacionbodega" value="#{controlController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
                                     <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
                                     <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
@@ -39,10 +39,10 @@
                                 <p:message for="ubicacionbodega"/>
                             </p:column>
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"   colspan="1"  >
                                 <p:selectOneMenu disabled="true"  id="ubicacionbodega2" value="#{controlController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
                                     <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
                                     <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(controlController.selected.idUbicacionPadre)}"   />
@@ -55,20 +55,20 @@
 
                         <p:row>     
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Fecha Plantación:" for="fecha" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:calendar disabled="true"  id="fecha" value="#{controlController.selected.fechaPlantacion}" />
                                 <p:message for="fecha" display="icon"/>
                             </p:column>
 
                         </p:row>
                         <p:row>     
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Lista de Productos" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:dataTable id="datalistProductos" value="#{controlController.selected.plantacionDetalleList}" var="item"
                                              selectionMode="single" selection="#{controlController.currentDetalle}"
                                              paginator="true"
@@ -81,19 +81,19 @@
                                     <p:ajax event="rowSelect"   update="viewDetalleButton  "/>
                                     <p:ajax event="rowUnselect" update="viewDetalleButton  "/>
 
-                                    <p:column width="10%">
+                                    <p:column  width="10%">
                                         <f:facet name="header" >
                                             <h:outputText value="Tipo de Suelo"/>
                                         </f:facet>
                                         <h:outputText rendered="#{not empty item.idTipoSuelo}" value="#{item.idTipoSuelo.nombreTipoSuelo}"/>
                                     </p:column>
-                                    <p:column width="35%">
+                                    <p:column   width="35%">
                                         <f:facet name="header" >
                                             <h:outputText value="Producto"/>
                                         </f:facet>
                                         <h:outputText value="#{item.idDetalleAdquisicion.idBien.nombreProducto}"/>
                                     </p:column>
-                                    <p:column width="35%">
+                                    <p:column  width="35%">
                                         <f:facet name="header" >
                                             <h:outputText value="Cantidad"/>
                                         </f:facet>

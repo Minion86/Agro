@@ -11,7 +11,7 @@
             <p:dialog id="SegUsuarioEditDlg" widgetVar="SegUsuarioEditDialog" height="400"  resizable="false"  header="Editar Registro">
 
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="3" rendered="#{segUsuarioController.selected != null}">
+                    <p:panelGrid columnClasses="form-label,form-input,form-input" columns="3" rendered="#{segUsuarioController.selected != null}">
                         <h:outputLabel value="*Cédula:"/>
                         <p:inputText maxlength="20" id="txtCedula" value="#{segUsuarioController.selected.identificacionUsuario}" required="true" requiredMessage="Valor Requerido" >
                             <f:validator for="txtCedula" validatorId="numerosValidacion"/>

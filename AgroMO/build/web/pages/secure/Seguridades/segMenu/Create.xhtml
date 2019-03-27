@@ -11,7 +11,7 @@
             <p:dialog id="SegMenuCreateDlg" widgetVar="SegMenuCreateDialog"  resizable="false"  header="Nuevo Registro">
 
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{segMenuController.selected != null}">
+                    <p:panelGrid columnClasses="form-label,form-input" columns="2" rendered="#{segMenuController.selected != null}">
                         <h:outputLabel value="*Nombre:"/>
                         <h:panelGroup>
                             <p:inputText maxlength="100" id="txtNombre" value="#{segMenuController.selected.textoMenu}" required="true" requiredMessage="Valor Requerido"/>

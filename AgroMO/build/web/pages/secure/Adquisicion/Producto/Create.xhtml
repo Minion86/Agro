@@ -15,17 +15,17 @@
                     <p:panelGrid rendered="#{productoController.selected != null}" >
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Código:" for="codigo" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"   colspan="1"  >
                                 <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="200" id="codigo" value="#{productoController.selected.codigoProducto}"/>
                                 <p:message for="codigo" display="icon"/>
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Nombre:" for="nombre" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"   colspan="1"  >
                                 <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="100" id="nombre" value="#{productoController.selected.nombreProducto}"/>
                                 <p:message for="nombre" display="icon"/>
                             </p:column>
@@ -36,17 +36,17 @@
                         <p:row>
 
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Medida (Longitud/profundidad):" for="medida" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"   colspan="1"  >
                                 <p:inputText maxlength="100" id="medida" value="#{productoController.selected.medidaProducto}"/>
                                 <p:message for="medida" display="icon"/>
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Peso en kgs:" for="peso" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"   colspan="1"  >
                                 <p:inputText maxlength="100" id="peso" value="#{productoController.selected.pesoProducto}"/>
                                 <p:message for="peso" display="icon"/>
                             </p:column>
@@ -54,17 +54,17 @@
 
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Valor:" for="valor" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"   colspan="1"  >
                                 <p:inputNumber minValue="0" id="valor" value="#{productoController.selected.valorProducto}" symbol=" $" symbolPosition="suffix"/>
                                 <p:message for="valor" display="icon"/>
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Observaciones:" for="descripcion" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-input"   colspan="1"  >
                                 <p:inputTextarea maxlength="2000" id="descripcion" counterTemplate="{0} caracteres restantes." counter="displaydescripcion" value="#{productoController.selected.descripcionProducto}"/>
                                 <h:outputText id="displaydescripcion" />
                                 <br/>

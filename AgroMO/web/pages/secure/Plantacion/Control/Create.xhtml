@@ -12,12 +12,12 @@
         <p:dialog closable="false" id="ControlPlantacionCreateDetalleDlg" height="400"  widgetVar="ControlPlantacionCreateDetalleDialog"  resizable="false"  header="Nuevo Registro de Control">
             <h:form id="ControlPlantacionCreateDetalleForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid rendered="#{controlController.currentControl != null}" >
+                    <p:panelGrid  rendered="#{controlController.currentControl != null}" >
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Observaciones:" for="descripcion" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:inputTextarea maxlength="4000" id="descripcion" counterTemplate="{0} caracteres restantes." counter="displaydescripcion" value="#{controlController.currentControl.descripcionControl}"/>
                                 <h:outputText id="displaydescripcion" />
                                 <p:message for="descripcion" display="icon"/>
@@ -26,10 +26,10 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Afección:" for="afeccion" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:panelGrid columns="1" id="panelAfeccion">
                                     <p:selectBooleanCheckbox   id="afeccion" value="#{controlController.currentControl.afeccion}"> 
                                         <p:ajax listener="#{controlController.checkAfeccion}" update=":ControlPlantacionCreateDetalleForm:display" process="afeccion"/>
@@ -40,10 +40,10 @@
 
                         </p:row>
                         <p:row id="rowAfeccionDescripcion" rendered="#{controlController.currentControl.afeccion==true}">
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Descripción Afección:" for="descripcionAfeccion"  rendered="#{controlController.currentControl.afeccion==true}"/>
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:inputTextarea maxlength="4000" id="descripcionAfeccion" counterTemplate="{0} caracteres restantes." counter="displaydescripcionafeccion" value="#{controlController.currentControl.descripcionAfeccion}"  rendered="#{controlController.currentControl.afeccion==true}"/>
                                 <h:outputText id="displaydescripcionafeccion" />
                                 <p:message for="descripcionAfeccion" display="icon"/>
@@ -52,10 +52,10 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Tratamiento:" for="tratamiento" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:panelGrid columns="1" id="panelTratamiento">
                                     <p:selectBooleanCheckbox id="tratamiento" value="#{controlController.currentControl.tratamiento}">
                                         <p:ajax listener="#{controlController.checkTratamiento}" update=":ControlPlantacionCreateDetalleForm:display" process="panelTratamiento"/>
@@ -66,10 +66,10 @@
 
                         </p:row>
                         <p:row id="rowTratamientoDescripcion" rendered="#{controlController.currentControl.tratamiento==true}">
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Descripción Tratamiento:" for="descripciontratamiento"  rendered="#{controlController.currentControl.tratamiento==true}"/>
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:inputTextarea maxlength="4000" id="descripciontratamiento" counterTemplate="{0} caracteres restantes." counter="displaydescripciontratamiento" value="#{controlController.currentControl.descripcionTratamiento}"  rendered="#{controlController.currentControl.tratamiento==true}"/>
                                 <h:outputText id="displaydescripciontratamiento" />
                                 <p:message for="descripciontratamiento" display="icon"/>
@@ -78,10 +78,10 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Pérdida:" for="perdida" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:panelGrid columns="1" id="panelPerdida">
                                     <p:selectBooleanCheckbox id="perdida" value="#{controlController.currentControl.perdida}">
                                         <p:ajax listener="#{controlController.checkperdida}" update=":ControlPlantacionCreateDetalleForm:display" process="panelPerdida"/>
@@ -92,10 +92,10 @@
 
                         </p:row>
                         <p:row id="rowPerdidaDescripcion" rendered="#{controlController.currentControl.perdida==true}">
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Descripción Pérdida:" for="descripcionperdida"  rendered="#{controlController.currentControl.perdida==true}"/>
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:inputTextarea maxlength="4000" id="descripcionperdida" counterTemplate="{0} caracteres restantes." counter="displaydescripcionperdida" value="#{controlController.currentControl.descripcionPerdida}"  rendered="#{controlController.currentControl.perdida==true}"/>
                                 <h:outputText id="displaydescripcionperdida" />
                                 <p:message for="descripcionperdida" display="icon"/>

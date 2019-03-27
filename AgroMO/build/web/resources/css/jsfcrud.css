@@ -80,3 +80,17 @@ tr.jsfcrud_even_row {
     left: 50%;
     top: 50%;
 }
+
+.form-label {
+    text-align: right;
+    color: #fff;
+    font-weight: bold;
+    padding: 3px;
+    vertical-align: top;
+    background-color: #1d6caf;
+}
+.form-input {
+    text-align: left;
+    padding: 3px;
+    vertical-align: top;
+}

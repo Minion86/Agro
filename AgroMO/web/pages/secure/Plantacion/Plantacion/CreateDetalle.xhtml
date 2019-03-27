@@ -14,12 +14,12 @@
                 <h:panelGroup id="display">
                     <p:panelGrid rendered="#{plantacionController.currentDetalle != null}" >
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Producto:" for="tipodeproducto" />
 
                             </p:column>
 
-                            <p:column colspan="3"   >
+                            <p:column styleClass="form-input"   colspan="3"   >
                                 <p:outputPanel id="panelProductosLista">
                                     <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="producto" value="#{plantacionController.currentDetalle.idDetalleAdquisicionInt}">
                                         <f:selectItems value="#{listaDetalleAdquisicionController.getbyAll()}"   />
@@ -31,12 +31,12 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Tipo de Suelo:" for="tipodesuelo" />
 
                             </p:column>
 
-                            <p:column colspan="3"   >
+                            <p:column styleClass="form-input"   colspan="3"   >
                                 <p:outputPanel id="panelTipoDeSueloLista">
                                     <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="tipodesuelo" value="#{plantacionController.currentDetalle.idTipoSueloInt}">
                                         <f:selectItems value="#{listaTipoSueloController.getbyAll()}"   />
@@ -47,10 +47,10 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Cantidad:" for="cantidad" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:panelGrid columns="1" id="panelCantidad">
                                     <p:inputNumber required="true" requiredMessage="Valor Requerido"  minValue="0" id="cantidad" value="#{plantacionController.currentDetalle.cantidadPlantacionDetalle}" maxValue="#{plantacionController.currentDetalle.maximo}"/> 
                                     <h:outputText value="máx #{plantacionController.currentDetalle.maximo}"/>
@@ -60,10 +60,10 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"   colspan="1"  >
                                 <h:outputLabel value="Tipo Cantidad:" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column styleClass="form-input"   colspan="3"  >
                                 <p:panelGrid columns="1" id="panelTipoCantidad">
                                     <h:outputText value="#{plantacionController.currentDetalle.tipoCantidadPlantacionDetalle}"/>
                                 </p:panelGrid>

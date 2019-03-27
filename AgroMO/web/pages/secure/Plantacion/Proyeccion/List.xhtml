@@ -35,8 +35,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="   "/>
-                        <p:ajax event="rowUnselect" update="   "/>
+                        <p:ajax event="rowSelect"   update=" viewButton  "/>
+                        <p:ajax event="rowUnselect" update=" viewButton  "/>
 
                         <f:facet name="header">
                             <h:commandLink rendered="#{proyeccionController.permisoImprimir}">
@@ -50,7 +50,13 @@
                             <f:facet name="header">
                                 <h:outputText value="Producto"/>
                             </f:facet>
-                            <p:outputLabel rendered="#{not empty item.idDetalleAdquisicion.idBien.nombreProducto}" value="Cantidad: #{item.cantidadPlantacionDetalle} #{item.tipoCantidadPlantacionDetalle}--  Producto: #{item.idDetalleAdquisicion.idBien.nombreProducto}"/>
+                            <p:outputLabel rendered="#{not empty item.idDetalleAdquisicion.idBien.nombreProducto}" value="#{item.idDetalleAdquisicion.idBien.nombreProducto}"/>
+                        </p:column>
+                        <p:column width="10%">
+                            <f:facet name="header">
+                                <h:outputText value="Cantidad"/>
+                            </f:facet>
+                            <p:outputLabel rendered="#{not empty item.idDetalleAdquisicion.idBien.nombreProducto}" value="#{item.cantidadPlantacionDetalle} #{item.tipoCantidadPlantacionDetalle}"/>
                         </p:column>
                         <p:column width="10%">
                             <f:facet name="header" >
@@ -69,7 +75,7 @@
 
 
                         <f:facet name="footer">
-                        
+                            <p:commandButton id="viewButton" update="ControlPlantacionViewForm" process="ControlPlantacionViewForm,viewButton"   icon="ui-icon-calendar" value="Proyecciones y Análisis" actionListener="#{proyeccionController.prepareView}"  oncomplete="PF('PlantacionViewDialog').show()" disabled="#{proyeccionController.selected.idPlantacionDetalle==null}" rendered="#{proyeccionController.permisoActualizar}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
@@ -187,6 +193,8 @@
                 </p:dialog>
 
             </h:form>
+
+            <ui:include src="View.xhtml" rendered="#{proyeccionController.permisoActualizar}"/>
 
 
             <script type="text/javascript">

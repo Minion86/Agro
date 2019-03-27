@@ -14,11 +14,11 @@
                 <h:panelGroup id="display">
                     <p:panelGrid rendered="#{adquisicionController.currentDetalle != null}" >
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Tipo del Producto:" for="tipodeproducto" />
 
                             </p:column>
-                            <p:column>
+                            <p:column styleClass="form-input" >
                                 <p:selectOneMenu id="tipodeproducto" value="#{adquisicionController.currentDetalle.tipoBienInt}" required="true" requiredMessage="Valor Requerido">
                                     <f:selectItems value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoTipoProducto('TIP_BIEN')}" />
                                     <p:ajax listener="#{adquisicionController.changeTipoProducto}" update="producto,panelProductosLista"/>
@@ -26,7 +26,7 @@
                                 </p:selectOneMenu>
                                 <p:message for="tipodeproducto"/>
                             </p:column>
-                            <p:column colspan="3"   >
+                            <p:column colspan="3"    styleClass="form-input" >
                                 <p:outputPanel id="panelProductosLista">
                                     <p:selectOneMenu required="true" requiredMessage="Valor Requerido" filter="true" filterMatchMode="contains" id="producto" value="#{adquisicionController.currentDetalle.idProductoint}">
                                         <f:selectItems value="#{listaProductoController.getbyAll()}"   />
@@ -38,20 +38,20 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Código de Barras:" for="codigoBarras" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column colspan="3"  styleClass="form-input"  >
                                 <p:inputNumber  minValue="0" decimalPlaces="0" thousandSeparator="" id="codigoBarras" value="#{adquisicionController.currentDetalle.codigoBarra}"  required="true" requiredMessage="Valor Requerido"/> 
                                 <p:message for="codigoBarras" display="icon"/>
                             </p:column>
                         </p:row>
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Estado del Producto:" for="estado" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:selectOneMenu id="estado" value="#{adquisicionController.currentDetalle.estadoBienInt}" required="true" requiredMessage="Valor Requerido">
 
                                     <f:selectItems   value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoEstadoBien('EST_BIEN')}" />
@@ -61,30 +61,30 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Valor:" for="valor" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputNumber  minValue="0" id="valor" value="#{adquisicionController.currentDetalle.valorDetalleAdquisicion}" symbol=" $" symbolPosition="suffix"/> 
                                 <p:message for="valor" display="icon"/>
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Valor en Libros:" for="valorlibros" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputNumber  minValue="0" id="valorlibros" value="#{adquisicionController.currentDetalle.valorLibrosDetalleAdquisicion}" symbol=" $" symbolPosition="suffix"/> 
                                 <p:message for="valorlibros" display="icon"/>
                             </p:column>
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Cantidad:" for="cantidad" />
                             </p:column>
-                            <p:column colspan="2"  >
+                            <p:column colspan="2"   styleClass="form-input" >
                                 <p:inputNumber required="true" requiredMessage="Valor Requerido"  minValue="0" id="cantidad" value="#{adquisicionController.currentDetalle.cantidadDetalleAdquisicion}"/> 
                                 <p:message for="cantidad" display="icon"/>
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:selectOneMenu  id="tipodecantidad" value="#{adquisicionController.currentDetalle.tipoCantidad}" required="true" requiredMessage="Valor Requerido">
                                     <f:selectItem itemLabel="Por favor escoja un valor" itemValue="#{null}" />
                                     <f:selectItem itemLabel="Kilogramos" itemValue="Kilogramos" />
@@ -99,10 +99,10 @@
 
                         </p:row>
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Observaciones:" for="descripcion" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column colspan="3"   styleClass="form-input" >
                                 <p:inputTextarea maxlength="2000" id="descripcion" counterTemplate="{0} caracteres restantes." counter="displaydescripcion" value="#{adquisicionController.currentDetalle.observaciones}"/>
                                 <h:outputText id="displaydescripcion" />
                                 <p:message for="descripcion" display="icon"/>

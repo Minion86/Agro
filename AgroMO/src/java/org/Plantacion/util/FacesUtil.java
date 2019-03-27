@@ -24,8 +24,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.primefaces.context.RequestContext;
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeRequestContext;
 
 /**
  *
@@ -123,13 +123,12 @@ public class FacesUtil implements Serializable {
         session.removeAttribute(nombre);
     }
 
-
     public static void ejecutarScript(String script) {
-        getRequestContext().execute(script);
+        PrimeFaces.current().executeScript(script);
     }
 
-    public static RequestContext getRequestContext() {
-        return RequestContext.getCurrentInstance();
+    public static PrimeRequestContext getRequestContext() {
+        return PrimeRequestContext.getCurrentInstance();
     }
 
     public static void abrirDialogo(String widgetVar) {
@@ -191,7 +190,7 @@ public class FacesUtil implements Serializable {
      */
     public static void mensajeContenidoError(final String idComponente, final String mensaje) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, idComponente, mensaje);
-        RequestContext.getCurrentInstance().showMessageInDialog(msg);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 //        getFacesContext().addMessage(null, msg);
     }
 
@@ -202,7 +201,7 @@ public class FacesUtil implements Serializable {
      */
     public static void mensajeErrorDialog(final String mensaje) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "", mensaje);
-        RequestContext.getCurrentInstance().showMessageInDialog(msg);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     /**
@@ -227,7 +226,7 @@ public class FacesUtil implements Serializable {
 
     public static void mensajeWarnDialog(final String mensaje) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "", mensaje);
-        RequestContext.getCurrentInstance().showMessageInDialog(msg);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     /**
@@ -247,7 +246,7 @@ public class FacesUtil implements Serializable {
      */
     public static void mensajeInfoDialog(final String mensaje) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", mensaje);
-        RequestContext.getCurrentInstance().showMessageInDialog(msg);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public static ServletContext getServletContext() {
@@ -318,7 +317,6 @@ public class FacesUtil implements Serializable {
         File fichero = new File(pArchivo);
         return fichero.exists();
     }
-
 
     /**
      * Retorna la fecha de 04 de agosto de 2016. Esta fecha es empleada para
@@ -503,7 +501,6 @@ public class FacesUtil implements Serializable {
         return fechaTruncada.getTime();
     }
 
-
     /**
      * Obtiene la fecha en un formato específico.
      *
@@ -631,7 +628,6 @@ public class FacesUtil implements Serializable {
         }
         return strDate;
     }
-
 
     /**
      * Calcula la edad de una persona.

@@ -15,18 +15,18 @@
 
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Nombre:" for="nombre" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputText required="true" requiredMessage="Valor Requerido" maxlength="300" id="nombre" value="#{bodegaController.selected.nombreBodega}"/>
                                 <p:message for="nombre" display="icon"/>
                             </p:column>
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Dirección:" for="direccion" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputText id="direccion" maxlength="300" value="#{bodegaController.selected.direccionBodega}"/>
                                 <p:message for="direccion" display="icon"/>
                             </p:column>
@@ -34,18 +34,18 @@
                         </p:row>
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Sector:" for="sector" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"  styleClass="form-input"  >
                                 <p:inputText maxlength="300" id="sector" value="#{bodegaController.selected.sectorBodega}"/>
                                 <p:message for="sector" display="icon"/>
                             </p:column>
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Código Bodega:" for="codigobodega" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:inputText maxlength="100" id="codigobodega" value="#{bodegaController.selected.codigoBodega}"/>
                                 <p:message for="codigobodega" display="icon"/>
                             </p:column>
@@ -55,10 +55,10 @@
 
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Tipo de Bodega:" for="tipobodega" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:selectOneMenu id="tipobodega" value="#{bodegaController.selected.tipoBodegaInt}"  required="true" requiredMessage="Valor Requerido">
 
                                     <f:selectItems  value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoTipoBodega('TIP_BOD')}"   />
@@ -66,10 +66,10 @@
                                 <p:message for="tipobodega"/>
                             </p:column>
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Clase de Bodega:" for="clasebodega" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:selectOneMenu id="clasebodega" value="#{bodegaController.selected.claseBodegaInt}"  required="true" requiredMessage="Valor Requerido">
 
                                     <f:selectItems   value="#{listaCatalogoController.getbyGrupoCatalogoNemonicoClaseBodega('CLA_BOD')}" />
@@ -80,10 +80,10 @@
                         </p:row>
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:selectOneMenu id="ubicacionbodega" value="#{bodegaController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
                                     <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
                                     <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
@@ -92,10 +92,10 @@
                                 <p:message for="ubicacionbodega"/>
                             </p:column>
 
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
                             </p:column>
-                            <p:column colspan="1"  >
+                            <p:column colspan="1"   styleClass="form-input" >
                                 <p:selectOneMenu id="ubicacionbodega2" value="#{bodegaController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
                                     <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
                                     <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(bodegaController.selected.idUbicacionPadre)}"   />
@@ -106,10 +106,10 @@
                         </p:row>
 
                         <p:row>
-                            <p:column colspan="1"  >
+                            <p:column styleClass="form-label"  colspan="1"  >
                                 <h:outputLabel value="Observaciones:" for="observaciones" />
                             </p:column>
-                            <p:column colspan="3"  >
+                            <p:column colspan="3"   styleClass="form-input" >
                                 <p:inputTextarea maxlength="2000" id="observaciones" counterTemplate="{0} caracteres restantes." counter="displayobservaciones" value="#{bodegaController.selected.observacionesBodega}"/>
                                 <h:outputText id="displayobservaciones" />
                                 <p:message for="sector" display="icon"/>

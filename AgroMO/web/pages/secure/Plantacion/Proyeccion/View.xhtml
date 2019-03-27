@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition>
+        <h:form id="ControlPlantacionViewForm">
+            <p:dialog closable="false" id="PlantacionViewDlg" widgetVar="PlantacionViewDialog" height="600"  resizable="false"  header="Análisis y Proyección de Producto">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid rendered="#{proyeccionController.selected != null}" >
+
+                        <p:row>
+
+                            <p:column styleClass="form-label" colspan="1"  >
+                                <h:outputLabel value="Nombre Plantación:" for="factura" />
+                            </p:column>
+                            <p:column styleClass="form-input" colspan="3"  >
+                                <p:inputText disabled="true" required="true" requiredMessage="Valor Requerido" maxlength="200" id="nombre" value="#{proyeccionController.selected.plantacion.nombrePlantacion}"/>
+                                <p:message for="nombre" display="icon"/>
+                            </p:column>
+
+
+                        </p:row>
+                        <p:row>
+                            <p:column styleClass="form-label" colspan="1"  >
+                                <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
+                            </p:column>
+                            <p:column styleClass="form-input" colspan="1"  >
+                                <p:selectOneMenu disabled="true"  id="ubicacionbodega" value="#{proyeccionController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                    <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
+                                    <p:ajax update="ubicacionbodega2"/>
+                                </p:selectOneMenu>
+                                <p:message for="ubicacionbodega"/>
+                            </p:column>
+
+                            <p:column styleClass="form-label" colspan="1"  >
+                                <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
+                            </p:column>
+                            <p:column styleClass="form-input" colspan="1"  >
+                                <p:selectOneMenu disabled="true"  id="ubicacionbodega2" value="#{proyeccionController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                    <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(proyeccionController.selected.idUbicacionPadre)}"   />
+                                </p:selectOneMenu>
+                                <p:message for="ubicacionbodega2"/>
+                            </p:column>
+
+                        </p:row>
+
+
+                        <p:row>     
+
+                            <p:column styleClass="form-label" colspan="1"  >
+                                <h:outputLabel value="Fecha Plantación:" for="fecha" />
+                            </p:column>
+                            <p:column styleClass="form-input" colspan="3"  >
+                                <p:calendar disabled="true"  id="fecha" value="#{proyeccionController.selected.plantacion.fechaPlantacion}" />
+                                <p:message for="fecha" display="icon"/>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>     
+                            <p:column styleClass="form-label" colspan="1"  >
+                                <h:outputLabel value="Producto" />
+                            </p:column>
+                            <p:column styleClass="form-input" colspan="3"  >
+                                <p:calendar disabled="true"  id="producto" value="#{proyeccionController.selected.idDetalleAdquisicion.idBien.nombreProducto}" />
+                                <p:message for="producto" display="icon"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>     
+
+                            <p:column styleClass="form-input" colspan="4"  >
+                                <h:outputText value="#{proyeccionController.analisis}"/>
+                                <br/>
+                                <br/>
+                                <p:dataTable id="datalist" value="#{proyeccionController.analisisClimaControlList}" var="item"
+                                             paginator="true"
+                                             rows="10"
+                                             widgetVar="datalistVar"
+                                             rowsPerPageTemplate="10,20,30,40,50"
+                                             >
+                                    <p:column width="20%">
+                                        <f:facet name="header">
+                                            <h:outputText value="Media Temperatura +/- 5 días"/>
+                                        </f:facet>
+                                        <p:outputLabel  value="#{item.mediaTemperatura}"/>
+                                    </p:column>
+                                    <p:column width="20%">
+                                        <f:facet name="header">
+                                            <h:outputText value="Media Humedad +/- 5 días"/>
+                                        </f:facet>
+                                        <p:outputLabel  value="#{item.mediaHumedad}"/>
+                                    </p:column>
+                                    <p:column width="20%">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Afección"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.afeccion}"/>
+                                    </p:column>
+                                    <p:column width="20%">
+                                        <f:facet name="header">
+                                            <h:outputText value="Tratamiento"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tratamiento}"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                                <br/>
+                                <br/>
+                                <p:chart type="line" model="#{proyeccionController.temperaturaModel}" style="height:300px;"/>
+                                <br/>
+                                <br/>
+                                <p:chart type="line" model="#{proyeccionController.humedadModel}" style="height:300px;"/>
+
+                            </p:column>
+                        </p:row>
+
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('PlantacionViewDialog').hide()"  immediate="true" actionListener="#{proyeccionController.cancelar}" update=":plantacionListForm:datalist"/>
+                </h:panelGroup>
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>
