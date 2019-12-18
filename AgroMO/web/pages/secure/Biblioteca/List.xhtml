@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <meta name="author" content="Nel Martinez"/>
+        <link href="https://fonts.googleapis.com/css?family=Poppins:400,800" rel="stylesheet" />
+        <link href="#{request.contextPath}/vendors/buscador/css/main.css" rel="stylesheet" />
+        <title>Sistema de Control de Plantaciones AgroMO</title>
+
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/default.css" />
+       
+        <script src="#{request.contextPath}/vendors/buscador/js/extention/choices.js"></script>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+
+    <h:body>
+        <p:growl id="growl" life="3000" />
+        <p:layout fullPage="true">
+            <h:form  id="TitleFormId">
+                <p:layoutUnit position="north" size="10%">
+
+                    <p:toolbar >
+                        <f:facet name="left">
+                            <p:graphicImage value="/images/logotipo_ministerio_coordinador_desarrollo_social_ecuador.png"  height="60" width="400%"   />
+
+                        </f:facet>
+
+                        <f:facet name="right">
+                            <p:outputLabel value="Usuario: #{loginController.user.usernameUsuario}" />
+
+                            <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" /> 
+                            <hr/>
+                            <p:commandButton value="Cambiar Perfil"  actionListener="#{loginController.iraescogePerfil}"/>
+                            <p:commandButton value="Salir" ajax="false" onclick="sendDataLogout();" />
+
+                        </f:facet>
+
+                    </p:toolbar>
+
+
+
+                </p:layoutUnit>
+                <script type="text/javascript" language="JavaScript">
+
+                    function sendDataLogout() {
+
+                        var forma = document.getElementById("TitleFormId");
+                        forma.action = "/AgroMO/j_spring_security_logout";
+                        forma.method = "POST";
+                        forma.submit();
+
+                    }
+                </script>
+            </h:form>
+            <p:layoutUnit position="west" id="MENU"  size="20%" resizable="true" collapsible="true" header="MENU">
+                <h:form>
+                    <p:panelMenu  model="#{loginController.model}" /> 
+
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+
+                <div class="s004">
+                    <h:form>
+                        <fieldset>
+                            <legend>VOY A TENER SUERTE</legend>
+                            <div class="inner-form">
+                                <div class="input-field">
+                                    <input class="form-control" id="choices-text-preset-values" type="text" placeholder="Buscar..." />
+                                    <button class="btn-search" type="button">
+                                        <svg  width="24" height="24" viewBox="0 0 24 24">
+                                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                           
+                        </fieldset>
+                    </h:form>
+                    <script>
+                        var textPresetVal = new Choices('#choices-text-preset-values',
+                                {
+                                    removeItemButton: true,
+                                });
+
+                    </script>
+                </div>
+
+            </p:layoutUnit>
+
+        </p:layout>
+        <p:ajaxStatus style="width:32px;height:32px;display:block;position:fixed;right:0;top:0;z-index:100">
+            <f:facet name="start">
+                <h:graphicImage value="/images/loading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+
+    </h:body>
+
+</html>
+
+
