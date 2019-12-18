@@ -23,7 +23,8 @@
             <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Producto/Create.xhtml</file>
         </group>
         <group name="siith">
-            <file>file:/home/fmullo/NetBeans%20Nelson%20Martinez/git2/AgroMOP/AgroMO/src/java/org/Plantacion/util/JasperReportUtil.java</file>
+            <file>file:/home/fmullo/NetBeansNelsonMartinez/git2/AgroMOP/AgroMO/src/java/org/Plantacion/Cron/ProcesoAnalisisPeriodicoImpl.java</file>
+            <file>file:/home/fmullo/NetBeansNelsonMartinez/git2/AgroMOP/AgroMO/src/java/org/Plantacion/Services/WeatherMapClient.java</file>
         </group>
     </open-files>
 </project-private>
