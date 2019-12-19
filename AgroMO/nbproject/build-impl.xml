@@ -854,11 +854,15 @@ exists or setup the property manually. For example like this:
             -->
     <target depends="init" if="no.dist.ear.dir" name="deps-module-jar" unless="no.deps">
         <ant antfile="${project.sch_adquisicion-ejb}/build.xml" inheritall="false" target="dist"/>
+        <ant antfile="${project.sch_biblioteca-ejb}/build.xml" inheritall="false" target="dist"/>
         <ant antfile="${project.sch_plantacion-ejb}/build.xml" inheritall="false" target="dist"/>
         <ant antfile="${project.sch_seguridades-ejb}/build.xml" inheritall="false" target="dist"/>
     </target>
     <target depends="init" if="dist.ear.dir" name="deps-ear-jar" unless="no.deps">
         <ant antfile="${project.sch_adquisicion-ejb}/build.xml" inheritall="false" target="dist-ear">
+            <property location="${build.dir}" name="dist.ear.dir"/>
+        </ant>
+        <ant antfile="${project.sch_biblioteca-ejb}/build.xml" inheritall="false" target="dist-ear">
             <property location="${build.dir}" name="dist.ear.dir"/>
         </ant>
         <ant antfile="${project.sch_plantacion-ejb}/build.xml" inheritall="false" target="dist-ear">
@@ -1098,6 +1102,8 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.groovy-all-2.4.14.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.commons-collections-3.2.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.jasperreports-functions-6.5.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${reference.sch_biblioteca-ejb.dist}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}"/>
+        <copyfiles files="${file.reference.gson-2.8.6.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
@@ -1189,6 +1195,8 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.groovy-all-2.4.14.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.commons-collections-3.2.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.jasperreports-functions-6.5.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${reference.sch_biblioteca-ejb.dist}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.gson-2.8.6.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
@@ -1603,6 +1611,7 @@ exists or setup the property manually. For example like this:
             -->
     <target depends="init" name="deps-clean" unless="no.deps">
         <ant antfile="${project.sch_adquisicion-ejb}/build.xml" inheritall="false" target="clean"/>
+        <ant antfile="${project.sch_biblioteca-ejb}/build.xml" inheritall="false" target="clean"/>
         <ant antfile="${project.sch_plantacion-ejb}/build.xml" inheritall="false" target="clean"/>
         <ant antfile="${project.sch_seguridades-ejb}/build.xml" inheritall="false" target="clean"/>
     </target>

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:h="http://java.sun.com/jsf/html" 
       xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <h:head>
         <meta charset="UTF-8"/>
@@ -13,11 +14,15 @@
         <meta name="author" content="Nel Martinez"/>
         <link href="https://fonts.googleapis.com/css?family=Poppins:400,800" rel="stylesheet" />
         <link href="#{request.contextPath}/vendors/buscador/css/main.css" rel="stylesheet" />
+        <link href="#{request.contextPath}/vendors/buscador/css/style.css" rel="stylesheet" />
         <title>Sistema de Control de Plantaciones AgroMO</title>
 
         <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/default.css" />
-       
-        <script src="#{request.contextPath}/vendors/buscador/js/extention/choices.js"></script>
+
+        <script src="#{request.contextPath}/vendors/buscador/js/jquery-3.3.1.min.js"></script>
+
+        <script src="#{request.contextPath}/vendors/buscador/js/jquery.autocomplete.min.js"></script>
+
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
@@ -70,31 +75,74 @@
 
             <p:layoutUnit position="center">
 
-                <div class="s004">
-                    <h:form>
-                        <fieldset>
-                            <legend>VOY A TENER SUERTE</legend>
-                            <div class="inner-form">
-                                <div class="input-field">
-                                    <input class="form-control" id="choices-text-preset-values" type="text" placeholder="Buscar..." />
-                                    <button class="btn-search" type="button">
-                                        <svg  width="24" height="24" viewBox="0 0 24 24">
-                                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                           
-                        </fieldset>
-                    </h:form>
-                    <script>
-                        var textPresetVal = new Choices('#choices-text-preset-values',
-                                {
-                                    removeItemButton: true,
-                                });
+                <h:form id="formBusqueda">
+                    <div id="w">
+                        <div id="content">
+                            <h1>Voy a tener suerte</h1>
 
-                    </script>
-                </div>
+                            <div id="searchfield">
+                                <input   id="autocomplete" class="biginput"  type="text" placeholder="Buscar..."  jsf:value="#{buscadorController.buscarText}">
+
+                                </input>
+                                <button  class="btn-search" type="button" onclick="accion();">
+                                    <svg  width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                                    </svg>
+                                </button>
+                                <p:remoteCommand  name="accion" id="accion" action="#{buscadorController.buscar}" update=":formBusqueda" process=":formBusqueda"/>
+                            </div>
+                            <div id="outputbox">
+                                <p id="outputcontent"></p>
+                            </div>
+                        </div><!-- @end #content -->
+                    </div><!-- @end #w -->
+                    <p:panel header="Biblioteca de Conocimiento">
+                        <p:dataTable id="datalist" value="#{buscadorController.allAccionItems}" var="item"
+
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rows="10"
+                                     widgetVar="datalistVar"
+                                     rowsPerPageTemplate="10,20,30,40,50"
+                                     >
+
+
+
+                            <p:column width="60%">
+                                <f:facet name="header">
+                                    <h:outputText value="Descripción"/>
+                                </f:facet>
+                                <h:outputText value="#{item.descripcion}"/>
+                            </p:column>
+                            <p:column width="40%">
+                                <f:facet name="header">
+                                    <h:outputText value="Tags"/>
+                                </f:facet>
+                                <h:outputText value="#{item.tags}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+
+                <script>
+                    jQuery.noConflict();
+
+                    $(document).ready(function () {
+                    });
+
+                    var lista =#{buscadorController.diccionarioBusquedaListJson};
+
+                    jQuery('#autocomplete').autocomplete({
+                        lookup: lista,
+                        onSelect: function (suggestion) {
+                            var thehtml = '<strong>Seleccionado:</strong> ' + suggestion.value;
+                            jQuery('#outputcontent').html(thehtml);
+                        }
+                    });
+
+
+                </script>
 
             </p:layoutUnit>
 

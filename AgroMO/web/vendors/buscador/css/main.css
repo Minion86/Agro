@@ -819,7 +819,7 @@ legend {
   -ms-flex-align: center;
       align-items: center;
   font-family: 'Poppins', sans-serif;
-  background: url("../images/bg.jpg");
+  //background: url("../images/bg.jpg");
   background-size: cover;
   background-position: center center;
   padding: 15px;
@@ -832,7 +832,7 @@ legend {
 
 .s004 form legend {
   font-size: 36px;
-  color: #fff;
+  color: #000;
   font-weight: 800;
   text-align: center;
   margin-bottom: 50px;
