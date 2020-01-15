@@ -35,7 +35,7 @@
 
                     <p:toolbar >
                         <f:facet name="left">
-                            <p:graphicImage value="/images/logotipo_ministerio_coordinador_desarrollo_social_ecuador.png"  height="60" width="400%"   />
+                            <p:graphicImage value="/images/logo.jpg"  height="60" width="60"   />
 
                         </f:facet>
 
@@ -89,36 +89,69 @@
                                         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
                                     </svg>
                                 </button>
-                                <p:remoteCommand  name="accion" id="accion" action="#{buscadorController.buscar}" update=":formBusqueda" process=":formBusqueda"/>
+                                <p:remoteCommand  name="accion" id="accion" action="#{buscadorController.buscar}" update=":formTabla" process=":formBusqueda,:formTabla"/>
                             </div>
                             <div id="outputbox">
                                 <p id="outputcontent"></p>
                             </div>
                         </div><!-- @end #content -->
                     </div><!-- @end #w -->
+
+                </h:form>
+
+                <h:form id="formTabla">
                     <p:panel header="Biblioteca de Conocimiento">
+                        <h:panelGroup rendered="#{not empty buscadorController.allAccionItems}">
+                            <p:commandLink action="#{buscadorController.firstAccion}" rendered="#{buscadorController.paginacionAccion.hasPreviousPage}"
+                                           update=":formTabla"  process=":formTabla">
+                                <p:graphicImage library="images" value="/images/navegacion/izquierda2.gif" />
+                            </p:commandLink>
+                            <p:commandLink action="#{buscadorController.previousAccion}" rendered="#{buscadorController.paginacionAccion.hasPreviousPage}"
+                                           update=":formTabla"  process=":formTabla">
+                                <p:graphicImage library="images" value="/images/navegacion/izquierda1.gif" />
+                            </p:commandLink>
+                            <p:commandLink action="#{buscadorController.nextAccion}" rendered="#{buscadorController.paginacionAccion.hasNextPage}"
+                                           update=":formTabla"  process=":formTabla">
+                                <p:graphicImage library="images" value="/images/navegacion/derecha1.gif" />
+                            </p:commandLink>
+                            <p:commandLink action="#{buscadorController.lastAccion}" rendered="#{buscadorController.paginacionAccion.hasNextPage}"
+                                           update=":formTabla"  process=":formTabla">
+                                <p:graphicImage library="images" value="/images/navegacion/derecha2.gif" />
+                            </p:commandLink>
+
+                            <h:outputText
+                                value="Total: #{buscadorController.paginacionAccion.itemsCount} registros, " />
+                            <h:outputText
+                                value="Página actual: #{buscadorController.paginacionAccion.page+1}, " />
+                            <h:outputText
+                                value="Total Páginas: #{buscadorController.paginacionAccion.totalPages}" />
+                        </h:panelGroup>
                         <p:dataTable id="datalist" value="#{buscadorController.allAccionItems}" var="item"
 
-                                     paginator="true"
                                      rowKey="#{item.id}"
-                                     rows="10"
                                      widgetVar="datalistVar"
-                                     rowsPerPageTemplate="10,20,30,40,50"
                                      >
 
 
 
-                            <p:column width="60%">
+                            <p:column width="50%">
                                 <f:facet name="header">
                                     <h:outputText value="Descripción"/>
                                 </f:facet>
                                 <h:outputText value="#{item.descripcion}"/>
                             </p:column>
-                            <p:column width="40%">
+                            <p:column width="30%">
                                 <f:facet name="header">
                                     <h:outputText value="Tags"/>
                                 </f:facet>
-                                <h:outputText value="#{item.tags}"/>
+                                <p:tagCloud model="#{item.model}">
+                                </p:tagCloud>
+                            </p:column>
+                            <p:column width="20%">
+                                <f:facet name="header">
+                                    <h:outputText value="imagen"/>
+                                </f:facet>
+                                <p:graphicImage value="../../../#{item.urlImagen}" />
                             </p:column>
 
                         </p:dataTable>

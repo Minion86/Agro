@@ -6,7 +6,9 @@ import org.Seguridades.Controller.*;
 import org.Seguridades.Controller.util.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -22,6 +24,9 @@ import org.Biblioteca.Entities.Accion;
 import org.Biblioteca.Entities.DiccionarioBusqueda;
 import org.Biblioteca.Facade.AccionFacade;
 import org.Biblioteca.Facade.DiccionarioBusquedaFacade;
+import org.General.util.PaginadorUtil;
+import org.primefaces.model.tagcloud.DefaultTagCloudItem;
+import org.primefaces.model.tagcloud.DefaultTagCloudModel;
 
 /**
  *
@@ -59,6 +64,8 @@ public class BuscadorController implements Serializable {
     private String buscarText;
 
     private List<Accion> allAccionItems;
+
+    private PaginadorUtil paginacionAccion;
 
     public BuscadorController() {
 
@@ -274,14 +281,34 @@ public class BuscadorController implements Serializable {
      */
     public List<Accion> getAllAccionItems() {
         if (allAccionItems == null) {
+            allAccionItems = new ArrayList<>();
             if (getBuscarText() != null) {
-                allAccionItems = accionFacade.getAccionbyTextoBusqueda(getBuscarText());
+
+                this.allAccionItems.clear();
+                buscarListaAccion();
+                this.allAccionItems.addAll(getPaginacionAccion().listar());
+
             } else {
                 allAccionItems = new ArrayList<>();
             }
         } else {
-            allAccionItems = new ArrayList<>();
+            if (!allAccionItems.isEmpty()) {
+                for (Accion item : allAccionItems) {
+                    item.setModel(new DefaultTagCloudModel());
+                    try {
+                        List<String> items = Arrays.asList(item.getTags().split("\\s*,\\s*"));
+
+                        Random random = new Random();
+                        for (String itemString : items) {
+                            item.getModel().addTag(new DefaultTagCloudItem(itemString, random.nextInt(6)));
+                        }
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            }
         }
+
         return allAccionItems;
     }
 
@@ -290,6 +317,79 @@ public class BuscadorController implements Serializable {
      */
     public void setAllAccionItems(List<Accion> allAccionItems) {
         this.allAccionItems = allAccionItems;
+    }
+
+    /**
+     *
+     * Obtengo la lista de Acciones paginadas a 10 registros
+     */
+    protected void buscarListaAccion() {
+        setPaginacionAccion(new PaginadorUtil(10) {
+            @Override
+            public long getItemsCount() {
+                return accionFacade.getAccionbyTextoBusquedaTotal(getBuscarText());
+            }
+
+            @Override
+            public List listar() {
+                return accionFacade.getAccionbyTextoBusquedaPaginado(getBuscarText(), getPageFirstItem(), getPageSize());
+            }
+        });
+
+    }
+
+    /**
+     * Reinicializa la lista de períodos
+     */
+    public void recreateModelAccion() {
+        this.getAllAccionItems().clear();
+        this.getAllAccionItems().addAll(getPaginacionAccion().listar());
+    }
+
+    /**
+     * Paginador acción anterior
+     */
+    public void firstAccion() {
+        getPaginacionAccion().firstPage();
+        recreateModelAccion();
+    }
+
+    /**
+     * Paginador acción anterior
+     */
+    public void previousAccion() {
+        getPaginacionAccion().previousPage();
+        recreateModelAccion();
+    }
+
+    /**
+     * Paginador acción anterior
+     */
+    public void lastAccion() {
+        getPaginacionAccion().lastPage();
+        recreateModelAccion();
+    }
+
+    /**
+     * Paginador acción siguiente
+     */
+    public void nextAccion() {
+        getPaginacionAccion().nextPage();
+        recreateModelAccion();
+    }
+
+    /**
+     * @return the paginacionAccion
+     */
+    public PaginadorUtil getPaginacionAccion() {
+        return paginacionAccion;
+    }
+
+    /**
+     * @param paginacionAccion the paginacionAccion to set
+     */
+    public void setPaginacionAccion(PaginadorUtil paginacionAccion) {
+        this.paginacionAccion = paginacionAccion;
     }
 
 }

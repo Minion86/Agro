@@ -53,16 +53,32 @@ public class AccionFacade extends AbstractFacade<Accion> {
     }
 
     /*
-    Obtengo la lista de Acciones en la base de conocimiento dado el texto de busqueda
+    Obtengo el total lista de Acciones en la base de conocimiento dado el texto de busqueda
      */
-    public List<Accion> getAccionbyTextoBusqueda(String textoBusqueda) {
+    public Long getAccionbyTextoBusquedaTotal(String textoBusqueda) {
         StringBuffer sql = new StringBuffer(100);
-        sql.append("SELECT a FROM Accion a ");
+        sql.append("SELECT count(a) FROM Accion a ");
         sql.append(" where UPPER(a.descripcion) like  ?1 or UPPER(a.tags) like  ?1 or  UPPER(a.producto.nombre) like ?1");
 
         Query query = em.createQuery(sql.toString());
-        query.setParameter(1, "%"+textoBusqueda.toUpperCase()+"%");
+        query.setParameter(1, "%" + textoBusqueda.toUpperCase() + "%");
 
+        return (Long) query.getSingleResult();
+
+    }
+
+    /*
+    Obtengo la lista de Acciones en la base de conocimiento dado el texto de busqueda
+     */
+    public List<Accion> getAccionbyTextoBusquedaPaginado(String textoBusqueda, Integer index, Integer cantidad_resultados) {
+        StringBuffer sql = new StringBuffer(100);
+        sql.append("SELECT a FROM Accion a ");
+        sql.append(" where UPPER(a.descripcion) like  ?1 or UPPER(a.tags) like  ?1 or  UPPER(a.producto.nombre) like ?1 order by a.id asc");
+
+        Query query = em.createQuery(sql.toString());
+        query.setParameter(1, "%" + textoBusqueda.toUpperCase() + "%");
+        query.setFirstResult(index);
+        query.setMaxResults(cantidad_resultados);
         List<Accion> listaTmp = query.getResultList();
         return listaTmp;
 

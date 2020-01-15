@@ -16,8 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.primefaces.model.tagcloud.TagCloudModel;
 
 /**
  *
@@ -43,6 +45,10 @@ public class Accion implements Serializable {
     @JoinColumn(name = "producto", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Producto producto;
+    @Column(name = "url_imagen")
+    private String urlImagen;
+    @Transient
+    private TagCloudModel model;
 
     public Accion() {
     }
@@ -107,5 +113,33 @@ public class Accion implements Serializable {
     public String toString() {
         return "org.Biblioteca.Entities.Accion[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the model
+     */
+    public TagCloudModel getModel() {
+        return model;
+    }
+
+    /**
+     * @param model the model to set
+     */
+    public void setModel(TagCloudModel model) {
+        this.model = model;
+    }
+
+    /**
+     * @return the urlImagen
+     */
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    /**
+     * @param urlImagen the urlImagen to set
+     */
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
+    }
+
 }

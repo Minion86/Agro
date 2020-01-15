@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import org.Seguridades.Entities.SegAccionMenu;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-12-19T16:19:45")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-01-15T14:09:08")
 @StaticMetamodel(SegAcciones.class)
 public class SegAcciones_ { 
 
