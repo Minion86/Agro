@@ -19,7 +19,10 @@
 
         <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/default.css" />
 
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/vendors/sweetalert/css/sweetalert2.min.css" />
+
         <script src="#{request.contextPath}/vendors/buscador/js/jquery-3.3.1.min.js"></script>
+        <script src="#{request.contextPath}/vendors/sweetalert/js/sweetalert2.all.min.js"></script>
 
         <script src="#{request.contextPath}/vendors/buscador/js/jquery.autocomplete.min.js"></script>
 
@@ -151,7 +154,11 @@
                                 <f:facet name="header">
                                     <h:outputText value="imagen"/>
                                 </f:facet>
-                                <p:graphicImage value="../../../#{item.urlImagen}" />
+                                <p:graphicImage value="/#{item.urlImagen}" onclick="Swal.fire({
+                                            imageUrl: '#{request.contextPath}/#{item.urlImagen}',
+
+                                                        imageAlt: '#{item.descripcion}'
+                                                    })"/>
                             </p:column>
 
                         </p:dataTable>

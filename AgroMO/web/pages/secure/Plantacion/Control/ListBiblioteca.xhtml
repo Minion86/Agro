@@ -106,7 +106,11 @@
                             <f:facet name="header">
                                 <h:outputText value="imagen"/>
                             </f:facet>
-                            <p:graphicImage value="/#{item.urlImagen}" />
+                            <p:graphicImage value="/#{item.urlImagen}"  onclick="Swal.fire({
+                                        imageUrl: '#{request.contextPath}/#{item.urlImagen}',
+                                                   
+                                                    imageAlt: '#{item.descripcion}'
+                                                })"/>
                         </p:column>
 
                     </p:dataTable>

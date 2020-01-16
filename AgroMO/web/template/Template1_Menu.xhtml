@@ -15,9 +15,14 @@
             </f:facet>
 
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/default.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/vendors/sweetalert/css/sweetalert2.min.css" />
+
+            <script src="#{request.contextPath}/vendors/buscador/js/jquery-3.3.1.min.js"></script>
+            <script src="#{request.contextPath}/vendors/sweetalert/js/sweetalert2.all.min.js"></script>
+
+
             <h:outputStylesheet library="css" name="jsfcrud.css"/>
             <h:outputScript library="js" name="jsfcrud.js"/>
-
             <style type="text/css">
                 .nestedUnit {
                     border:0px none !important;
@@ -69,6 +74,8 @@
 
                     </p:layoutUnit>
                     <script type="text/javascript" language="JavaScript">
+                        jQuery.noConflict();
+
 
                         function sendDataLogout() {
 
