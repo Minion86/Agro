@@ -294,16 +294,18 @@ public class BuscadorController implements Serializable {
         } else {
             if (!allAccionItems.isEmpty()) {
                 for (Accion item : allAccionItems) {
-                    item.setModel(new DefaultTagCloudModel());
-                    try {
-                        List<String> items = Arrays.asList(item.getTags().split("\\s*,\\s*"));
+                    if (item.getModel() == null) {
+                        item.setModel(new DefaultTagCloudModel());
+                        try {
+                            List<String> items = Arrays.asList(item.getTags().split("\\s*,\\s*"));
 
-                        Random random = new Random();
-                        for (String itemString : items) {
-                            item.getModel().addTag(new DefaultTagCloudItem(itemString, random.nextInt(6)));
+                            Random random = new Random();
+                            for (String itemString : items) {
+                                item.getModel().addTag(new DefaultTagCloudItem(itemString, random.nextInt(6)));
+                            }
+                        } catch (Exception ex) {
+                            System.out.println(ex.getMessage());
                         }
-                    } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
                     }
                 }
             }
