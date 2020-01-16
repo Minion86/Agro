@@ -105,7 +105,8 @@
 
                                     <f:facet name="footer">
                                         <p:commandButton id="editDetalleButton"   icon="ui-icon-pencil" value="Registro de Control" actionListener="#{controlController.prepareCreateDetalle}" update=":ControlPlantacionCreateDetalleForm" process=":ControlPlantacionCreateDetalleForm,editDetalleButton" oncomplete="PF('ControlPlantacionCreateDetalleDialog').show()" disabled="#{empty controlController.currentDetalle}" rendered="#{controlController.permisoActualizar}"/>
-                                     
+                                        <p:commandButton id="mostrarAyudaDetalleButton"   icon="ui-icon-help" value="Biblioteca de Ayuda" actionListener="#{controlController.prepareCreateDetalle}" update=":formBusqueda,:formTabla" process=":formBusqueda,:formTabla,editDetalleButton" oncomplete="PF('ListBibliotecaViewDialog').show()"  rendered="#{buscadorController.permisoListarPagina}"/>
+
                                     </f:facet>
                                 </p:dataTable>
                             </p:column>

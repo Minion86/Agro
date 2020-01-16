@@ -197,6 +197,7 @@
             <ui:include src="Edit.xhtml" rendered="#{controlController.permisoActualizar}"/>
             <ui:include src="View.xhtml" rendered="#{controlController.permisoActualizar}"/>
             <ui:include src="ViewDetalle.xhtml" rendered="#{controlController.permisoActualizar}"/>
+            <ui:include src="ListBiblioteca.xhtml" rendered="#{buscadorController.permisoListarPagina}"/>
 
 
             <script type="text/javascript">
@@ -214,10 +215,35 @@
                 }
 
 
+                jQuery.noConflict();
+
+                $(document).ready(function () {
+                });
+
+                var lista =#{buscadorController.diccionarioBusquedaListJson};
+
+                jQuery('#autocomplete').autocomplete({
+                    lookup: lista,
+                    onSelect: function (suggestion) {
+                        var thehtml = '<strong>Seleccionado:</strong> ' + suggestion.value;
+                        jQuery('#outputcontent').html(thehtml);
+                    }
+                });
+
 
 
 
             </script>
+
+            <p:ajaxStatus style="width:32px;height:32px;display:block;position:fixed;right:0;top:0;z-index:100">
+                <f:facet name="start">
+                    <h:graphicImage value="/images/loading.gif" />
+                </f:facet>
+
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
         </ui:define>
     </ui:composition>
 
