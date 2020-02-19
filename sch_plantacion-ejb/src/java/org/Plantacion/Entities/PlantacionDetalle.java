@@ -18,7 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
@@ -52,11 +51,11 @@ public class PlantacionDetalle implements Serializable {
     @Size(max = 100)
     @Column(name = "tipo_cantidad_plantacion_detalle")
     private String tipoCantidadPlantacionDetalle;
-    @JoinColumn(name = "id_plantacion_detalle", referencedColumnName = "id_plantacion", insertable = false, updatable = false)
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_plantacion", referencedColumnName = "id_plantacion")
+    @ManyToOne
     private Plantacion plantacion;
     @JoinColumn(name = "id_tipo_suelo", referencedColumnName = "id_tipo_suelo")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne
     private TipoSuelo idTipoSuelo;
     @Transient
     private Double maximo;

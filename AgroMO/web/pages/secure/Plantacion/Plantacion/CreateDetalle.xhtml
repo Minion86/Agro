@@ -8,9 +8,9 @@
       xmlns:pe="http://primefaces.org/ui/extensions">
 
     <ui:composition>
-        <h:form id="PlantacionCreateDetalleForm">
-            <p:dialog closable="false" id="PlantacionCreateDetalleDlg" height="400"  widgetVar="PlantacionCreateDetalleDialog"  resizable="false"  header="Nuevo Registro Detalle">
 
+        <p:dialog closable="false" id="PlantacionCreateDetalleDlg" height="400"  widgetVar="PlantacionCreateDetalleDialog"  resizable="false"  header="Nuevo Registro Detalle">
+            <h:form id="PlantacionCreateDetalleForm">
                 <h:panelGroup id="display">
                     <p:panelGrid rendered="#{plantacionController.currentDetalle != null}" >
                         <p:row>
@@ -71,12 +71,12 @@
 
                         </p:row>
                     </p:panelGrid>
-                    <p:commandButton rendered="#{plantacionController.currentDetalle.idPlantacionDetalle == null}"  actionListener="#{plantacionController.createDetalle}" value="#{bundle.Save}" update="display,:PlantacionCreateForm:datalistProductos,:PlantacionEditForm:datalistProductos,:growl" oncomplete="handleSubmit(args, 'PlantacionCreateDetalleDialog');"/>
+                    <p:commandButton rendered="#{plantacionController.currentDetalle.idPlantacionDetalle == null}"  actionListener="#{plantacionController.createDetalle}" value="#{bundle.Save}" update="display,:PlantacionCreateForm:datalistProductos,:PlantacionEditForm:datalistProductos,:growl" oncomplete="handleSubmit(args, 'PlantacionCreateDetalleDialog');" process=":PlantacionCreateDetalleForm"/>
                     <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('PlantacionCreateDetalleDialog').hide()"  immediate="true" actionListener="#{plantacionController.cancelarDetalle}" update=":PlantacionEditForm:datalistProductos,:PlantacionCreateForm:datalistProductos"/>
                 </h:panelGroup>
+            </h:form>
+        </p:dialog>
 
-            </p:dialog>
-        </h:form>
 
     </ui:composition>
 </html>

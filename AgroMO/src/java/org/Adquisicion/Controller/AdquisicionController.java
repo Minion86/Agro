@@ -278,7 +278,12 @@ public class AdquisicionController implements Serializable {
 
             //this.current.setEstadoAdquisicion(true);
             current.setIdBodega(ejbBodegaFacade.findbyId(current.getIdBodegaInt()));
-
+            if (current.getDetalleAdquisicionList() != null && !current.getDetalleAdquisicionList().isEmpty()) {
+                current.getDetalleAdquisicionList().forEach((DetalleAdquisicion item)
+                        -> {
+                    item.setIdDetalleAdquisicion(null);
+                });
+            }
             getFacade().create(current);
             getAllAdquisicionItems().add(current);
 

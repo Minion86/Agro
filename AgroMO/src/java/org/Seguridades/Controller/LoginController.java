@@ -44,7 +44,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * The Class LoginBean.
  */
-@Named(value =  "loginController")
+@Named(value = "loginController")
 @SessionScoped
 public class LoginController
         implements Serializable {
@@ -131,7 +131,7 @@ public class LoginController
                     SecurityContextHolder.getContext().getAuthentication().getCredentials(), autoridades);
 
             SecurityContextHolder.getContext().setAuthentication(customAuthentication);
-            FacesContext.getCurrentInstance().getExternalContext().redirect(JsfUtil.GetContextPath() + "/pages/secure/Principal_Menu.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(JsfUtil.GetContextPath() + "/pages/secure/Dashboard/List.jsf");
             log.info("Usuario:" + this.getUser().getUsernameUsuario() + " ha escogido el perfil: " + getRol().getNombrePerfil());
 
         } catch (AuthenticationException e) {
@@ -266,6 +266,19 @@ public class LoginController
 
     public void setMenuBean() {
         model = new DefaultMenuModel();
+        DefaultSubMenu SubmenuHome = new DefaultSubMenu("Home");
+        DefaultMenuItem item = new DefaultMenuItem("Dashboard");
+
+        // item.setIcon("ui-icon-close");
+        item.setCommand("#{loginController.setBreadcrumb}");
+        item.setParam("URL", "#{loginController.prepareDashboard}");
+        // item.setValue(((Object[])x)[0].toString());
+        item.setParam("ID", "0");
+        item.setId("0");
+
+        SubmenuHome.addElement(item);
+
+        model.addElement(SubmenuHome);
         List<Object> ListaJerarquia = getEjbSegMenuFacade().findbyJerarquia();
         SegAcciones SysAcciones = getejbSegAccionesFacade().findBySonAccion("listar pagina");
 
@@ -319,6 +332,10 @@ public class LoginController
 //		secondSubmenu.addElement(item);
 //
 //        model.addElement(secondSubmenu);
+    }
+
+    public void prepareDashboard() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect(JsfUtil.GetContextPath() + "/pages/secure/Dashboard/List.jsf");
     }
 
     public void GetPagePermissions() {

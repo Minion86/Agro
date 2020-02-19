@@ -47,8 +47,6 @@ public class TipoSuelo implements Serializable {
     private String descripcionTipoSuelo;
     @Column(name = "estado_tipo_suelo")
     private Boolean estadoTipoSuelo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoSuelo", fetch = FetchType.LAZY)
-    private List<PlantacionDetalle> plantacionDetalleList;
 
     public TipoSuelo() {
     }
@@ -97,14 +95,6 @@ public class TipoSuelo implements Serializable {
         this.estadoTipoSuelo = estadoTipoSuelo;
     }
 
-    @XmlTransient
-    public List<PlantacionDetalle> getPlantacionDetalleList() {
-        return plantacionDetalleList;
-    }
-
-    public void setPlantacionDetalleList(List<PlantacionDetalle> plantacionDetalleList) {
-        this.plantacionDetalleList = plantacionDetalleList;
-    }
 
     @Override
     public int hashCode() {

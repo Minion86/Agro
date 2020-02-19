@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Sistema de Control de Plantaciones AgroMO</title>
+            </f:facet>
+
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/default.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/vendors/sweetalert/css/sweetalert2.min.css" />
+
+            <script src="#{request.contextPath}/vendors/buscador/js/jquery-3.3.1.min.js"></script>
+            <script src="#{request.contextPath}/vendors/sweetalert/js/sweetalert2.all.min.js"></script>
+            <link type="text/css" href="#{request.contextPath}/vendors/jquery-circliful/css/jquery.circliful.css" rel="stylesheet"/>
+            <link rel="stylesheet" type="text/css" href="#{request.contextPath}/vendors/nvd3chart/nv.d3.min.css"/>
+            <link type="text/css" href="#{request.contextPath}/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+            <script src="#{request.contextPath}/vendors/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+            <script src="#{request.contextPath}/vendors/d3-chart/d3.v3.min.js" type="text/javascript"></script>
+            <script src="#{request.contextPath}/vendors/nvd3chart/nv.d3.min.js" type="text/javascript"></script>    
+            <script src="#{request.contextPath}/vendors/chartsjs/floatchart/jquery.flot.min.js" type="text/javascript"></script>
+            <script src="#{request.contextPath}/vendors/chartsjs/floatchart/jquery.flot.resize.min.js" type="text/javascript"></script>
+            <script src="#{request.contextPath}/vendors/chartsjs/floatchart/jquery.flot.categories.js" type="text/javascript"></script>
+            <script src="#{request.contextPath}/vendors/chartsjs/floatchart/jquery.flot.tooltip.js" type="text/javascript"></script>
+
+
+            <h:outputStylesheet library="css" name="jsfcrud.css"/>
+            <h:outputScript library="js" name="jsfcrud.js"/>
+            <style type="text/css">
+                .nestedUnit {
+                    border:0px none !important;
+                }
+
+                .ui-layout-center .ui-layout-resizer {
+                    border:1px solid #A8A8A8 !important;
+                }
+
+                .ui-tree-item span {
+                    float:left !important;
+                }
+
+                .ui-tree {
+                    border:0px none !important;
+                }
+
+                .ui-tabs {
+                    border:0px none !important;
+                }
+            </style>
+        </h:head>
+
+        <h:body>
+            <p:growl id="growl" life="3000" />
+            <p:layout fullPage="true">
+                <h:form  id="TitleFormId">
+                    <p:layoutUnit position="north" size="10%">
+
+                        <p:toolbar >
+                            <f:facet name="left">
+                                <p:graphicImage value="/images/logo.jpg"  height="60" width="60"   />
+
+                            </f:facet>
+
+                            <f:facet name="right">
+                                <p:outputLabel value="Usuario: #{loginController.user.usernameUsuario}" />
+
+                                <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" /> 
+                                <hr/>
+                                <p:commandButton value="Cambiar Perfil"  actionListener="#{loginController.iraescogePerfil}"/>
+                                <p:commandButton value="Salir" ajax="false" onclick="sendDataLogout();" />
+
+                            </f:facet>
+
+                        </p:toolbar>
+
+
+
+                    </p:layoutUnit>
+                    <script type="text/javascript" language="JavaScript">
+                        jQuery.noConflict();
+
+
+                        function sendDataLogout() {
+
+                            var forma = document.getElementById("TitleFormId");
+                            forma.action = "/AgroMO/j_spring_security_logout";
+                            forma.method = "POST";
+                            forma.submit();
+
+                        }
+                    </script>
+                </h:form>
+                <p:layoutUnit position="west" id="MENU"  size="20%" resizable="true" collapsible="true" header="MENU">
+                    <h:form>
+                        <p:panelMenu  model="#{loginController.model}" /> 
+
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+
+                    <ui:insert name="body"></ui:insert>
+
+                </p:layoutUnit>
+
+            </p:layout>
+            <p:ajaxStatus style="width:32px;height:32px;display:block;position:fixed;right:0;top:0;z-index:100">
+                <f:facet name="start">
+                    <h:graphicImage value="/images/loading.gif" />
+                </f:facet>
+
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+
+
+
+            <p:growl id="msg" />
+
+
+        </h:body>
+
+    </f:view>
+
+</html>
+

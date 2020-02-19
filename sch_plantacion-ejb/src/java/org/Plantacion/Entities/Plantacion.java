@@ -43,7 +43,7 @@ public class Plantacion implements Serializable {
     @Column(name = "fecha_plantacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPlantacion;
-    @OneToMany(mappedBy = "plantacion", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "plantacion", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<PlantacionDetalle> plantacionDetalleList;
     @Column(name = "nombre_plantacion")
     private String nombrePlantacion;
@@ -68,7 +68,7 @@ public class Plantacion implements Serializable {
     private Integer idUbicacionInt;
     @Transient
     private String producto;
-     @OneToMany(mappedBy = "idPlantacion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idPlantacion", fetch = FetchType.LAZY)
     private List<WeatherMap> weatherMapList;
 
     public Plantacion() {

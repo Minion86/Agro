@@ -26,6 +26,31 @@
                     </f:facet>
                 </p:menubar>
                 <p:panel header="Lista de Plantaciones">
+                    <h:panelGroup rendered="#{not empty plantacionController.allPlantacionItems}">
+                        <p:commandLink action="#{plantacionController.firstPlantacion}" rendered="#{plantacionController.paginacionPlantacion.hasPreviousPage}"
+                                       update=":plantacionListForm"  process=":plantacionListForm">
+                            <p:graphicImage library="images" value="/images/navegacion/izquierda2.gif" />
+                        </p:commandLink>
+                        <p:commandLink action="#{plantacionController.previousPlantacion}" rendered="#{plantacionController.paginacionPlantacion.hasPreviousPage}"
+                                       update=":plantacionListForm"  process=":plantacionListForm">
+                            <p:graphicImage library="images" value="/images/navegacion/izquierda1.gif" />
+                        </p:commandLink>
+                        <p:commandLink action="#{plantacionController.nextPlantacion}" rendered="#{plantacionController.paginacionPlantacion.hasNextPage}"
+                                       update=":plantacionListForm"  process=":plantacionListForm">
+                            <p:graphicImage library="images" value="/images/navegacion/derecha1.gif" />
+                        </p:commandLink>
+                        <p:commandLink action="#{plantacionController.lastPlantacion}" rendered="#{plantacionController.paginacionPlantacion.hasNextPage}"
+                                       update=":plantacionListForm"  process=":plantacionListForm">
+                            <p:graphicImage library="images" value="/images/navegacion/derecha2.gif" />
+                        </p:commandLink>
+
+                        <h:outputText
+                            value="Total: #{plantacionController.paginacionPlantacion.itemsCount} registros, " />
+                        <h:outputText
+                            value="Página actual: #{plantacionController.paginacionPlantacion.page+1}, " />
+                        <h:outputText
+                            value="Total Páginas: #{plantacionController.paginacionPlantacion.totalPages}" />
+                    </h:panelGroup>
                     <p:dataTable id="datalist" value="#{plantacionController.allPlantacionItems}" var="item"
                                  selectionMode="single" selection="#{plantacionController.selected}"
                                  paginator="true"
@@ -61,7 +86,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
-             
+
                         <p:column width="30%">
                             <f:facet name="header">
                                 <h:outputText value="Productos"/>
@@ -71,9 +96,9 @@
                             </p:dataList>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{plantacionController.prepareCreate}" update=":PlantacionCreateForm"  oncomplete="PF('PlantacionCreateDialog').show()" rendered="#{plantacionController.permisoInsertar}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{plantacionController.prepareEdit}" update=":PlantacionEditForm"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoActualizar}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{plantacionController.destroy}" update=":growl,datalist" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoEliminar}"/>
+                            <p:commandButton id="createButton" process="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" action="#{plantacionController.prepareCreate}" update=":PlantacionCreateForm"  oncomplete="PF('PlantacionCreateDialog').show()" rendered="#{plantacionController.permisoInsertar}"/>
+                            <p:commandButton id="editButton" process="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" action="#{plantacionController.prepareEdit}" update=":PlantacionEditForm"  oncomplete="PF('PlantacionEditDialog').show()" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoActualizar}"/>
+                            <p:commandButton id="deleteButton" process="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" action="#{plantacionController.destroy}" update=":growl,datalist" disabled="#{plantacionController.selected.idPlantacion==null}" rendered="#{plantacionController.permisoEliminar}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
