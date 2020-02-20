@@ -5,11 +5,17 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <!-- Enable Spring -->
     <application>
+        <locale-config>
+            <default-locale>es</default-locale>
+            <supported-locale>es</supported-locale>
+            <!-- supported-locale>en</supported-locale -->
+        </locale-config>
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
         <resource-bundle>
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        
     </application>
     <!-- Simple Navigation Rule -->
     <!-- If  user keys in ToSecure, move to /pages/secure/page.jsf-->
