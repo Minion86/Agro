@@ -207,4 +207,18 @@ public class PlantacionFacade extends AbstractFacade<Plantacion> {
 
     }
 
+    /*
+    Obtengo la lista de Plantaciones activas
+     */
+    public List<Plantacion> getPlantacionesActivas() {
+        StringBuffer sql = new StringBuffer(100);
+        sql.append("SELECT s FROM Plantacion s ");
+        sql.append(" WHERE s.estadoPlantacion=true and s.estadoCosecha=false ");
+
+        Query query = em.createQuery(sql.toString());
+        List<Plantacion> listaTmp = query.getResultList();
+        return listaTmp;
+
+    }
+
 }

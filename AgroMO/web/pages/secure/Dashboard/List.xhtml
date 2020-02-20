@@ -15,22 +15,196 @@
             <h:form id="form">
                 <div class="container-fluid">
                     <div class="row bg-color">
-                        <div class="col-lg-4">
+                        <div class="col-lg-12">
                             <div class="box-model">
                                 <h4>Estadísticas</h4>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-4 text-center">
+                                    <p class="income">Plantaciones Activas</p>
+                                    <div id="myStat2" data-dimension="210" data-width="20" data-text="#{dashboardController.cantidadPlantacionesActivas}" data-fontsize="20" data-percent="#{dashboardController.cantidadPlantacionesActivas}" data-fgcolor="#33a4d8" data-bgcolor="#f7f7f7"></div>
+                                    <br/>
+                                    <div class="panel-body text-center">
+                                        <div class="panel-body text-center">
+                                            <a href="#">
+                                                DE
+                                                <h1 id="total_plantaciones">100 </h1>
+                                                Disponibles
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-4 col-xs-4 text-center">
+                                    <p class="income">Afecciones de Plantaciones Activas</p>
+                                    <div id="myStat3" data-dimension="210" data-width="20" data-text="#{dashboardController.cantidadAfeccionesControlesPlantacionesActivas}" data-fontsize="20" data-percent="#{dashboardController.porcentajeAfeccionesControlesPlantacionesActivas}" data-fgcolor="#33a4d8" data-bgcolor="#f7f7f7"></div>
+                                    <br/>
+                                    <div class="panel-body text-center">
+                                        <div class="panel-body text-center">
+                                            <a href="#">
+                                                DE
+                                                <h1 id="total_controles"> </h1>
+                                                Controles
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-xs-4 text-center">
+                                    <p class="income">Afecciones Tratadas</p>
+                                    <div id="myStat4" data-dimension="210" data-width="20" data-text="#{dashboardController.cantidadAfeccionesTratadasControlesPlantacionesActivas}" data-fontsize="20" data-percent="#{dashboardController.porcentajeAfeccionesTratadasControlesPlantacionesActivas}" data-fgcolor="#33a4d8" data-bgcolor="#f7f7f7"></div>
+                                    <br/>
+                                    <div class="panel-body text-center">
+                                        <div class="panel-body text-center">
+                                            <a href="#">
+                                                DE
+                                                <h1 id="total_afecciones_tratadas"> </h1>
+                                                Afecciones
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            mundo
-                        </div>
-                        <div class="col-lg-4">
-                            cruel
+
+                        <div class="col-lg-12">
+                            <div class="box-model">
+                                <h4>Reporte Actual del Clima de las Plantaciones Activas</h4>
+                            </div>
+                            <h:panelGroup id="groupPlantaciones" rendered="#{not empty dashboardController.listaPlantacionesActivas}">
+                                <p:commandLink action="#{dashboardController.firstPlantacion}" rendered="#{dashboardController.paginacionPlantacion.hasPreviousPage}"
+                                               update=":form:grupoPlantaciones"  process=":form:grupoPlantaciones">
+                                    <p:graphicImage library="images" value="/images/navegacion/izquierda2.gif" />
+                                </p:commandLink>
+                                <p:commandLink action="#{dashboardController.previousPlantacion}" rendered="#{dashboardController.paginacionPlantacion.hasPreviousPage}"
+                                               update=":form:grupoPlantaciones"  process=":form:grupoPlantaciones">
+                                    <p:graphicImage library="images" value="/images/navegacion/izquierda1.gif" />
+                                </p:commandLink>
+                                <p:commandLink action="#{dashboardController.nextPlantacion}" rendered="#{dashboardController.paginacionPlantacion.hasNextPage}"
+                                               update=":form:grupoPlantaciones"  process=":form:grupoPlantaciones">
+                                    <p:graphicImage library="images" value="/images/navegacion/derecha1.gif" />
+                                </p:commandLink>
+                                <p:commandLink action="#{dashboardController.lastPlantacion}" rendered="#{dashboardController.paginacionPlantacion.hasNextPage}"
+                                               update=":form:grupoPlantaciones"  process=":form:grupoPlantaciones">
+                                    <p:graphicImage library="images" value="/images/navegacion/derecha2.gif" />
+                                </p:commandLink>
+
+                                <h:outputText
+                                    value="Total: #{dashboardController.paginacionPlantacion.itemsCount} registros, " />
+                                <h:outputText
+                                    value="Página actual: #{dashboardController.paginacionPlantacion.page+1}, " />
+                                <h:outputText
+                                    value="Total Páginas: #{dashboardController.paginacionPlantacion.totalPages}" />
+                                <p:dataList value="#{dashboardController.listaPlantacionesActivas}" var="plantacion" type="ordered">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-xs-12 text-center">
+                                            <p class="income">Plantación #{plantacion.nombrePlantacion}</p>
+                                            <p:dataList value="#{plantacion.plantacionDetalleList}" var="detalle">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-xs-12 text-center">
+                                                        <p class="income">#{detalle.producto}</p>
+                                                        <br/>
+                                                        <br/>
+                                                        <p:chart type="line" model="#{detalle.temperaturaModel}" style="height:300px; width: 700px;"/>
+                                                        <br/>
+                                                        <br/>
+                                                        <p:chart type="line" model="#{detalle.humedadModel}" style="height:300px; width: 700px;"/>
+                                                    </div>
+                                                </div>
+                                            </p:dataList>
+                                        </div>
+
+                                    </div>
+
+                                </p:dataList>
+
+
+                            </h:panelGroup>
                         </div>
                     </div>
                 </div>
 
 
+                <script>
+                    jQuery.noConflict();
+
+                    $(document).ready(function ()
+                    {
+                        //pie chart
+                        jQuery('#myStat2').circliful({
+                            animation: 1,
+                            animationStep: 5,
+                            foregroundBorderWidth: 20,
+                            backgroundBorderWidth: 20,
+                            percent: 100,
+                            // textSize: 40,
+                            backgroundColor: '#f7f7f7',
+                            foregroundColor: '#33a4d8',
+                            textStyle: 'font-size: 20px;',
+                            textColor: '#666',
+                        });
+
+                        jQuery('#myStat3').circliful({
+                            animation: 1,
+                            animationStep: 5,
+                            foregroundBorderWidth: 20,
+                            backgroundBorderWidth: 20,
+                            percent: #{dashboardController.porcentajeAfeccionesControlesPlantacionesActivas},
+                            // textSize: 40,
+                            backgroundColor: '#f7f7f7',
+                            foregroundColor: '#33a4d8',
+                            textStyle: 'font-size: 20px;',
+                            textColor: '#666',
+                        });
+
+                        jQuery('#myStat4').circliful({
+                            animation: 1,
+                            animationStep: 5,
+                            foregroundBorderWidth: 20,
+                            backgroundBorderWidth: 20,
+                            percent: #{dashboardController.porcentajeAfeccionesTratadasControlesPlantacionesActivas},
+                            // textSize: 40,
+                            backgroundColor: '#f7f7f7',
+                            foregroundColor: '#33a4d8',
+                            textStyle: 'font-size: 20px;',
+                            textColor: '#666',
+                        });
+
+                        //user countup
+                        var useOnComplete = false,
+                                useEasing = false,
+                                useGrouping = false,
+                                options = {
+                                    useEasing: useEasing, // toggle easing
+                                    useGrouping: useGrouping, // 1,000,000 vs 1000000
+                                    separator: ',', // character to use as a separator
+                                    decimal: '.' // character to use as a decimal
+                                }
+
+                        var cantidadControlesPlantacionesActivas =#{dashboardController.cantidadControlesPlantacionesActivas};
+                        var count2 = new CountUp("total_controles", 0, cantidadControlesPlantacionesActivas, 0, 4, options);
+                        count2.start();
+
+                        var cantidadAfeccionesControlesPlantacionesActivas =#{dashboardController.cantidadAfeccionesControlesPlantacionesActivas};
+                        var count3 = new CountUp("total_afecciones_tratadas", 0, cantidadAfeccionesControlesPlantacionesActivas, 0, 4, options);
+                        count3.start();
+                        jQuery(window).on("scroll", function () {
+
+                            if (isScrolledIntoView("#total_controles")) {
+                                count2.start();
+                            }
+
+                            if (isScrolledIntoView("#total_afecciones_tratadas")) {
+                                count3.start();
+                            }
+                        });
+
+
+                    });
+                </script>
             </h:form>
+
         </ui:define>
     </ui:composition>
 

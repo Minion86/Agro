@@ -24,6 +24,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.Adquisicion.Entities.Ubicacion;
+import org.Plantacion.Dto.AnalisisClimaControl;
 
 /**
  *
@@ -70,6 +71,7 @@ public class Plantacion implements Serializable {
     private String producto;
     @OneToMany(mappedBy = "idPlantacion", fetch = FetchType.LAZY)
     private List<WeatherMap> weatherMapList;
+   
 
     public Plantacion() {
     }
@@ -291,5 +293,6 @@ public class Plantacion implements Serializable {
     public void setWeatherMapList(List<WeatherMap> weatherMapList) {
         this.weatherMapList = weatherMapList;
     }
+
 
 }

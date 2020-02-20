@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.Adquisicion.Entities.DetalleAdquisicion;
 import org.Adquisicion.Entities.Ubicacion;
+import org.Plantacion.Dto.AnalisisClimaControl;
+import org.primefaces.model.chart.LineChartModel;
 
 /**
  *
@@ -77,6 +79,12 @@ public class PlantacionDetalle implements Serializable {
     private Ubicacion idUbicacionPadre;
     @Transient
     private String producto;
+    @Transient
+    private List<AnalisisClimaControl> analisisClimaControlList;
+    @Transient
+    private LineChartModel temperaturaModel = new LineChartModel();
+    @Transient
+    private LineChartModel humedadModel = new LineChartModel();
 
     public PlantacionDetalle() {
     }
@@ -311,6 +319,48 @@ public class PlantacionDetalle implements Serializable {
      */
     public void setProducto(String producto) {
         this.producto = producto;
+    }
+
+    /**
+     * @return the analisisClimaControlList
+     */
+    public List<AnalisisClimaControl> getAnalisisClimaControlList() {
+        return analisisClimaControlList;
+    }
+
+    /**
+     * @param analisisClimaControlList the analisisClimaControlList to set
+     */
+    public void setAnalisisClimaControlList(List<AnalisisClimaControl> analisisClimaControlList) {
+        this.analisisClimaControlList = analisisClimaControlList;
+    }
+
+    /**
+     * @return the temperaturaModel
+     */
+    public LineChartModel getTemperaturaModel() {
+        return temperaturaModel;
+    }
+
+    /**
+     * @param temperaturaModel the temperaturaModel to set
+     */
+    public void setTemperaturaModel(LineChartModel temperaturaModel) {
+        this.temperaturaModel = temperaturaModel;
+    }
+
+    /**
+     * @return the humedadModel
+     */
+    public LineChartModel getHumedadModel() {
+        return humedadModel;
+    }
+
+    /**
+     * @param humedadModel the humedadModel to set
+     */
+    public void setHumedadModel(LineChartModel humedadModel) {
+        this.humedadModel = humedadModel;
     }
 
 }

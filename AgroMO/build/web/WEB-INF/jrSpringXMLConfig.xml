@@ -21,6 +21,7 @@
         <intercept-url pattern="/pages/unsecure/**" access="permitAll"/>
        
         <intercept-url pattern="/resources/**" access="permitAll"/>
+        <intercept-url pattern="/vendors/**" access="permitAll"/>
         <form-login login-page="/LogIn.jsf"
          
                     default-target-url="/pages/secure/Principal.jsf"

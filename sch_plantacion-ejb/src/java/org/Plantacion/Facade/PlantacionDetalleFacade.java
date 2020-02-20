@@ -115,5 +115,7 @@ public class PlantacionDetalleFacade extends AbstractFacade<PlantacionDetalle> {
         return q.getResultList();
     }
 
+    
+    
 
 }
