@@ -46,6 +46,19 @@ public class SegPerfilFacade extends AbstractFacade<SegPerfil> {
     }
 
     /**
+     * Devuelve el listado de perfiles de acuerdo a su nombre
+     *
+     * @param nombrePerfil
+     * @return
+     */
+    public SegPerfil findbyNombre(String nombrePerfil) {
+        javax.persistence.Query q = em.createQuery("select p from SegPerfil p where p.nombrePerfil=:nombrePerfil");
+        q.setParameter("nombrePerfil", nombrePerfil);
+
+        return (SegPerfil) q.getSingleResult();
+    }
+
+    /**
      * Devuelve el listado de perfiles de acuerdo a los permisos de usuario
      *
      * @param nombreUsuario
@@ -67,6 +80,7 @@ public class SegPerfilFacade extends AbstractFacade<SegPerfil> {
 
     /**
      * Devuelve el listado de perfiles activos
+     *
      * @return
      */
     public List<SegPerfil> findbyActivos() {
@@ -80,7 +94,7 @@ public class SegPerfilFacade extends AbstractFacade<SegPerfil> {
 
         return q.getResultList();
     }
-    
+
     /**
      * Devuelve el listado de perfiles de acuerdo a la busqueda avanzada
      *

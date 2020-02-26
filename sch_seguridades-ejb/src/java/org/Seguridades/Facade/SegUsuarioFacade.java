@@ -42,7 +42,7 @@ public class SegUsuarioFacade extends AbstractFacade<SegUsuario> {
 
         return (SegUsuario) q.getSingleResult();
     }
-    
+
     /**
      * Devuelve el usuario por el username y password
      *
@@ -61,9 +61,8 @@ public class SegUsuarioFacade extends AbstractFacade<SegUsuario> {
             return null;
         }
     }
-    
-    
-     /**
+
+    /**
      * Devuelve el listado de usuarios de acuerdo a la busqueda avanzada
      *
      * @param usuario
@@ -115,9 +114,20 @@ public class SegUsuarioFacade extends AbstractFacade<SegUsuario> {
 
         }
 
-
         return q.getResultList();
     }
 
-    
+    /**
+     * Devuelve el usuario por el nombrePerfil
+     *
+     * @param nombrePerfil
+     * @return
+     */
+    public List<SegUsuario> findbyPerfil(String nombrePerfil) {
+        javax.persistence.Query q = em.createQuery("Select s from SegUsuario s join s.segUsuarioPerfilList u on s=u.idUsuario where  u.idPerfil.nombrePerfil=:nombrePerfil and s.activoUsuario=true");
+        q.setParameter("nombrePerfil", nombrePerfil);
+
+        return (List<SegUsuario>) q.getResultList();
+    }
+
 }

@@ -17,4 +17,10 @@ public interface ProcesoAnalisisPeriodicoCron {
      *
      */
     void analizar();
+
+    /**
+     * Creo análisis de las plantaciones activas y envío mail a usuarios
+     * parametrizados
+     */
+    void notificaciones();
 }

@@ -5,6 +5,7 @@
 package org.Plantacion.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
@@ -64,6 +65,8 @@ public class FacesUtil implements Serializable {
 
     public static String months[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+
+    private static final String PROPERTIES_FILE = "/Bundle.properties";
 
     /**
      * Obtiene el contexto del sistema.
@@ -805,6 +808,52 @@ public class FacesUtil implements Serializable {
 
     public static void setDomingo(String Domingo) {
         FacesUtil.Domingo = Domingo;
+    }
+
+    //28-01-2015 nmartinez  Leer template de mail para envío de mails
+    public static String crearMensajePorTipoPlantillaHTML(String cuerpoMensaje) throws Exception {
+
+        try {
+
+            java.util.Properties prop = new java.util.Properties();
+            prop.load(FacesUtil.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE));
+
+            String cuerpo = new String();
+
+            cuerpo = prop.get("mail.cuerpo.template").toString();
+
+            String cuerpo2 = cuerpo.replaceAll("Texto", reemplazaCuerpoHTML(cuerpoMensaje));
+            return cuerpo2;
+
+        } catch (Exception ex) {
+            return cuerpoMensaje;
+        }
+    }
+
+    //28-01-2015 nmartinez  Reemplazo tildes y ñ
+    private static String reemplazaCuerpoHTML(String cuerpoMensaje) throws FileNotFoundException, IOException {
+        try {
+
+            String cuerpo2 = cuerpoMensaje;
+
+            cuerpo2 = cuerpo2.replaceAll("á", "&aacute;");
+            cuerpo2 = cuerpo2.replaceAll("é", "&eacute;");
+            cuerpo2 = cuerpo2.replaceAll("í", "&iacute;");
+            cuerpo2 = cuerpo2.replaceAll("ó", "&oacute;");
+            cuerpo2 = cuerpo2.replaceAll("ú", "&uacute;");
+
+            cuerpo2 = cuerpo2.replaceAll("Á", "&Aacute;");
+            cuerpo2 = cuerpo2.replaceAll("É", "&Eacute;");
+            cuerpo2 = cuerpo2.replaceAll("Í", "&Iacute;");
+            cuerpo2 = cuerpo2.replaceAll("Ó", "&Oacute;");
+            cuerpo2 = cuerpo2.replaceAll("Ú", "&Uacute;");
+
+            cuerpo2 = cuerpo2.replaceAll("ñ", "&ntilde;");
+            cuerpo2 = cuerpo2.replaceAll("Ñ", "&Ntilde;");
+            return cuerpo2;
+        } catch (Exception ex) {
+            return cuerpoMensaje;
+        }
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class SendEmailTLS {
 
-    public void SendNotificacion() {
+    public void SendNotificacion(String to,String texto) {
 
         final String username = "Renzo199725@gmail.com";
         final String password = "089897717r";
@@ -33,14 +33,13 @@ public class SendEmailTLS {
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("from@gmail.com"));
+            message.setFrom(new InternetAddress("Renzo199725@gmail.com"));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse("to_username_a@gmail.com, to_username_b@yahoo.com")
+                    InternetAddress.parse(to)
             );
-            message.setSubject("Testing Gmail TLS");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n Please do not spam my email!");
+            message.setSubject("Reporte Análisis Plantaciones Activas AGROMOP");
+            message.setText(texto);
 
             Transport.send(message);
 
