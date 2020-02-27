@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
+import javax.ejb.Schedules;
 import javax.ejb.Stateless;
 import org.Adquisicion.Entities.Ubicacion;
 import org.Adquisicion.Facade.UbicacionFacade;
@@ -100,7 +101,13 @@ public class ProcesoAnalisisPeriodicoImpl implements ProcesoAnalisisPeriodicoCro
         System.out.print("Fin proceso");
     }
 
-    @Schedule(minute = "*", hour = "14", persistent = false)
+    @Schedules({
+        @Schedule(dayOfWeek = "*", hour = "10", minute = "00")
+        ,
+          @Schedule(dayOfWeek = "*", hour = "15", minute = "00")
+        ,
+          @Schedule(dayOfWeek = "*", hour = "22", minute = "00")
+    })
     @Override
     public void notificaciones() {
         try {
