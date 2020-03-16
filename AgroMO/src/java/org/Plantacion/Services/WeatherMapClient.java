@@ -19,6 +19,9 @@ public class WeatherMapClient {
     private static final String REST_URI
             = "http://api.openweathermap.org/data/2.5/weather?q=";
 
+    private static final String REST_URI_FORECAST
+            = "http://api.openweathermap.org/data/2.5/forecast?q=";
+
     private static final String REST_URI_TOKEN
             = "4edd79d8cc132245dd4396897ad5d76e";
 
@@ -27,6 +30,13 @@ public class WeatherMapClient {
     public WeatherMap getJsonWeatherMap(String ciudad, String pais) {
         return client
                 .target(REST_URI + ciudad + "," + pais + "&APPID=" + REST_URI_TOKEN)
+                .request(MediaType.APPLICATION_JSON)
+                .get(WeatherMap.class);
+    }
+
+    public WeatherMap getJsonWeatherForecastMap(String ciudad, String pais) {
+        return client
+                .target(REST_URI_FORECAST + ciudad + "," + pais + "&APPID=" + REST_URI_TOKEN)
                 .request(MediaType.APPLICATION_JSON)
                 .get(WeatherMap.class);
     }
