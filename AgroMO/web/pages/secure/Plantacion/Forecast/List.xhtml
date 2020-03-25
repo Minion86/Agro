@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition template="/template/Template1_Menu.xhtml">
+
+
+        <ui:define name="title">
+            <p:graphicImage value="/images/cabecera_popup.jpg"  width="70%" height="10%" />
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="plantacionListForm">
+                <p:menubar >
+
+
+                    <f:facet name="options" >
+                        <p:commandButton rendered="#{proyeccionController.permisoBuscar}"  update=":FormSearch:ListaSearch" actionListener="#{proyeccionController.prepareSearch}"
+                                         value="Búsqueda Avanzada"      oncomplete="PF('PlantacionSearchDialog').show(); "  icon="ui-icon ui-icon-search" title="Búsqueda Avanzada" >
+                        </p:commandButton>
+                    </f:facet>
+                </p:menubar>
+                <p:panel header="Lista de Productos en Plantaciones Activas">
+                    <p:dataTable id="datalist" value="#{proyeccionController.allPlantacionItems}" var="item"
+                                 selectionMode="single" selection="#{proyeccionController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idPlantacionDetalle}"
+                                 rows="10"
+                                 widgetVar="datalistVar"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update=" viewButton  "/>
+                        <p:ajax event="rowUnselect" update=" viewButton  "/>
+
+                        <f:facet name="header">
+                            <h:commandLink rendered="#{proyeccionController.permisoImprimir}">
+                                <p:graphicImage value="/images/excel.png" width="32" height="32"/>
+                                <p:dataExporter type="xls" target="datalist" fileName="ReporteLista" />
+                            </h:commandLink>
+
+
+                        </f:facet>
+                        <p:column width="30%">
+                            <f:facet name="header">
+                                <h:outputText value="Producto"/>
+                            </f:facet>
+                            <p:outputLabel rendered="#{not empty item.idDetalleAdquisicion.idBien.nombreProducto}" value="#{item.idDetalleAdquisicion.idBien.nombreProducto}"/>
+                        </p:column>
+                        <p:column width="10%">
+                            <f:facet name="header">
+                                <h:outputText value="Cantidad"/>
+                            </f:facet>
+                            <p:outputLabel rendered="#{not empty item.idDetalleAdquisicion.idBien.nombreProducto}" value="#{item.cantidadPlantacionDetalle} #{item.tipoCantidadPlantacionDetalle}"/>
+                        </p:column>
+                        <p:column width="10%">
+                            <f:facet name="header" >
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.plantacion.nombrePlantacion}"/>
+                        </p:column>
+                        <p:column width="10%">
+                            <f:facet name="header">
+                                <h:outputText value="Fecha"/>
+                            </f:facet>
+                            <h:outputText value="#{item.plantacion.fechaPlantacion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+
+
+                        <f:facet name="footer">
+                            <p:commandButton id="viewButton" update="ControlPlantacionViewForm" process="ControlPlantacionViewForm,viewButton"   icon="ui-icon-calendar" value="Proyecciones y Análisis" actionListener="#{proyeccionController.prepareView}"  oncomplete="PF('PlantacionViewDialog').show()" disabled="#{proyeccionController.selected.idPlantacionDetalle==null}" rendered="#{proyeccionController.permisoActualizar}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <h:form id="FormSearch" rendered="#{proyeccionController.permisoBuscar}">
+
+                <p:dialog closable="false" header="Búsqueda Avanzada" widgetVar="PlantacionSearchDialog" resizable="false" id="PlantacionearchDlg"
+                          width="780"  height="440">
+                    <br/>
+                    <center>
+                        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                            <f:facet name="start">
+                                <p:graphicImage value="/images/ajaxloadingbar.gif" />
+                            </f:facet>
+
+                            <f:facet name="complete">
+                                <h:outputText value="" />
+                            </f:facet>
+                        </p:ajaxStatus>
+
+                        <p:panelGrid id="ListaSearch"  >
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Nombre Plantación:" for="nombre" />
+                                </p:column>
+                                <p:column colspan="3"  >
+                                    <p:inputText maxlength="100" id="nombre" value="#{proyeccionController.selected.nombrePlantacion}"/>
+                                    <p:message for="nombre" display="icon"/>
+                                </p:column>
+
+
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Producto:" for="producto" />
+                                </p:column>
+                                <p:column colspan="3"  >
+                                    <p:inputText maxlength="100" id="producto" value="#{proyeccionController.selected.producto}"/>
+                                    <p:message for="producto" display="icon"/>
+                                </p:column>
+
+
+                            </p:row>
+
+
+                            <p:row>
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:selectOneMenu id="ubicacionbodega" value="#{proyeccionController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
+                                        <p:ajax update="ubicacionbodega2"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="ubicacionbodega"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:selectOneMenu id="ubicacionbodega2" value="#{proyeccionController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter">
+                                        <f:selectItem  itemLabel="TODOS"  itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(bodegaController.selected.idUbicacionPadre)}"   />
+                                    </p:selectOneMenu>
+                                    <p:message for="ubicacionbodega2"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>       
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Fecha Compra Desde:" for="fechadesde" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:calendar id="fechadesde" value="#{proyeccionController.selected.fechaPlantacionDesde}" />
+                                    <p:message for="fechadesde" display="icon"/>
+                                </p:column>
+
+                                <p:column colspan="1"  >
+                                    <h:outputLabel value="Fecha Compra Hasta:" for="fechahasta" />
+                                </p:column>
+                                <p:column colspan="1"  >
+                                    <p:calendar id="fechahasta" value="#{proyeccionController.selected.fechaPlantacionHasta}" />
+                                    <p:message for="fechahasta" display="icon"/>
+                                </p:column>
+                            </p:row>
+
+
+                            <f:facet name="footer">
+                                <p:row>
+                                    <p:column colspan="4"  >
+                                        <p:outputPanel  layout="block" style="text-align:right">
+
+                                            <p:commandButton value="Buscar"  update=":growl,:plantacionListForm:datalist"
+                                                             oncomplete="handleListaPlantacionSearchCloseRequest(xhr, status, args)" actionListener="#{proyeccionController.search}"
+                                                             icon="ui-icon ui-icon-check"/>
+
+                                            <p:commandButton value="Cancelar" onclick="PF('PlantacionSearchDialog').hide()" type="button"
+                                                             icon="ui-icon ui-icon-close"/>
+
+                                        </p:outputPanel>
+                                    </p:column>
+                                </p:row>
+                            </f:facet>
+
+                        </p:panelGrid>
+                        <br/>
+
+                    </center>
+                </p:dialog>
+
+            </h:form>
+
+            <ui:include src="View.xhtml" rendered="#{proyeccionController.permisoActualizar}"/>
+
+
+            <script type="text/javascript">
+
+
+                function handleListaPlantacionSearchCloseRequest(xhr, status, args) {
+                    if (args.validationFailed) {
+                        jQuery('#PlantacionearchDlg').effect("shake", {times: 3}, 100);
+                        alert('Error');
+                    } else {
+                        PF('PlantacionSearchDialog').hide();
+                        PF('datalistVar').clearFilters();
+                    }
+
+                }
+
+
+
+
+
+            </script>
+        </ui:define>
+    </ui:composition>
+
+</html>

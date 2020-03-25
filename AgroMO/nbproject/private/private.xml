@@ -2,26 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/AdquisicionController.java</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Producto/List.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Bodega/List.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/util/ListaProductoControllerConverter.java</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/CreateDetalle.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/ListaProductoController.java</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/CreateProducto.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/Create.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/Edit.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/List.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Bodega/Create.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/ExistenciasController.java</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/util/UtilReporte.java</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Adquisicion/EditDetalle.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Producto/Edit.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Bodega/Edit.xhtml</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/src/java/org/Adquisicion/Controller/ProductoController.java</file>
-            <file>file:/M:/projectsMDT/git/Agro/AgroMO/web/pages/secure/Adquisicion/Producto/Create.xhtml</file>
-        </group>
         <group name="siith">
             <file>file:/home/fmullo/NetBeansNelsonMartinez/git2/AgroMOP/AgroMO/src/java/org/General/util/PaginadorUtil.java</file>
             <file>file:/home/fmullo/NetBeansNelsonMartinez/git2/AgroMOP/AgroMO/web/pages/secure/Biblioteca/List.xhtml</file>
@@ -33,6 +13,19 @@
             <file>file:/home/fmullo/NetBeansNelsonMartinez/git2/AgroMOP/AgroMO/web/pages/secure/Plantacion/Control/ListBiblioteca.xhtml</file>
             <file>file:/home/fmullo/NetBeansNelsonMartinez/git2/AgroMOP/AgroMO/web/pages/secure/Plantacion/Control/List.xhtml</file>
             <file>file:/home/fmullo/NetBeansNelsonMartinez/git2/AgroMOP/AgroMO/src/java/org/Biblioteca/Controller/BuscadorController.java</file>
+        </group>
+        <group>
+            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Plantacion/Forecast/List.xhtml</file>
+            <file>file:/E:/git/Agro/AgroMO/src/java/org/Plantacion/Services/WeatherMapClient.java</file>
+            <file>file:/E:/git/Agro/AgroMO/web/template/Template1_Menu.xhtml</file>
+            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Plantacion/Proyeccion/View.xhtml</file>
+            <file>file:/E:/git/Agro/AgroMO/web/resources/css/iess.css</file>
+            <file>file:/E:/git/Agro/AgroMO/web/resources/css/default.css</file>
+            <file>file:/E:/git/Agro/AgroMO/src/java/org/Plantacion/Controller/ProyeccionController.java</file>
+            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Plantacion/Forecast/View.xhtml</file>
+            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Principal.xhtml</file>
+            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Plantacion/Proyeccion/List.xhtml</file>
+            <file>file:/E:/git/Agro/AgroMO/src/java/org/Plantacion/Cron/ProcesoAnalisisPeriodicoImpl.java</file>
         </group>
     </open-files>
 </project-private>
