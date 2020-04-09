@@ -35812,7 +35812,7 @@
         Object.defineProperty(e, "__esModule", {
             value: !0
         });
-        var r = "//openweathermap.org",
+        var r = "//api.openweathermap.org",
                 i = {
                     mapLayers: {
                         lat: 20,
