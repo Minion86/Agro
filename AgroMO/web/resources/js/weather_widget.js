@@ -985,7 +985,7 @@
                     t.removeChild(t.firstChild)
             }
 
-            function $(t) {
+            function jQuery(t) {
                 var e = t.parentNode;
                 e.lastChild !== t && e.appendChild(t)
             }
@@ -4083,7 +4083,7 @@
                             return t.opacity && this.setOpacity(t.opacity), this
                         },
                         bringToFront: function () {
-                            return this._map && $(this._image), this
+                            return this._map && jQuery(this._image), this
                         },
                         bringToBack: function () {
                             return this._map && K(this._image), this
@@ -4207,7 +4207,7 @@
                             return !!this._map && this._map.hasLayer(this)
                         },
                         bringToFront: function () {
-                            return this._map && $(this._container), this
+                            return this._map && jQuery(this._container), this
                         },
                         bringToBack: function () {
                             return this._map && K(this._container), this
@@ -4571,7 +4571,7 @@
                     this._removeAllTiles(), X(this._container), t._removeZoomLimit(this), this._container = null, this._tileZoom = void 0
                 },
                 bringToFront: function () {
-                    return this._map && ($(this._container), this._setAutoZIndex(Math.max)), this
+                    return this._map && (jQuery(this._container), this._setAutoZIndex(Math.max)), this
                 },
                 bringToBack: function () {
                     return this._map && (K(this._container), this._setAutoZIndex(Math.min)), this
@@ -5264,7 +5264,7 @@
                             t._path.v = e
                         },
                         _bringToFront: function (t) {
-                            $(t._container)
+                            jQuery(t._container)
                         },
                         _bringToBack: function (t) {
                             K(t._container)
@@ -5327,7 +5327,7 @@
                             t._path.setAttribute("d", e)
                         },
                         _bringToFront: function (t) {
-                            $(t._path)
+                            jQuery(t._path)
                         },
                         _bringToBack: function (t) {
                             K(t._path)
@@ -6579,7 +6579,7 @@
                             return I.apply(Pt(this), arguments)
                         },
                         filter: function (t) {
-                            return St(this, $(Pt(this), t, arguments.length > 1 ? arguments[1] : void 0))
+                            return St(this, jQuery(Pt(this), t, arguments.length > 1 ? arguments[1] : void 0))
                         },
                         find: function (t) {
                             return Q(Pt(this), t, arguments.length > 1 ? arguments[1] : void 0)
@@ -19283,7 +19283,7 @@
             return (t = t.nodeName) && "input" === t.toLowerCase() && ("checkbox" === e || "radio" === e)
         }
 
-        function $(t) {
+        function jQuery(t) {
             var e = q(t) ? "checked" : "value",
                     n = Object.getOwnPropertyDescriptor(t.constructor.prototype, e),
                     r = "" + t[e];
@@ -19315,7 +19315,7 @@
         }
 
         function K(t) {
-            t._valueTracker || (t._valueTracker = $(t))
+            t._valueTracker || (t._valueTracker = jQuery(t))
         }
 
         function J(t) {
@@ -30887,7 +30887,7 @@
                             m = 0,
                             v = void 0 === e ? 4294967295 : e >>> 0,
                             g = RegExp(t.source, d + "g");
-                    for (l || (r = RegExp("^" + g.source + "$(?!\\s)", d));
+                    for (l || (r = RegExp("^" + g.source + "jQuery(?!\\s)", d));
                             (u = g.exec(n)) && !((c = u.index + u[0][s]) > m && (p.push(n.slice(m, u.index)), !l && u[s] > 1 && u[0].replace(r, function() {
                     for (f = 1; f < arguments[s] - 2; f++) void 0 === arguments[f] && (u[f] = void 0)
                     }), u[s] > 1 && u.index < n[s] && a.apply(p, u.slice(1)), h = u[0][s], m = c, p[s] >= v)); )

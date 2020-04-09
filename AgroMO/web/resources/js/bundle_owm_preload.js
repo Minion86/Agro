@@ -610,7 +610,7 @@
                 return t instanceof _
             },
             z = function(t, e, n) {
-                return t === W && z(N, e, n), y(t), e = $(e, !0), y(n), i(H, e) ? (n.enumerable ? (i(t, A) && t[A][e] && (t[A][e] = !1), n = x(n, {
+                return t === W && z(N, e, n), y(t), e = jQuery(e, !0), y(n), i(H, e) ? (n.enumerable ? (i(t, A) && t[A][e] && (t[A][e] = !1), n = x(n, {
                     enumerable: C(0, !1)
                 })) : (i(t, A) || j(t, A, C(1, {})), t[A][e] = !0), B(t, e, n)) : j(t, e, n)
             },
@@ -623,11 +623,11 @@
                 return void 0 === e ? x(t) : X(x(t), e)
             },
             J = function(t) {
-                var e = I.call(this, t = $(t, !0));
+                var e = I.call(this, t = jQuery(t, !0));
                 return !(this === W && i(H, t) && !i(N, t)) && (!(e || !i(this, t) || !i(H, t) || i(this, A) && this[A][t]) || e)
             },
             K = function(t, e) {
-                if (t = w(t), e = $(e, !0), t !== W || !i(H, e) || i(N, e)) {
+                if (t = w(t), e = jQuery(e, !0), t !== W || !i(H, e) || i(N, e)) {
                     var n = O(t, e);
                     return !n || !i(H, e) || i(t, A) && t[A][e] || (n.enumerable = !0), n
                 }
@@ -1913,55 +1913,55 @@
     },
     453: function(t, e, n) {
         "use strict";
-        $(window).load(function() {
-            $(".navbar").sticky({
+        jQuery(window).load(function() {
+            jQuery(".navbar").sticky({
                 topSpacing: 0
             })
-        }), $("#nav-search").on("click", function() {
-            return $(this).toggleClass("show hidden"), $(this).removeClass("animated flipInX"), $("#nav-search-close").toggleClass("show hidden"), $("#nav-search-form").toggleClass("show hidden animated flipInX"), !1
-        }), $("#nav-search-close").on("click", function() {
-            return $(this).toggleClass("show hidden"), $("#nav-search").toggleClass("show hidden animated flipInX"), $("#nav-search-form").toggleClass("show hidden animated flipInX"), !1
-        }), $(".navbar-nav > li > a").hover(function() {
-            return $(this).toggleClass("nav-hover-fix"), !1
-        }), $(".style-toggle-btn").on("click", function() {
-            return $(".style-toggle").toggleClass("style-toggle-show"), $(this).toggleClass("fa-gears fa-angle-double-right"), !1
-        }), $("#opt-navbar-dark").on("change", function() {
-            return $(".mini-navbar").addClass("mini-navbar-dark"), $(".mini-navbar").removeClass("mini-navbar-white"), $(".navbar").addClass("navbar-dark"), $(".navbar").removeClass("navbar-white"), !1
-        }), $("#opt-navbar-white").on("change", function() {
-            return $(".mini-navbar").addClass("mini-navbar-white"), $(".mini-navbar").removeClass("mini-navbar-dark"), $(".navbar").addClass("navbar-white"), $(".navbar").removeClass("navbar-dark"), !1
-        }), $("#opt-navbar-mixed").on("change", function() {
-            return $(".mini-navbar").addClass("mini-navbar-dark"), $(".mini-navbar").removeClass("mini-navbar-white"), $(".navbar").addClass("navbar-white"), $(".navbar").removeClass("navbar-dark"), !1
-        }), $("#opt-footer-dark").on("change", function() {
-            return $("footer").addClass("footer-dark"), $("footer").removeClass("footer-white"), !1
-        }), $("#opt-footer-white").on("change", function() {
-            return $("footer").addClass("footer-white"), $("footer").removeClass("footer-dark"), !1
-        }), $(".style-toggle-body .colors > .green").on("click", function() {
-            return $("body").addClass("body-green"), $("body").removeClass("body-blue"), $("body").removeClass("body-orange"), $("body").removeClass("body-red"), !1
-        }), $(".style-toggle-body .colors > .blue").on("click", function() {
-            return $("body").addClass("body-blue"), $("body").removeClass("body-green"), $("body").removeClass("body-orange"), $("body").removeClass("body-red"), !1
-        }), $(".style-toggle-body .colors > .orange").on("click", function() {
-            return $("body").addClass("body-orange"), $("body").removeClass("body-green"), $("body").removeClass("body-blue"), $("body").removeClass("body-red"), !1
-        }), $(".style-toggle-body .colors > .red").on("click", function() {
-            return $("body").addClass("body-red"), $("body").removeClass("body-green"), $("body").removeClass("body-blue"), $("body").removeClass("body-orange"), !1
-        }), $(".services-item").hover(function() {
-            return $(this).children("i").toggleClass("fa-rotate-90"), !1
-        }), $(".pwd-lost > .pwd-lost-q > a").on("click", function() {
-            return $(".pwd-lost > .pwd-lost-q").toggleClass("show hidden"), $(".pwd-lost > .pwd-lost-f").toggleClass("hidden show animated fadeIn"), !1
-        }), $(function() {
-            $("#name").popover()
-        }), $(function() {
-            $("#username").popover()
-        }), $(function() {
-            $("#email").popover()
-        }), $(function() {
-            $("#password").popover()
-        }), $(function() {
-            $("#repeat-password").popover()
-        }), $(document).ready(function() {
-            return $("a[href*=#buttons],a[href*=#panels], a[href*=#info-boards], a[href*=#navs], a[href*=#headlines]").bind("click", function(t) {
-                var e = $(this);
-                $("html, body").stop().animate({
-                    scrollTop: $(e.attr("href")).offset().top
+        }), jQuery("#nav-search").on("click", function() {
+            return jQuery(this).toggleClass("show hidden"), jQuery(this).removeClass("animated flipInX"), jQuery("#nav-search-close").toggleClass("show hidden"), jQuery("#nav-search-form").toggleClass("show hidden animated flipInX"), !1
+        }), jQuery("#nav-search-close").on("click", function() {
+            return jQuery(this).toggleClass("show hidden"), jQuery("#nav-search").toggleClass("show hidden animated flipInX"), jQuery("#nav-search-form").toggleClass("show hidden animated flipInX"), !1
+        }), jQuery(".navbar-nav > li > a").hover(function() {
+            return jQuery(this).toggleClass("nav-hover-fix"), !1
+        }), jQuery(".style-toggle-btn").on("click", function() {
+            return jQuery(".style-toggle").toggleClass("style-toggle-show"), jQuery(this).toggleClass("fa-gears fa-angle-double-right"), !1
+        }), jQuery("#opt-navbar-dark").on("change", function() {
+            return jQuery(".mini-navbar").addClass("mini-navbar-dark"), jQuery(".mini-navbar").removeClass("mini-navbar-white"), jQuery(".navbar").addClass("navbar-dark"), jQuery(".navbar").removeClass("navbar-white"), !1
+        }), jQuery("#opt-navbar-white").on("change", function() {
+            return jQuery(".mini-navbar").addClass("mini-navbar-white"), jQuery(".mini-navbar").removeClass("mini-navbar-dark"), jQuery(".navbar").addClass("navbar-white"), jQuery(".navbar").removeClass("navbar-dark"), !1
+        }), jQuery("#opt-navbar-mixed").on("change", function() {
+            return jQuery(".mini-navbar").addClass("mini-navbar-dark"), jQuery(".mini-navbar").removeClass("mini-navbar-white"), jQuery(".navbar").addClass("navbar-white"), jQuery(".navbar").removeClass("navbar-dark"), !1
+        }), jQuery("#opt-footer-dark").on("change", function() {
+            return jQuery("footer").addClass("footer-dark"), jQuery("footer").removeClass("footer-white"), !1
+        }), jQuery("#opt-footer-white").on("change", function() {
+            return jQuery("footer").addClass("footer-white"), jQuery("footer").removeClass("footer-dark"), !1
+        }), jQuery(".style-toggle-body .colors > .green").on("click", function() {
+            return jQuery("body").addClass("body-green"), jQuery("body").removeClass("body-blue"), jQuery("body").removeClass("body-orange"), jQuery("body").removeClass("body-red"), !1
+        }), jQuery(".style-toggle-body .colors > .blue").on("click", function() {
+            return jQuery("body").addClass("body-blue"), jQuery("body").removeClass("body-green"), jQuery("body").removeClass("body-orange"), jQuery("body").removeClass("body-red"), !1
+        }), jQuery(".style-toggle-body .colors > .orange").on("click", function() {
+            return jQuery("body").addClass("body-orange"), jQuery("body").removeClass("body-green"), jQuery("body").removeClass("body-blue"), jQuery("body").removeClass("body-red"), !1
+        }), jQuery(".style-toggle-body .colors > .red").on("click", function() {
+            return jQuery("body").addClass("body-red"), jQuery("body").removeClass("body-green"), jQuery("body").removeClass("body-blue"), jQuery("body").removeClass("body-orange"), !1
+        }), jQuery(".services-item").hover(function() {
+            return jQuery(this).children("i").toggleClass("fa-rotate-90"), !1
+        }), jQuery(".pwd-lost > .pwd-lost-q > a").on("click", function() {
+            return jQuery(".pwd-lost > .pwd-lost-q").toggleClass("show hidden"), jQuery(".pwd-lost > .pwd-lost-f").toggleClass("hidden show animated fadeIn"), !1
+        }), jQuery(function() {
+            jQuery("#name").popover()
+        }), jQuery(function() {
+            jQuery("#username").popover()
+        }), jQuery(function() {
+            jQuery("#email").popover()
+        }), jQuery(function() {
+            jQuery("#password").popover()
+        }), jQuery(function() {
+            jQuery("#repeat-password").popover()
+        }), jQuery(document).ready(function() {
+            return jQuery("a[href*=#buttons],a[href*=#panels], a[href*=#info-boards], a[href*=#navs], a[href*=#headlines]").bind("click", function(t) {
+                var e = jQuery(this);
+                jQuery("html, body").stop().animate({
+                    scrollTop: jQuery(e.attr("href")).offset().top
                 }, 1e3), t.preventDefault()
             }), !1
         })
@@ -2156,15 +2156,15 @@
                 k = !1,
                 E = t.prototype,
                 T = E[u] || E["@@iterator"] || v && E[v],
-                S = T || $(v),
-                O = v ? x ? $("entries") : S : void 0,
+                S = T || jQuery(v),
+                O = v ? x ? jQuery("entries") : S : void 0,
                 j = "Array" == e ? E.entries || T : T;
             if (j && (w = d(j.call(new t))) !== Object.prototype && w.next && (c(w, C, !0), o || "function" == typeof w[u] || s(w, u, p)), x && T && "values" !== T.name && (k = !0, S = function() {
                     return T.call(this)
                 }), o && !g || !f && !k && E[u] || s(E, u, S), a[e] = S, a[C] = p, v)
                 if (y = {
-                        values: x ? S : $("values"),
-                        keys: m ? S : $("keys"),
+                        values: x ? S : jQuery("values"),
+                        keys: m ? S : jQuery("keys"),
                         entries: O
                     }, g)
                     for (b in y) b in E || r(E, b, y[b]);
