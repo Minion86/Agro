@@ -9,17 +9,17 @@
 
     <ui:composition>
         <h:form id="ControlPlantacionViewForm">
-            <p:dialog closable="false" id="PlantacionViewDlg" widgetVar="PlantacionViewDialog" height="600"  resizable="false"  header="Análisis y Proyección de Producto">
+            <p:dialog closable="false" id="PlantacionViewDlg" widgetVar="PlantacionViewDialog" height="600"  resizable="false"  header="AnÃ¡lisis y ProyecciÃ³n de Producto">
                 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Array.from,Array.assign,fetch"></script>
                 <script src='#{request.contextPath}/resources/js/bundle_owm_preload.js'></script>            
-                <link href='#{request.contextPath}/resources/css/bundle_owm_styles.css' rel="stylesheet"/> 
+                <link type="text/css"  href='#{request.contextPath}/resources/css/bundle_owm_styles.css' rel="stylesheet"/> 
                 <h:panelGroup id="display">
                     <p:panelGrid rendered="#{proyeccionController.selected != null}" >
 
                         <p:row>
 
                             <p:column styleClass="form-label" colspan="1"  >
-                                <h:outputLabel value="Nombre Plantación:" for="factura" />
+                                <h:outputLabel value="Nombre PlantaciÃ³n:" for="factura" />
                             </p:column>
                             <p:column styleClass="form-input" colspan="3"  >
                                 <p:inputText disabled="true" required="true" requiredMessage="Valor Requerido" maxlength="200" id="nombre" value="#{proyeccionController.selected.plantacion.nombrePlantacion}"/>
@@ -58,7 +58,7 @@
                         <p:row>     
 
                             <p:column styleClass="form-label" colspan="1"  >
-                                <h:outputLabel value="Fecha Plantación:" for="fecha" />
+                                <h:outputLabel value="Fecha PlantaciÃ³n:" for="fecha" />
                             </p:column>
                             <p:column styleClass="form-input" colspan="3"  >
                                 <p:calendar disabled="true"  id="fecha" value="#{proyeccionController.selected.plantacion.fechaPlantacion}" />
@@ -99,7 +99,7 @@
                                         </div>   
                                     </div>       
                                     <link href="#{request.contextPath}/resources/css/weather_widget.css" rel="stylesheet"/>
-                                    <link href="#{request.contextPath}/resources/css/weather_widget_styles.c31872127471c475ade0.css" rel="stylesheet"/>
+                                    <link type="text/css"  href="#{request.contextPath}/resources/css/weather_widget_styles.css" rel="stylesheet"/>
                                     <!-- popup wrong-data -->
                                     <div class="container">
                                         <div id="widget" class="global-map"></div> 
