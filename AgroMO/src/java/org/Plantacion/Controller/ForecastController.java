@@ -29,6 +29,7 @@ import org.Plantacion.Entities.ControlPlantacion;
 import org.Plantacion.Entities.WeatherMap;
 import org.Plantacion.Facade.WeatherMapFacade;
 import org.Plantacion.util.JasperReportUtil;
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -63,7 +64,7 @@ public class ForecastController implements Serializable {
 
     private List<PlantacionDetalle> allPlantacionItems = null;
     private List<Plantacion> sonFilteredPerfiles;
-    
+
     private String analisis;
 
     static Logger log = Logger.getLogger(ForecastController.class.getName());
@@ -254,9 +255,13 @@ public class ForecastController implements Serializable {
                 analisisClimaControlItem.setCondicionesCorrectas(true);
             } else {
                 analisisClimaControlItem.setCondicionesCorrectas(false);
-                analisis+="\nLa plantación presenta problemas con una media de humedad de " +analisisClimaControlItem.getMediaHumedad() +" y con una media de Tempreatura de "+analisisClimaControlItem.getMediaTemperatura()+" grados centígrados";
+                analisis += "\nLa plantación presenta problemas con una media de humedad de " + analisisClimaControlItem.getMediaHumedad() + " y con una media de Tempreatura de " + analisisClimaControlItem.getMediaTemperatura() + " grados centígrados";
             }
             getAnalisisClimaControlList().add(analisisClimaControlItem);
+
+            PrimeFaces.current().executeScript("APICall('" + current.getIdUbicacion().getNombreUbicacion() + "');");
+            PrimeFaces.current().executeScript("$('.carousel').carousel();");
+
         }
 
     }
