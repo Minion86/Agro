@@ -10,11 +10,18 @@
     <ui:composition>
         <h:form id="ControlPlantacionViewForm">
             <p:dialog closable="false" id="PlantacionViewDlg" widgetVar="PlantacionViewDialog" height="600"  resizable="false"  header="AnÃ¡lisis y ProyecciÃ³n de Producto">
-                <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Array.from,Array.assign,fetch"></script>
-                <script src='#{request.contextPath}/resources/js/bundle_owm_preload.js'></script>            
-                <link type="text/css"  href='#{request.contextPath}/resources/css/bundle_owm_styles.css' rel="stylesheet"/> 
+                <script type="text/javascript" src="#{request.contextPath}/vendors/EasyWeather/scripts/easy-weather.js"></script>
+                <script type="text/javascript" src="#{request.contextPath}/vendors/jquery/js/jquery-3.3.1.min.js"></script>
+                <script type="text/javascript" src="#{request.contextPath}/vendors/bootstrap/js/bootstrap.min.js"></script>
+                <script type="text/javascript" src="#{request.contextPath}/vendors/chartjs/Chart.min.js"></script>
+
+                <script src="#{request.contextPath}/vendors/sweetalert/js/sweetalert2.all.min.js"></script>
+                <link href='https://fonts.googleapis.com/css?family=Oxygen' rel="stylesheet"/>
+                <!-- Latest compiled and minified CSS -->
+                <link rel="stylesheet" href="#{request.contextPath}/vendors/bootstrap/css/bootstrap.min.css"/>
+                <link rel="stylesheet" href="#{request.contextPath}/vendors/EasyWeather/css/easy-weather.css"/>
                 <h:panelGroup id="display">
-                    <p:panelGrid rendered="#{proyeccionController.selected != null}" >
+                    <p:panelGrid rendered="#{forecastController.selected != null}" >
 
                         <p:row>
 
@@ -22,7 +29,7 @@
                                 <h:outputLabel value="Nombre PlantaciÃ³n:" for="factura" />
                             </p:column>
                             <p:column styleClass="form-input" colspan="3"  >
-                                <p:inputText disabled="true" required="true" requiredMessage="Valor Requerido" maxlength="200" id="nombre" value="#{proyeccionController.selected.plantacion.nombrePlantacion}"/>
+                                <p:inputText disabled="true" required="true" requiredMessage="Valor Requerido" maxlength="200" id="nombre" value="#{forecastController.selected.plantacion.nombrePlantacion}"/>
                                 <p:message for="nombre" display="icon"/>
                             </p:column>
 
@@ -33,7 +40,7 @@
                                 <h:outputLabel value="Provincia/Estado:" for="ubicacionbodega" />
                             </p:column>
                             <p:column styleClass="form-input" colspan="1"  >
-                                <p:selectOneMenu disabled="true"  id="ubicacionbodega" value="#{proyeccionController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                <p:selectOneMenu disabled="true"  id="ubicacionbodega" value="#{forecastController.selected.idUbicacionPadre}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
                                     <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
                                     <f:selectItems itemValue="#{ubicacionbodega}" var="ubicacionbodega" value="#{listaUbicacionController.getbyNivelUbicacion(2)}"   />
                                     <p:ajax update="ubicacionbodega2"/>
@@ -45,9 +52,9 @@
                                 <h:outputLabel value="Ciudad:" for="ubicacionbodega2" />
                             </p:column>
                             <p:column styleClass="form-input" colspan="1"  >
-                                <p:selectOneMenu disabled="true"  id="ubicacionbodega2" value="#{proyeccionController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
+                                <p:selectOneMenu disabled="true"  id="ubicacionbodega2" value="#{forecastController.selected.idUbicacion}" converter="ListaUbicacionControllerConverter" required="true" requiredMessage="Valor Requerido">
                                     <f:selectItem  itemLabel="Por favor seleccione un valor"  itemValue="#{null}" noSelectionOption="true"/>
-                                    <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(proyeccionController.selected.idUbicacionPadre)}"   />
+                                    <f:selectItems itemValue="#{ubicacionbodega2}" var="ubicacionbodega2" value="#{listaUbicacionController.getbyPadreUbicacion(forecastController.selected.idUbicacionPadre)}"   />
                                 </p:selectOneMenu>
                                 <p:message for="ubicacionbodega2"/>
                             </p:column>
@@ -61,7 +68,7 @@
                                 <h:outputLabel value="Fecha PlantaciÃ³n:" for="fecha" />
                             </p:column>
                             <p:column styleClass="form-input" colspan="3"  >
-                                <p:calendar disabled="true"  id="fecha" value="#{proyeccionController.selected.plantacion.fechaPlantacion}" />
+                                <p:calendar disabled="true"  id="fecha" value="#{forecastController.selected.plantacion.fechaPlantacion}" />
                                 <p:message for="fecha" display="icon"/>
                             </p:column>
 
@@ -71,50 +78,53 @@
                                 <h:outputLabel value="Producto" />
                             </p:column>
                             <p:column styleClass="form-input" colspan="3"  >
-                                <p:calendar disabled="true"  id="producto" value="#{proyeccionController.selected.idDetalleAdquisicion.idBien.nombreProducto}" />
+                                <p:calendar disabled="true"  id="producto" value="#{forecastController.selected.idDetalleAdquisicion.idBien.nombreProducto}" />
                                 <p:message for="producto" display="icon"/>
                             </p:column>
                         </p:row>
                         <p:row>     
 
                             <p:column styleClass="form-input" colspan="4"  >
-                                <h:outputText value="#{proyeccionController.analisis}"/>
+                                <h:outputText value="#{forecastController.analisis}"/>
                                 <br/>
                                 <br/>
-                                <main class="wrapper"> 
-                                    <div class="topic">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-sm-7">
-                                                    <h1 class="breadcrumb-title">Weather forecast</h1>
-                                                </div>
-                                                <div class="col-sm-5">
-                                                    <ol class="breadcrumb pull-right hidden-xs">
-                                                        <li><a href="/">Home</a></li>
-
-                                                        <li class="breadcrumb__leaf">Weather forecast</li>
-                                                    </ol>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </div>       
-                                    <link href="#{request.contextPath}/resources/css/weather_widget.css" rel="stylesheet"/>
-                                    <link type="text/css"  href="#{request.contextPath}/resources/css/weather_widget_styles.css" rel="stylesheet"/>
-                                    <!-- popup wrong-data -->
+                                <div class="wrapper">
                                     <div class="container">
-                                        <div id="widget" class="global-map"></div> 
-                                    </div> <!-- / .container -->
-                                    <script src="#{request.contextPath}/resources/js/weather_widget.js"></script>
-                                    <script src="#{request.contextPath}/resources/js/weather_widget_styles.js"></script>     
 
+                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+                                            </ol>
+                                            <div class="carousel-inner">
 
-                                </main>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+
+                                        <canvas id="canvas1"></canvas>
+                                        <br/>
+                                        <canvas id="canvas2"></canvas>
+                                    </div>
+                                </div>
 
                             </p:column>
                         </p:row>
 
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('PlantacionViewDialog').hide()"  immediate="true" actionListener="#{proyeccionController.cancelar}" update=":plantacionListForm:datalist"/>
+                    <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('PlantacionViewDialog').hide()"  immediate="true" actionListener="#{forecastController.cancelar}" update=":plantacionListForm:datalist"/>
                 </h:panelGroup>
             </p:dialog>
         </h:form>
