@@ -260,7 +260,7 @@ public class ForecastController implements Serializable {
             getAnalisisClimaControlList().add(analisisClimaControlItem);
 
             PrimeFaces.current().executeScript("APICall('" + current.getIdUbicacion().getNombreUbicacion() + "');");
-            PrimeFaces.current().executeScript("$('.carousel').carousel();");
+            PrimeFaces.current().executeScript("JQUERY('.carousel').carousel();");
 
         }
 

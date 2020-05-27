@@ -15,17 +15,7 @@
             <file>file:/home/fmullo/NetBeansNelsonMartinez/git2/AgroMOP/AgroMO/src/java/org/Biblioteca/Controller/BuscadorController.java</file>
         </group>
         <group>
-            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Plantacion/Forecast/List.xhtml</file>
-            <file>file:/E:/git/Agro/AgroMO/src/java/org/Plantacion/Services/WeatherMapClient.java</file>
-            <file>file:/E:/git/Agro/AgroMO/web/template/Template1_Menu.xhtml</file>
-            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Plantacion/Proyeccion/View.xhtml</file>
-            <file>file:/E:/git/Agro/AgroMO/web/resources/css/iess.css</file>
-            <file>file:/E:/git/Agro/AgroMO/web/resources/css/default.css</file>
-            <file>file:/E:/git/Agro/AgroMO/src/java/org/Plantacion/Controller/ProyeccionController.java</file>
-            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Plantacion/Forecast/View.xhtml</file>
-            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Principal.xhtml</file>
-            <file>file:/E:/git/Agro/AgroMO/web/pages/secure/Plantacion/Proyeccion/List.xhtml</file>
-            <file>file:/E:/git/Agro/AgroMO/src/java/org/Plantacion/Cron/ProcesoAnalisisPeriodicoImpl.java</file>
+            <file>file:/E:/Projects/git/Agro/AgroMO/src/java/org/Plantacion/Services/WeatherMapClient.java</file>
         </group>
     </open-files>
 </project-private>

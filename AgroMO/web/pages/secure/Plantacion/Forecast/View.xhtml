@@ -11,8 +11,8 @@
         <h:form id="ControlPlantacionViewForm">
             <p:dialog closable="false" id="PlantacionViewDlg" widgetVar="PlantacionViewDialog" height="600"  resizable="false"  header="AnÃ¡lisis y ProyecciÃ³n de Producto">
                 <script type="text/javascript" src="#{request.contextPath}/vendors/EasyWeather/scripts/easy-weather.js"></script>
-                <script type="text/javascript" src="#{request.contextPath}/vendors/jquery/js/jquery-3.3.1.min.js"></script>
                 <script type="text/javascript" src="#{request.contextPath}/vendors/bootstrap/js/bootstrap.min.js"></script>
+
                 <script type="text/javascript" src="#{request.contextPath}/vendors/chartjs/Chart.min.js"></script>
 
                 <script src="#{request.contextPath}/vendors/sweetalert/js/sweetalert2.all.min.js"></script>
@@ -91,28 +91,11 @@
                                 <div class="wrapper">
                                     <div class="container">
 
-                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                            <ol class="carousel-indicators">
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
-                                            </ol>
-                                            <div class="carousel-inner">
 
-                                            </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
+                                        <div class="carousel-inner">
+
                                         </div>
+
 
                                         <canvas id="canvas1"></canvas>
                                         <br/>

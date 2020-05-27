@@ -8,8 +8,7 @@
 'use strict';
 
 $(document).ready(function () {
-    APICall('Quito');
-    $('.carousel').carousel();
+  
 });
 // Function gets a date in the future. Gets current date if numbersOfDaysToAdd = 0
 var getFutureDate = function (day) {
@@ -134,13 +133,8 @@ var getWeather = function (theForecast) {
         dia.push(Math.round(theForecast.list[i].temp.morn));
         noche.push(Math.round(theForecast.list[i].temp.night));
         dias.push(futureDate);
-        var active = "";
-
-        if (i == 1)
-            active = "<div class='carousel-item active'>";
-        else
-            active = "<div class='carousel-item'>";
-        var data = active + "<div class='section'>\n\
+       
+        var data =  "<div class='section'>\n\
 <h2 class='date'>" + futureDate + "</h2>\n\
 	<div class='weather-description'>\n\
 			<div id='weather-info'>\n\
@@ -152,12 +146,12 @@ var getWeather = function (theForecast) {
                 <h3>Noche: " + Math.round(theForecast.list[i].temp.night) + "&deg;</h3>\n\
 <img src='http://webdesignertroy.com/dump/clouds/cloud-" + cloudsCondition.cloudNumber + ".jpg' class='cloud-image'/>\n\
 </div>\n\
-</div></div></div>";
+</div></div>";
 
 
 
         // APPEND fullText to the div.container
-        $('.carousel-inner').append(data);
+        jQuery('.carousel-inner').append(data);
     }
 
     maximosMinimos(maximos, minimos,average, dias);
@@ -298,7 +292,7 @@ var APICall = function (theCity) {
     var daysTotal = 8;
 
     // start jQuery-based API Call
-    $.get({
+    jQuery.get({
         url: weatherUrl + "&APPID=" + apiKey + "&units=" + unitType + "&cnt=" + daysTotal,
         success: function (objectFromOWM) {
             getWeather(objectFromOWM);
