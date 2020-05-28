@@ -116,35 +116,35 @@ var getWeather = function (theForecast) {
         var cloudsCondition = getClouds(theForecast.list[i].clouds);
 
         // build weather data object for Handlebars
-        var weatherData = {
-            now: futureDate,
-            average: Math.round(theForecast.list[i].temp.day),
-            high: Math.round(theForecast.list[i].temp.max),
-            low: Math.round(theForecast.list[i].temp.min),
-            morning: Math.round(theForecast.list[i].temp.morn),
-            nighttime: Math.round(theForecast.list[i].temp.night),
-            cloudInfo: cloudsCondition.cloudNumber,
-            cloudInfoText: cloudsCondition.cloudText
-        }
+       
+            var now= futureDate;
+            var average=  (Math.round(theForecast.list[i].temp.day));
+            var high=  (Math.round(theForecast.list[i].temp.max));
+            var low=  (Math.round(theForecast.list[i].temp.min));
+            var morning=  (Math.round(theForecast.list[i].temp.morn));
+            var nighttime=  (Math.round(theForecast.list[i].temp.night));
+            var cloudInfo= cloudsCondition.cloudNumber;
+            var cloudInfoText= cloudsCondition.cloudText;
+        
 
-        maximos.push(Math.round(theForecast.list[i].temp.max));
-        minimos.push(Math.round(theForecast.list[i].temp.min));
-        average.push(Math.round(theForecast.list[i].temp.day));
-        dia.push(Math.round(theForecast.list[i].temp.morn));
-        noche.push(Math.round(theForecast.list[i].temp.night));
+        maximos.push(high);
+        minimos.push(low);
+        average.push(average);
+        dia.push(morning);
+        noche.push(nighttime);
         dias.push(futureDate);
        
         var data =  "<div class='section'>\n\
-<h2 class='date'>" + futureDate + "</h2>\n\
+<h2 class='date'>" + now + "</h2>\n\
 	<div class='weather-description'>\n\
 			<div id='weather-info'>\n\
 \n\
- <h2>Average: " + Math.round(theForecast.list[i].temp.day) + "&deg;</h2>\n\
-				  <h3>Máximo: " + Math.round(theForecast.list[i].temp.max) + "&deg;</h3>\n\
-				<h3>Mínimo: " + Math.round(theForecast.list[i].temp.min) + "&deg;</h3>\n\
-                <h3>Mañana: " + Math.round(theForecast.list[i].temp.morn) + "&deg;</h3>\n\
-                <h3>Noche: " + Math.round(theForecast.list[i].temp.night) + "&deg;</h3>\n\
-<img src='http://webdesignertroy.com/dump/clouds/cloud-" + cloudsCondition.cloudNumber + ".jpg' class='cloud-image'/>\n\
+ <h2>Average: " + average + "&deg;</h2>\n\
+				  <h3>Máximo: " + high + "&deg;</h3>\n\
+				<h3>Mínimo: " + low + "&deg;</h3>\n\
+                <h3>Mañana: " + morning + "&deg;</h3>\n\
+                <h3>Noche: " + nighttime + "&deg;</h3>\n\
+<img src='http://webdesignertroy.com/dump/clouds/cloud-" + cloudInfo + ".jpg' class='cloud-image'/>\n\
 </div>\n\
 </div></div>";
 
@@ -287,7 +287,7 @@ var APICall = function (theCity) {
     // get API key
     var apiKey = "b0b34e0501286ae903bab8dde901b6ae";
     // get "unit" as imperial
-    var unitType = "imperial";
+    var unitType = "metric";
     // get "cnt" as number of days up to 16 days
     var daysTotal = 8;
 
