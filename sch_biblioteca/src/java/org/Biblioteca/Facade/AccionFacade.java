@@ -83,5 +83,20 @@ public class AccionFacade extends AbstractFacade<Accion> {
         return listaTmp;
 
     }
+    
+      /*
+    Obtengo la lista de Acciones en la base de conocimiento dado el texto de busqueda
+     */
+    public List<Accion> getAccionbyTextoAfeccion(String textoBusqueda) {
+        StringBuffer sql = new StringBuffer(100);
+        sql.append("SELECT a FROM Accion a ");
+        sql.append(" where UPPER(a.descripcion) like  ?1 or UPPER(a.tags) like  ?1 or  UPPER(a.producto.nombre) like ?1 order by a.id asc");
+
+        Query query = em.createQuery(sql.toString());
+        query.setParameter(1, "%" + textoBusqueda.toUpperCase() + "%");
+        List<Accion> listaTmp = query.getResultList();
+        return listaTmp;
+
+    }
 
 }
