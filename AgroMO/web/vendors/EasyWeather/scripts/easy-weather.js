@@ -104,7 +104,7 @@ var getWeather = function (theForecast) {
 
     var maximos = [];
     var minimos = [];
-    var average = [];
+    var average1 = [];
     var dia = [];
     var noche = [];
     var dias = [];
@@ -129,7 +129,7 @@ var getWeather = function (theForecast) {
 
         maximos.push(high);
         minimos.push(low);
-        average.push(average);
+        average1.push(average);
         dia.push(morning);
         noche.push(nighttime);
         dias.push(futureDate);
@@ -139,7 +139,7 @@ var getWeather = function (theForecast) {
 	<div class='weather-description'>\n\
 			<div id='weather-info'>\n\
 \n\
- <h2>Average: " + average + "&deg;</h2>\n\
+ <h2>Average: " + average1 + "&deg;</h2>\n\
 				  <h3>Máximo: " + high + "&deg;</h3>\n\
 				<h3>Mínimo: " + low + "&deg;</h3>\n\
                 <h3>Mañana: " + morning + "&deg;</h3>\n\
@@ -154,7 +154,7 @@ var getWeather = function (theForecast) {
         jQuery('.carousel-inner').append(data);
     }
 
-    maximosMinimos(maximos, minimos,average, dias);
+    maximosMinimos(maximos, minimos,average1, dias);
     diaNoche(dia,noche, dias);
 };
 
