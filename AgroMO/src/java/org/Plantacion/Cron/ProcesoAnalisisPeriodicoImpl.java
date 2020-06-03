@@ -8,6 +8,7 @@ package org.Plantacion.Cron;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,8 @@ import javax.ejb.Schedules;
 import javax.ejb.Stateless;
 import org.Adquisicion.Entities.Ubicacion;
 import org.Adquisicion.Facade.UbicacionFacade;
+import org.Biblioteca.Entities.Accion;
+import org.Biblioteca.Facade.AccionFacade;
 import org.General.util.SendEmailTLS;
 import org.Plantacion.Dto.AnalisisClimaControl;
 import org.Plantacion.Dto.Clima;
@@ -26,17 +29,11 @@ import org.Plantacion.Entities.Plantacion;
 import org.Plantacion.Entities.PlantacionDetalle;
 import org.Plantacion.Entities.Weather;
 import org.Plantacion.Facade.ControlPlantacionFacade;
-import org.Plantacion.Facade.PlantacionDetalleFacade;
 import org.Plantacion.Facade.PlantacionFacade;
 import org.Plantacion.Facade.WeatherMapFacade;
 import org.Plantacion.Services.WeatherMapClient;
 import org.Plantacion.util.FacesUtil;
 import org.Seguridades.Entities.SegUsuario;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -58,6 +55,8 @@ public class ProcesoAnalisisPeriodicoImpl implements ProcesoAnalisisPeriodicoCro
 
     @EJB
     private org.Adquisicion.Facade.DetalleAdquisicionFacade ejbDetalleAdquisicionFacade;
+    @EJB
+    private AccionFacade accionFacade;
 
     @Schedule(minute = "01", hour = "*", persistent = false)
     @Override
@@ -154,12 +153,148 @@ public class ProcesoAnalisisPeriodicoImpl implements ProcesoAnalisisPeriodicoCro
                     analisisClimaControlItem.setMediaHumedad(totalHumedadCruce / climaCruceList.size());
                     analisisClimaControlItem.setAfeccion(item3.getAfeccion());
                     analisisClimaControlItem.setTratamiento(item3.getTratamiento());
-                    if (item3.getAfeccion() == true) {
+                    if (item3.getAfeccion() == false) {
                         analisisClimaControlItem.setCondicionesCorrectas(true);
                     } else {
                         analisisClimaControlItem.setCondicionesCorrectas(false);
                         textoAnalisisPlantacionDetalle += "\nLa plantación presenta problemas con una media de humedad de " + analisisClimaControlItem.getMediaHumedad() + " y con una media de Tempreatura de " + analisisClimaControlItem.getMediaTemperatura() + " grados centígrados<br/> ";
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(item3.getFechaControlPlantacion());
+                        if (analisisClimaControlItem.getMediaTemperatura() > 30) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de plaga de TRIPS";
+                            if (item3.getDescripcionAfeccion().toUpperCase().contains("TRIPS")) {
+                                List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("TRIPS");
+                                if (!accionList.isEmpty()) {
+                                    for (Accion x : accionList) {
+                                        textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                    }
+                                }
+
+                            }
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("ÁFIDOS") && ((cal.get(Calendar.MONTH) >= 3) && (cal.get(Calendar.MONTH) >= 9))) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de plaga de ÁFIDOS";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("ÁFIDOS");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("TERMITAS") && analisisClimaControlItem.getMediaHumedad() > 85) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de plaga de TERMITAS";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("TERMITAS");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("ZOMPOPOS") && ((cal.get(Calendar.MONTH) >= 2) && (cal.get(Calendar.MONTH) >= 3))) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de plaga de ZOMPOPOS";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("ZOMPOPOS");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("BARRENADORES DE TALLO Y RAMA") && analisisClimaControlItem.getMediaHumedad() <= 50) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de plaga de BARRENADORES DE TALLO Y RAMA";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("BARRENADORES DE TALLO Y RAMA");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("ARDILLAS") && analisisClimaControlItem.getMediaTemperatura() > 30) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de plaga de ARDILLAS";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("ARDILLAS");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("Monalonion") && analisisClimaControlItem.getMediaTemperatura() < 10) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de plaga de Monalonion";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("Monalonion");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("MAL DE MACHETE") && analisisClimaControlItem.getMediaTemperatura() < 10 && analisisClimaControlItem.getMediaHumedad() > 80) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de enfermedad de MAL DE MACHETE";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("MAL DE MACHETE");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("MONILIASIS") && analisisClimaControlItem.getMediaTemperatura() > 30) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de enfermedad de MONILIASIS";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("MONILIASIS");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("MAZORCA NEGRA") && analisisClimaControlItem.getMediaTemperatura() > 30) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de enfermedad de MAZORCA NEGRA";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("MAZORCA NEGRA");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("ESCOBA DE BRUJA") && analisisClimaControlItem.getMediaTemperatura() >= 24 && analisisClimaControlItem.getMediaTemperatura() <= 28 && analisisClimaControlItem.getMediaHumedad() > 80) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de enfermedad de ESCOBA DE BRUJA";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("ESCOBA DE BRUJA");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("ANTRACNOSIS") && analisisClimaControlItem.getMediaTemperatura() >= 27 && analisisClimaControlItem.getMediaHumedad() > 80) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de enfermedad de ANTRACNOSIS";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("ANTRACNOSIS");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
+                        if (item3.getDescripcionAfeccion().toUpperCase().contains("MUERTE DE FRUTOS TIERNO") && analisisClimaControlItem.getMediaTemperatura() <= 17 && analisisClimaControlItem.getMediaHumedad() > 80) {
+                            textoAnalisisPlantacionDetalle += "\n Precaución de enfermedad de MUERTE DE FRUTOS TIERNO";
+                            List<Accion> accionList = accionFacade.getAccionbyTextoAfeccion("MUERTE DE FRUTOS TIERNO");
+                            if (!accionList.isEmpty()) {
+                                for (Accion x : accionList) {
+                                    textoAnalisisPlantacionDetalle += "\n" + x.getDescripcion();
+                                }
+                            }
+
+                        }
                     }
+
                     item2.getAnalisisClimaControlList().add(analisisClimaControlItem);
                 }
                 textoAnalisisPlantacionDetalle += "</td></tr>";
